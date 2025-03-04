@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-/* Funções e variáveis globais */
+/* Funï¿½ï¿½es e variï¿½veis globais */
 void menuPrincipal(void);
 void menuLimpeza(void);
 void menuAlimento(void);
@@ -17,7 +17,6 @@ int main()
     menuPrincipal();
     return 0;
 }
-
 
 void menuPrincipal(){
     int opcaoUm=0;
@@ -89,7 +88,7 @@ void menuLimpeza()
             menuLimpeza();
             break;
 
-        case 12:    /*<----- SABAO EM PÓ */
+        case 12:    /*<----- SABAO EM Pï¿½ */
             printf("Sabao em po\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -186,7 +185,7 @@ void menuLimpeza()
             menuAlimento();
             break;
 
-        case 25:    /*<----- AÇÚCAR*/
+        case 25:    /*<----- Aï¿½ï¿½CAR*/
             printf("Acucar 1kg\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -278,8 +277,8 @@ void menuPadaria()
 void menuPagamento()
 {
     int cPagamento, cCartao;
-    float vTotal = 0, vTcdesconto = 0, qnt = 0, troco = 0, valorCobrado = 0, descontoReal =0; /* <<< VARIÁVEIS DE ARMAZENAMENTO TEMPORÁRIO */
-    float descontoCinco, descontoDez, descontoDezoito ; /* <<< VARIÁVEIS DE ARMAZENAMENTO FIXO */
+    float vTotal = 0, vTcdesconto = 0, qnt = 0, troco = 0, valorCobrado = 0, descontoReal =0; /* <<< VARIï¿½VEIS DE ARMAZENAMENTO TEMPORï¿½RIO */
+    float descontoCinco, descontoDez, descontoDezoito ; /* <<< VARIï¿½VEIS DE ARMAZENAMENTO FIXO */
         /* DESCONTOS */
     descontoCinco = 0.05;   /* <<<- 5% desconto */
     descontoDez = 0.10;  /* <<<- 10% desconto */
@@ -320,7 +319,7 @@ void menuPagamento()
             if (valorCobrado >= vTcdesconto)
             {
                 troco= valorCobrado- vTcdesconto;
-                totalDia= totalDia + vTcdesconto;  /* <----------- Soma do total diário */
+                totalDia= totalDia + vTcdesconto;  /* <----------- Soma do total diï¿½rio */
                 printf("Troco: %.2f R$\n", troco);
                 printf("Pagamento realizado com sucesso!\n");
                 vLimpeza= 0;
@@ -340,7 +339,7 @@ void menuPagamento()
                 break;
             }
 
-        case 42:       /* <--------- PAGAMENTO EM CARTÃO */
+        case 42:       /* <--------- PAGAMENTO EM CARTï¿½O */
             printf("Valor total: %.2f R$\n",vTotal);
             printf("51. Pagamento realizado\n");
             printf("52. Pagamento nao realizado\n");
@@ -350,7 +349,7 @@ void menuPagamento()
             if (cCartao == 51)
                 {
                     printf("Pagamento realizado com sucesso!\n");
-                    totalDia = totalDia + vTotal; /* <----------- Soma do total diário */
+                    totalDia = totalDia + vTotal; /* <----------- Soma do total diï¿½rio */
                 }
                 else if (cCartao == 52)
                 {
@@ -380,15 +379,15 @@ void menuPagamento()
             printf("Opcao invalida... Tente Novamente\n");
             menuPagamento();
             break;
-        }
+    }
 }
 
-void menufPagamento() //FUNÇÃO CRIADA PARA CASO A PESSOA NÃO DE DINHEIRO SUFICIENTE NO PAGAMENTO NO MENUPRINCIPAL
+void menufPagamento() //FUNï¿½ï¿½O CRIADA PARA CASO A PESSOA Nï¿½O DE DINHEIRO SUFICIENTE NO PAGAMENTO NO MENUPRINCIPAL
 {
     int cPagamento= 0, cCartao= 0;
-    float troco = 0, valorCobrado = 0; /* <<< VARIÁVEIS DE ARMAZENAMENTO TEMPORÁRIO */
+    float troco = 0, valorCobrado = 0; /* <<< VARIï¿½VEIS DE ARMAZENAMENTO TEMPORï¿½RIO */
 
-    float descontoCinco, descontoDez, descontoDezoito ; /* <<< VARIÁVEIS DE ARMAZENAMENTO FIXO */
+    float descontoCinco, descontoDez, descontoDezoito ; /* <<< VARIï¿½VEIS DE ARMAZENAMENTO FIXO */
                 /* DESCONTOS */
     descontoCinco = 0.05;   /* <<<- 5% desconto */
     descontoDez = 0.10;  /* <<<- 10% desconto */
@@ -408,7 +407,7 @@ void menufPagamento() //FUNÇÃO CRIADA PARA CASO A PESSOA NÃO DE DINHEIRO SUFICIE
 
             if (valorCobrado >= fPagar)
             {
-                totalDia= totalDia + fPagar;  /* <----------- Soma do total diário */
+                totalDia= totalDia + fPagar;  /* <----------- Soma do total diï¿½rio */
                 troco= valorCobrado- fPagar;
                 printf("Troco: %.2f R$\n", troco);
                 printf("Pagamento realizado com sucesso!\n");
@@ -429,7 +428,7 @@ void menufPagamento() //FUNÇÃO CRIADA PARA CASO A PESSOA NÃO DE DINHEIRO SUFICIE
                 break;
             }
 
-        case 42:       /* <--------- PAGAMENTO EM CARTÃO */
+        case 42:       /* <--------- PAGAMENTO EM CARTï¿½O */
             printf("Valor total: %.2f R$\n",fPagar);
             printf("51. Pagamento realizado\n");
             printf("52. Pagamento nao realizado\n");
@@ -438,7 +437,7 @@ void menufPagamento() //FUNÇÃO CRIADA PARA CASO A PESSOA NÃO DE DINHEIRO SUFICIE
             if (cCartao == 51)
             {
                 printf("Pagamento realizado com sucesso!\n");
-                totalDia= totalDia + fPagar; /* <----------- Soma do total diário */
+                totalDia= totalDia + fPagar; /* <----------- Soma do total diï¿½rio */
                 menuPrincipal();
             }
 
@@ -470,5 +469,5 @@ void menufPagamento() //FUNÇÃO CRIADA PARA CASO A PESSOA NÃO DE DINHEIRO SUFICIE
             printf("Opcao invalida... Tente Novamente\n");
             menufPagamento();
             break;
-        }
+    }
 }
