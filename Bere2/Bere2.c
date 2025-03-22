@@ -1,40 +1,43 @@
 #include <stdio.h>
-#include <math.h>
+#include <math.h> //Bibliotecas
 #include <stdlib.h>
 
-/* Fun��es e vari�veis globais */
+/* Funcoes e variaveis globais */
 void menuPrincipal(void);
 void menuLimpeza(void);
-void menuAlimento(void);
+void menuAlimento(void); // Declaracoes das Funcoes
 void menuPadaria(void);
 void menuPagamento(void);
 void menufPagamento(void);
-float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =0;
+
+float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =0; // Variaveis globais
 float fPagar;
 
 int main()
 {
-    menuPrincipal();
+    menuPrincipal(); // Funcao Principal
     return 0;
 }
 
-void menuPrincipal(){
-    int opcaoUm=0;
+void menuPrincipal() //Funcao do Menu Principal
+{
+    int opcaoUm=0; // Variavel opcao do usuario
 
     while (opcaoUm!=5)
     {
-        printf("   <Menu Principal>\n");
+        printf("\n   <Menu Principal>\n"); //Print do Menu
         printf("1. Material de Limpeza\n");
         printf("2. Alimentos\n");
         printf("3. Padaria\n");
         printf("4. Pagamento\n");
         printf("5. Sair\n");
 
-        printf("\nValor total de vendas hoje: %.2f \n",totalDia);
+        printf("\nValor total de vendas hoje: %.2f \n",totalDia); // Atualizacao do valor total das vendas
+        printf("\n");
 
         scanf("%d", &opcaoUm);
 
-        switch(opcaoUm){
+        switch(opcaoUm){ // Switch Case para as sessoes do mercadinho
             case 1:
                 menuLimpeza();
                 break;
@@ -57,16 +60,17 @@ void menuPrincipal(){
   }
 }
 
-void menuLimpeza()
+void menuLimpeza() // Funcao Menu Limpeza
 {
-    int cLimpeza;
+    printf("\n");
+    int cLimpeza; // Opcao do usuario
     float pDetergente, pSabaopo, pEsponja, pAmaciante; /* <<< PRODUTOS DE LIMPEZA */
     float qnt;
         /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
             /* LIMPEZA */
     pDetergente = 1.99;
     pSabaopo = 8.99;
-    pEsponja = 1.50;
+    pEsponja = 1.50; // Valores dos produtos
     pAmaciante = 15.00;
 
     printf("  <Material de limpeza>\n");
@@ -75,11 +79,13 @@ void menuLimpeza()
     printf("13. Esponja         R$ 1,50\n");
     printf("14. Amaciante 1lt   R$ 15,00\n");
     printf("15. Voltar ao menu principal\n");
+    printf("\n");
 
     scanf("%d", &cLimpeza);
 
-    switch(cLimpeza){
+    switch(cLimpeza){ // Switch case para selecao dos produtos
         case 11:    /*<----- DETERGENTE */
+            printf("\n");
             printf("Detergente\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -89,6 +95,7 @@ void menuLimpeza()
             break;
 
         case 12:    /*<----- SABAO EM P� */
+            printf("\n");
             printf("Sabao em po\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -98,6 +105,7 @@ void menuLimpeza()
             break;
 
         case 13:    /*<----- ESPONJA*/
+            printf("\n");
             printf("Esponja\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -107,6 +115,7 @@ void menuLimpeza()
             break;
 
         case 14:    /*<----- AMACIANTE*/
+            printf("\n");
             printf("Amaciante\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -116,25 +125,27 @@ void menuLimpeza()
             break;
 
         case 15:    /*<----- VOLTAR*/
+            printf("\n");
             printf("Voltar ao menu principal\n");
             break;
 
         default:
+            printf("\n");
             printf("Opcao invalida... Tente Novamente\n");
             menuLimpeza();
             break;
         }
 }
-
-  void menuAlimento()
+  void menuAlimento() // Funcao Menu Alimentos
 {
+    printf("\n");
     int cAlimento;
     float pCafe, pFeijaop, pAcucar, pLeite, pArroz; /* <<< ALIMENTOS */
     float qnt;
             /* ALIMENTOS */
     pCafe = 19.99;
     pLeite = 5.90;
-    pArroz = 4.50;
+    pArroz = 4.50; // Valores dos produtos
     pFeijaop = 8.00;
     pAcucar = 5.00;
 
@@ -148,8 +159,9 @@ void menuLimpeza()
 
     scanf("%d", &cAlimento);
 
-    switch(cAlimento){
+    switch(cAlimento){ // Switch case para selecao dos produtos
         case 21:    /*<----- CAFE */
+            printf("\n");
             printf("Cafe\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -159,6 +171,7 @@ void menuLimpeza()
             break;
 
         case 22:    /*<----- LEITE */
+            printf("\n");
             printf("Leite\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -168,6 +181,7 @@ void menuLimpeza()
             break;
 
         case 23:    /*<----- ARROZ*/
+            printf("\n");
             printf("Arroz 1kg\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -177,6 +191,7 @@ void menuLimpeza()
             break;
 
         case 24:    /*<----- FEIJAO PRETO*/
+            printf("\n");
             printf("Feijao Preto 1kg\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -185,7 +200,8 @@ void menuLimpeza()
             menuAlimento();
             break;
 
-        case 25:    /*<----- A��CAR*/
+        case 25:    /*<----- ACUCAR*/
+            printf("\n");
             printf("Acucar 1kg\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -195,25 +211,26 @@ void menuLimpeza()
             break;
 
         case 26:    /*<----- VOLTAR*/
+            printf("\n");
             printf("Voltar ao menu principal\n");
             break;
 
         default:
+            printf("\n");
             printf("Opcao invalida... Tente Novamente\n");
             menuAlimento();
             break;
         }
 }
-
-
-void menuPadaria()
+void menuPadaria() // Funcao Menu Padaria
 {
+    printf("\n");
     int cPadaria;
     float pPaoforma, pPaointegral, pSonho, pPaofrances; /* <<< PADARIA */
     float qnt;
     /* PADARIA */
     pPaoforma = 9.50;
-    pPaointegral = 12.50;
+    pPaointegral = 12.50; // Valores dos produtos
     pPaofrances = 1.90;
     pSonho = 8.50;
 
@@ -226,8 +243,9 @@ void menuPadaria()
 
     scanf("%d", &cPadaria);
 
-    switch(cPadaria){
+    switch(cPadaria){ // Switch case para selecao dos protudos
         case 31:   /*<----- PAO DE FORMA */
+            printf("\n");
             printf("Pao de Forma\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -237,6 +255,7 @@ void menuPadaria()
             break;
 
         case 32:    /*<----- PAO INTEGRAL */
+            printf("\n");
             printf("Pao Integral\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -246,6 +265,7 @@ void menuPadaria()
             break;
 
         case 33:    /*<----- PAO FRANCES*/
+            printf("\n");
             printf("Pao Frances\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -255,6 +275,7 @@ void menuPadaria()
             break;
 
         case 34:    /*<----- SONHO*/
+            printf("\n");
             printf("Sonho\n");
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
@@ -264,27 +285,34 @@ void menuPadaria()
             break;
 
         case 35:    /*<----- VOLTAR*/
+            printf("\n");
             printf("Voltar ao menu principal\n");
             break;
 
         default:
+            printf("\n");
             printf("Opcao invalida... Tente Novamente\n");
             menuPadaria();
             break;
     }
 }
-
-void menuPagamento()
+void menuPagamento() // Funcao Menu Pagamento
 {
+    printf("\n");
     int cPagamento, cCartao;
-    float vTotal = 0, vTcdesconto = 0, qnt = 0, troco = 0, valorCobrado = 0, descontoReal =0; /* <<< VARI�VEIS DE ARMAZENAMENTO TEMPOR�RIO */
-    float descontoCinco, descontoDez, descontoDezoito ; /* <<< VARI�VEIS DE ARMAZENAMENTO FIXO */
+
+    /* <<< VARIAVEIS DE ARMAZENAMENTO TEMPORARIO */
+    float vTotal = 0, vTcdesconto = 0, qnt = 0, troco = 0, valorCobrado = 0, descontoReal =0;
+
+    /* <<< VARIAVEIS DE ARMAZENAMENTO FIXO */
+    float descontoCinco, descontoDez, descontoDezoito ;
+
         /* DESCONTOS */
     descontoCinco = 0.05;   /* <<<- 5% desconto */
     descontoDez = 0.10;  /* <<<- 10% desconto */
     descontoDezoito = 0.18;  /* <<<- 18% desconto */
 
-    vTotal = vLimpeza + vPadaria + vAlimento;
+    vTotal = vLimpeza + vPadaria + vAlimento; // Calculo valor total sem desconto
     printf("Forma de Pagamento:\n");
     printf("41. Dinheiro\n");
     printf("42. Cartao\n");
@@ -292,8 +320,9 @@ void menuPagamento()
 
     scanf("%d", &cPagamento);   /* <--------------- PAGAMENTO EM DINHEIRO */
 
-    switch(cPagamento){
+    switch(cPagamento){ // Switch case para verificar valor com desconto
         case 41:
+            printf("\n");
             printf("Valor total: %.2f\n",vTotal);
 
             if (vTotal <= 50)
@@ -301,7 +330,7 @@ void menuPagamento()
                 descontoReal = vTotal * descontoCinco;
             }
 
-            else if (vTotal > 50 && vTotal< 100)
+            else if (vTotal > 50 && vTotal < 100)
             {
                 descontoReal = vTotal * descontoDez;
             }
@@ -311,15 +340,17 @@ void menuPagamento()
                     descontoReal = vTotal * descontoDezoito;
             }
 
-            vTcdesconto = vTotal - descontoReal;
+            vTcdesconto = vTotal - descontoReal; // Calculo valor total com desconto
+            printf("\n");
             printf("Valor com desconto: %.2f R$\n", vTcdesconto);
             printf("Inserir valor recebido em dinheiro\n");
             scanf("%f", &valorCobrado);
 
-            if (valorCobrado >= vTcdesconto)
+            if (valorCobrado > vTcdesconto)
             {
                 troco= valorCobrado- vTcdesconto;
-                totalDia= totalDia + vTcdesconto;  /* <----------- Soma do total di�rio */
+                totalDia= totalDia + vTcdesconto;  /* <----------- Soma do total diario */
+                printf("\n");
                 printf("Troco: %.2f R$\n", troco);
                 printf("Pagamento realizado com sucesso!\n");
                 vLimpeza= 0;
@@ -329,8 +360,21 @@ void menuPagamento()
                 fPagar= 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
                 break;
             }
-            else if (valorCobrado < vTcdesconto)
+            else if (valorCobrado == vTcdesconto)
             {
+                totalDia= totalDia + vTcdesconto;
+                printf("\n");
+                printf("Pagamento realizado com sucesso!\n");
+                vLimpeza= 0;
+                vAlimento= 0;
+                vPadaria= 0;
+                descontoReal = 0;
+                fPagar= 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
+                break;
+            }
+            else
+            {
+                printf("\n");
                 printf("O valor integral sera cobrado!\n");
                 fPagar = vTotal - valorCobrado;
                 totalDia= totalDia + valorCobrado;
@@ -341,6 +385,7 @@ void menuPagamento()
 
         case 42:       /* <--------- PAGAMENTO EM CART�O */
             printf("Valor total: %.2f R$\n",vTotal);
+            printf("\n");
             printf("51. Pagamento realizado\n");
             printf("52. Pagamento nao realizado\n");
             printf("53. Voltar ao  menu anterior\n");
@@ -348,22 +393,26 @@ void menuPagamento()
 
             if (cCartao == 51)
                 {
+                    printf("\n");
                     printf("Pagamento realizado com sucesso!\n");
                     totalDia = totalDia + vTotal; /* <----------- Soma do total di�rio */
                 }
                 else if (cCartao == 52)
                 {
+                    printf("\n");
                     printf("Pagamento nao realizado!\n");
                 }
 
                 else if (cCartao == 53)
                 {
+                    printf("\n");
                     printf("Voltar ao menu anterior\n");
                     menuPagamento();
                 }
 
                 else
                 {
+                    printf("\n");
                     printf("Opcao invalida... Tente novamente\n");
                 }
 
@@ -371,18 +420,20 @@ void menuPagamento()
                 break;
 
         case 43:
+            printf("\n");
             printf("Voltar ao menu principal\n");
             menuPrincipal();
             break;
 
         default:
+            printf("\n");
             printf("Opcao invalida... Tente Novamente\n");
             menuPagamento();
             break;
     }
 }
 
-void menufPagamento() //FUN��O CRIADA PARA CASO A PESSOA N�O DE DINHEIRO SUFICIENTE NO PAGAMENTO NO MENUPRINCIPAL
+void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIENTE NO PAGAMENTO NO MENUPRINCIPAL
 {
     int cPagamento= 0, cCartao= 0;
     float troco = 0, valorCobrado = 0; /* <<< VARI�VEIS DE ARMAZENAMENTO TEMPOR�RIO */
@@ -394,6 +445,7 @@ void menufPagamento() //FUN��O CRIADA PARA CASO A PESSOA N�O DE DINHEIRO S
     descontoDezoito = 0.18;  /* <<<- 18% desconto */
 
     printf("\nForma de Pagamento:\n");
+    printf("\n");
     printf("41. Dinheiro\n");
     printf("42. Cartao\n");
     printf("43. Voltar ao menu principal\n");
@@ -401,6 +453,7 @@ void menufPagamento() //FUN��O CRIADA PARA CASO A PESSOA N�O DE DINHEIRO S
     scanf("%d", &cPagamento);   /* <--------------- PAGAMENTO EM DINHEIRO */
     switch(cPagamento){
         case 41:
+            printf("\n");
             printf("Valor total: %.2f R$\n",fPagar);
             printf("Inserir valor recebido em dinheiro\n");
             scanf("%f", &valorCobrado);
@@ -409,8 +462,10 @@ void menufPagamento() //FUN��O CRIADA PARA CASO A PESSOA N�O DE DINHEIRO S
             {
                 totalDia= totalDia + fPagar;  /* <----------- Soma do total di�rio */
                 troco= valorCobrado- fPagar;
+                printf("\n");
                 printf("Troco: %.2f R$\n", troco);
                 printf("Pagamento realizado com sucesso!\n");
+                printf("\n");
                 vLimpeza= 0;
                 vAlimento= 0;
                 vPadaria= 0;
@@ -424,6 +479,7 @@ void menufPagamento() //FUN��O CRIADA PARA CASO A PESSOA N�O DE DINHEIRO S
                 fPagar = fPagar - valorCobrado;
                 totalDia=  totalDia + valorCobrado;
                 printf("Falta pagar %.2f R$ \n", fPagar);
+                printf("\n");
                 menufPagamento();
                 break;
             }
@@ -437,6 +493,7 @@ void menufPagamento() //FUN��O CRIADA PARA CASO A PESSOA N�O DE DINHEIRO S
             if (cCartao == 51)
             {
                 printf("Pagamento realizado com sucesso!\n");
+                printf("\n");
                 totalDia= totalDia + fPagar; /* <----------- Soma do total di�rio */
                 menuPrincipal();
             }
@@ -449,12 +506,14 @@ void menufPagamento() //FUN��O CRIADA PARA CASO A PESSOA N�O DE DINHEIRO S
             else if (cCartao == 53)
             {
                 printf("Voltar ao menu anterior\n");
+                printf("\n");
                 menuPagamento();
             }
 
             else
             {
                 printf("Opcao invalida... Tente novamente\n");
+                printf("\n");
             }
 
             vPadaria = 0; vAlimento= 0; vLimpeza =0;   /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
@@ -462,11 +521,13 @@ void menufPagamento() //FUN��O CRIADA PARA CASO A PESSOA N�O DE DINHEIRO S
 
         case 43:
             printf("Voltar ao menu principal\n");
+            printf("\n");
             menuPrincipal();
             break;
 
         default:
             printf("Opcao invalida... Tente Novamente\n");
+            printf("\n");
             menufPagamento();
             break;
     }
