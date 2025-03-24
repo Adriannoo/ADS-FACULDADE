@@ -12,7 +12,8 @@ void menufPagamento(void);
 
 float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =0; // Variaveis globais
 float fPagar;
-float vCar = 0; vAbertura = 0;
+float vCar = 0;
+float vAbertura = 0;
 
 int main()
 {
@@ -33,31 +34,71 @@ void menuPrincipal() //Funcao do Menu Principal
         printf("3. Padaria\n");
         printf("4. Pagamento\n");
         printf("5. Abertura de caixa\n");
-        printf("6. Sair\n");
-        printf("Valor total carrinho: %.2f", (vCar += vLimpeza + vPadaria + vAlimento));
+        printf("6. Fechamento de caixa\n");
+        printf("7. Sair\n");
+        printf("Valor total carrinho: %.2f R$", vCar);
 
-        printf("\nValor total de vendas hoje: %.2f \n",totalDia); // Atualizacao do valor total das vendas
+        printf("\nValor total de vendas hoje: %.2f  R$ \n",totalDia); // Atualizacao do valor total das vendas
         printf("\n");
 
         scanf("%d", &opcaoUm);
 
         switch(opcaoUm){ // Switch Case para as sessoes do mercadinho
             case 1:
+                if(vAbertura <= 0){          // 47 até 51 === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    sleep(3);
+                    menuPrincipal();
+                }
+                else{
                 menuLimpeza();
-                break;
+                break;}
             case 2:
+                    if(vAbertura <= 0){    // VERIFICAÇÃO CAIXA ABERTO
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    sleep(3);
+                    menuPrincipal();
+                }
+                else{
                 menuAlimento();
-                break;
+                break;}
             case 3:
+                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    sleep(3);
+                    menuPrincipal();
+                }
+                else{
                 menuPadaria();
-                break;
+                break;}
             case 4:
+                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    sleep(3);
+                    menuPrincipal();
+                    }
+                else{
                 menuPagamento();
-                break;
+                break;}
             case 5:
                 menuAbertura();
                 break;
             case 6:
+                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    sleep(3);
+
+                    menuPrincipal();
+                }
+                else{
+                menuFechamento();
+                break;}
+            case 7:
                 printf("Encerrando o sistema...");
                 exit (0);
             default:
@@ -87,7 +128,7 @@ void menuLimpeza() // Funcao Menu Limpeza
     printf("13. Esponja         R$ 1,50\n");
     printf("14. Amaciante 1lt   R$ 15,00\n");
     printf("15. Voltar ao menu principal\n");
-    printf("Carrinho materiais de limpeza: %.2f", vLimpeza);
+    printf("Carrinho materiais de limpeza: %.2f R$", vLimpeza);
     printf("\n");
 
     scanf("%d", &cLimpeza);
@@ -100,6 +141,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Detergente adicionado ao carrinho.\n",qnt);
             vLimpeza += pDetergente * qnt;
+            vCar += pDetergente * qnt;
             menuLimpeza();
             break;
 
@@ -110,6 +152,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Sabao em po adicionado ao carrinho.\n",qnt);
             vLimpeza += pSabaopo * qnt;
+            vCar += pSabaopo * qnt;
             menuLimpeza();
             break;
 
@@ -120,6 +163,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Esponja adicionado ao carrinho.\n",qnt);
             vLimpeza += pEsponja * qnt;
+            vCar += pEsponja * qnt;
             menuLimpeza();
             break;
 
@@ -130,6 +174,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Amaciante adicionado ao carrinho.\n",qnt);
             vLimpeza += pAmaciante * qnt;
+            vCar += pAmaciante * qnt;
             menuLimpeza();
             break;
 
@@ -166,7 +211,7 @@ void menuLimpeza() // Funcao Menu Limpeza
     printf("24. Feijao Preto 1KG R$ 8,00\n");
     printf("25. Acucar 1KG       R$ 5,00\n");
     printf("26. Voltar ao menu principal\n");
-    printf("Carrinho alimentos: %.2f", vAlimento);
+    printf("Carrinho alimentos: %.2f R$", vAlimento);
     printf("\n");
 
     scanf("%d", &cAlimento);
@@ -179,6 +224,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Cafe adicionado ao carrinho.\n",qnt);
             vAlimento += pCafe * qnt;
+            vCar += pCafe * qnt;
             menuAlimento();
             break;
 
@@ -189,6 +235,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Leite adicionado ao carrinho.\n",qnt);
             vAlimento += pLeite * qnt;
+            vCar += pLeite * qnt;
             menuAlimento();
             break;
 
@@ -199,6 +246,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Arroz 1kg adicionado ao carrinho.\n",qnt);
             vAlimento += pArroz * qnt;
+            vCar += pArroz * qnt;
             menuAlimento();
             break;
 
@@ -209,6 +257,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Feijao preto 1kg adicionado ao carrinho.\n",qnt);
             vAlimento += pFeijaop * qnt;
+            vCar += pFeijaop * qnt;
             menuAlimento();
             break;
 
@@ -219,6 +268,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             scanf("%f", &qnt);
             printf("%.2f x Acucar 1kg adicionado ao carrinho.\n",qnt);
             vAlimento += pAcucar * qnt;
+            vCar += pAcucar * qnt;
             menuAlimento();
             break;
 
@@ -253,7 +303,7 @@ void menuPadaria() // Funcao Menu Padaria
     printf("33. Pao Frances und R$ 1,90\n");
     printf("34. Sonho           R$ 8,50\n");
     printf("35. Voltar ao menu principal\n");
-    printf("Carrinho padaria: %.2f", vPadaria);
+    printf("Carrinho padaria: %.2f R$ ", vPadaria);
     printf("\n");
 
     scanf("%d", &cPadaria);
@@ -266,6 +316,7 @@ void menuPadaria() // Funcao Menu Padaria
             scanf("%f", &qnt);
             printf("%.2f x Pao de Forma adicionado ao carrinho.\n",qnt);
             vPadaria += pPaoforma * qnt;
+            vCar += pPaoforma * qnt;
             menuPadaria();
             break;
 
@@ -276,6 +327,7 @@ void menuPadaria() // Funcao Menu Padaria
             scanf("%f", &qnt);
             printf("%.2f x Pao integral adicionado ao carrinho.\n",qnt);
             vPadaria += pPaointegral * qnt;
+            vCar += pPaointegral * qnt;
             menuPadaria();
             break;
 
@@ -286,6 +338,7 @@ void menuPadaria() // Funcao Menu Padaria
             scanf("%f", &qnt);
             printf("%.2f x Pao frances adicionado ao carrinho.\n",qnt);
             vPadaria += pPaofrances * qnt;
+            vCar += pPaofrances * qnt;
             menuPadaria();
             break;
 
@@ -296,6 +349,7 @@ void menuPadaria() // Funcao Menu Padaria
             scanf("%f", &qnt);
             printf("%.2f x Sonho adicionado ao carrinho.\n",qnt);
             vPadaria += pSonho * qnt;
+            vCar += pSonho * qnt;
             menuPadaria();
             break;
 
@@ -339,7 +393,7 @@ void menuPagamento() // Funcao Menu Pagamento
     switch(cPagamento){ // Switch case para verificar valor com desconto
         case 41:
             printf("\n");
-            printf("Valor total: %.2f\n",vTotal);
+            printf("Valor total: %.2f R$\n",vTotal);
 
             if (vTotal <= 50)
             {
@@ -366,14 +420,29 @@ void menuPagamento() // Funcao Menu Pagamento
             {
                 troco= valorCobrado- vTcdesconto;
                 totalDia= totalDia + vTcdesconto;  /* <----------- Soma do total diario */
+                system("cls");
+                printf("Processando pagamento.");
+                sleep(1);
+                system("cls");
+                printf("Processando pagamento..");
+                sleep(1);
+                system("cls");
+                printf("Processando pagamento...");
+                sleep(1);
+                system("cls");
+                printf("Processando pagamento....");
+                sleep(1);
+                system("cls");
                 printf("\n");
                 printf("Troco: %.2f R$\n", troco);
                 printf("Pagamento realizado com sucesso!\n");
+                sleep(3);
                 vLimpeza= 0;
                 vAlimento= 0;
                 vPadaria= 0;
                 descontoReal = 0;
                 fPagar= 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
+                vCar= 0;
                 break;
             }
             else if (valorCobrado == vTcdesconto)
@@ -574,6 +643,23 @@ switch (cAbertura){
       case 1:
       printf("Informe o valor: ");
       scanf("%f",&vAbertura);
+      system("cls");
+      printf("Validando abertura de caixa.");
+      sleep(1);
+      system("cls");
+      printf("Validando abertura de caixa..");
+      sleep(1);
+      system("cls");
+      printf("Validando abertura de caixa...");
+      sleep(1);
+      system("cls");
+      printf("Validando abertura de caixa....");
+      sleep(1);
+      system("cls");
+      printf("Caixa aberto com sucesso...\n");
+      sleep(1);
+      printf("Valor de abertura de caixa %.2f R$", vAbertura);
+      sleep(4);
       menuPrincipal();
       break;
       case 2:
@@ -585,4 +671,40 @@ switch (cAbertura){
       break;}
 
 }
+}
+
+void menuFechamento(){
+    int cFechamento = 0;
+    float vFechamentoD = 0;
+    float vFechamentoC = 0;
+    float vFechageral = 0;
+
+     printf("1 - Inserir valor de fechamento\n");
+     printf("2 - Cancelar\n");
+     scanf("%d",&cFechamento);
+     switch (cFechamento){
+            case 1:
+                printf("Informe valor em dinheiro: ");
+                scanf("%f",&vFechamentoD);
+                printf("\nInforme valor em cartao: ");
+                scanf("%f",&vFechamentoC);
+                vFechageral = vFechamentoD+ vFechamentoC+ vAbertura;
+                totalDia += vAbertura;
+                if (vFechageral >= totalDia ){
+                    printf("Caixa fechado  com sucesso\n");
+                    printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
+                    printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
+                    printf("Valor de abertura de caixa: %.2f R$\n", vAbertura);
+                    printf("Sistema finalizando em 5 segundos");
+                    sleep(5);
+                    exit(0);}
+            case 2:
+                menuPrincipal();
+                break;
+
+
+
+     }
+
+
 }
