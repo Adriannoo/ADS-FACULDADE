@@ -11,11 +11,9 @@ void menuAlimento(void); // Declaracoes das Funcoes
 void menuPadaria(void);
 void menuPagamento(void);
 void menufPagamento(void);
-void delay(int delayemSegundos){
-    int mili = 1000 * delayemSegundos;
-    clock_t comecoT = clock();
-    while (clock() < comecoT + mili);
-}
+void menuAbertura(void);
+void menuFechamento(void);
+
 
 float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =0; // Variaveis globais
 float fPagar;
@@ -25,97 +23,10 @@ int totalDetergente = 50, totalsabPo = 30, totalEsponja = 0, totalAmaciante = 20
 int totalCafe = 10, totalLeite = 15, totalArroz = 10, totalFeijao = 5, totalAcucar = 20, totalSal = 6, totalFarinha = 15;
 
 
-int main()
-{
-    menuPrincipal(); // Funcao Principal
-    return 0;
-}
-
-void menuPrincipal() //Funcao do Menu Principal
-{
-    int opcaoUm=0; // Variavel opcao do usuario
-
-    while (opcaoUm!=5)
-    {
-        system("cls");
-        printf("\n   <Menu Principal>\n"); //Print do Menu
-        printf("1. Material de Limpeza\n");
-        printf("2. Alimentos\n");
-        printf("3. Padaria\n");
-        printf("4. Pagamento\n");
-        printf("5. Abertura de caixa\n");
-        printf("6. Fechamento de caixa\n");
-        printf("7. Sair\n");
-        printf("Valor total carrinho: %.2f R$", vCar);
-
-        printf("\nValor total de vendas hoje: %.2f  R$ \n",totalDia); // Atualizacao do valor total das vendas
-        printf("\n");
-
-        scanf("%d", &opcaoUm);
-
-        switch(opcaoUm){ // Switch Case para as sessoes do mercadinho
-            case 1:
-                if(vAbertura <= 0){          // 47 até 51 === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                }
-                else{
-                menuLimpeza();
-                break;}
-            case 2:
-                    if(vAbertura <= 0){    // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                }
-                else{
-                menuAlimento();
-                break;}
-            case 3:
-                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                }
-                else{
-                menuPadaria();
-                break;}
-            case 4:
-                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                    }
-                else{
-                menuPagamento();
-                break;}
-            case 5:
-                menuAbertura();
-                break;
-            case 6:
-                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-
-                    menuPrincipal();
-                }
-                else{
-                menuFechamento();
-                break;}
-            case 7:
-                printf("Encerrando o sistema...");
-                exit (0);
-            default:
-                printf("Opcao invalida... Tente novamente\n");
-                menuPrincipal();
-    }
-  }
+void delay(int delayemSegundos){
+    int mili = 1000 * delayemSegundos;
+    clock_t comecoT = clock();
+    while (clock() < comecoT + mili);
 }
 
 void menuLimpeza() // Funcao Menu Limpeza
@@ -919,4 +830,97 @@ void menuFechamento() {
      }
 
 
+}
+
+int main()
+{
+    menuPrincipal(); // Funcao Principal
+    return 0;
+}
+
+void menuPrincipal() //Funcao do Menu Principal
+{
+    int opcaoUm=0; // Variavel opcao do usuario
+
+    while (opcaoUm!=5)
+    {
+        system("cls");
+        printf("\n   <Menu Principal>\n"); //Print do Menu
+        printf("1. Material de Limpeza\n");
+        printf("2. Alimentos\n");
+        printf("3. Padaria\n");
+        printf("4. Pagamento\n");
+        printf("5. Abertura de caixa\n");
+        printf("6. Fechamento de caixa\n");
+        printf("7. Sair\n");
+        printf("Valor total carrinho: %.2f R$", vCar);
+
+        printf("\nValor total de vendas hoje: %.2f  R$ \n",totalDia); // Atualizacao do valor total das vendas
+        printf("\n");
+
+        scanf("%d", &opcaoUm);
+
+        switch(opcaoUm){ // Switch Case para as sessoes do mercadinho
+            case 1:
+                if(vAbertura <= 0){          // 47 até 51 === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    delay(3);
+                    menuPrincipal();
+                }
+                else{
+                menuLimpeza();
+                break;}
+            case 2:
+                    if(vAbertura <= 0){    // VERIFICAÇÃO CAIXA ABERTO
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    delay(3);
+                    menuPrincipal();
+                }
+                else{
+                menuAlimento();
+                break;}
+            case 3:
+                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    delay(3);
+                    menuPrincipal();
+                }
+                else{
+                menuPadaria();
+                break;}
+            case 4:
+                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    delay(3);
+                    menuPrincipal();
+                    }
+                else{
+                menuPagamento();
+                break;}
+            case 5:
+                menuAbertura();
+                break;
+            case 6:
+                    if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
+                    system("cls");
+                    printf("O caixa esta fechado, abra para prosseguir...");
+                    delay(3);
+
+                    menuPrincipal();
+                }
+                else{
+                menuFechamento();
+                break;}
+            case 7:
+                printf("Encerrando o sistema...");
+                exit (0);
+            default:
+                printf("Opcao invalida... Tente novamente\n");
+                menuPrincipal();
+    }
+  }
 }
