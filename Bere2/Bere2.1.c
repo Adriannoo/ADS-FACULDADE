@@ -546,3 +546,5 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
             break;
     }
 }
+
+
