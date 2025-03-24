@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <math.h> //Bibliotecas
+#include <math.h> // Bibliotecas
 #include <stdlib.h>
 #include <time.h>
 #include <windows.h>
@@ -14,14 +14,12 @@ void menufPagamento(void);
 void menuAbertura(void);
 void menuFechamento(void);
 
-
 float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =0; // Variaveis globais
 float fPagar;
 float vCar = 0;
 float vAbertura = 0;
 int totalDetergente = 50, totalsabPo = 30, totalEsponja = 0, totalAmaciante = 20, totalBucha = 100, totalDesinfetante = 15, totalSabao = 60;
 int totalCafe = 10, totalLeite = 15, totalArroz = 10, totalFeijao = 5, totalAcucar = 20, totalSal = 6, totalFarinha = 15;
-
 
 void delay(int delayemSegundos){
     int mili = 1000 * delayemSegundos;
@@ -220,6 +218,7 @@ void menuLimpeza() // Funcao Menu Limpeza
             break;
         }
 }
+
 void menuAlimento() // Funcao Menu Alimentos
 {
     system("cls");
@@ -424,6 +423,7 @@ void menuAlimento() // Funcao Menu Alimentos
             break;
         }
 }
+
 void menuPadaria() // Funcao Menu Padaria
 {
     system("cls");
@@ -501,6 +501,7 @@ void menuPadaria() // Funcao Menu Padaria
             break;
     }
 }
+
 void menuPagamento() // Funcao Menu Pagamento
 {
     system("cls");
@@ -802,41 +803,32 @@ void menuFechamento() {
     float vFechamentoC = 0;
     float vFechageral = 0;
 
-     printf("1 - Inserir valor de fechamento\n");
-     printf("2 - Cancelar\n");
-     scanf("%d",&cFechamento);
-     switch (cFechamento){
-            case 1:
-                printf("Informe valor em dinheiro: ");
-                scanf("%f",&vFechamentoD);
-                printf("\nInforme valor em cartao: ");
-                scanf("%f",&vFechamentoC);
-                vFechageral = vFechamentoD+ vFechamentoC+ vAbertura;
-                totalDia += vAbertura;
-                if (vFechageral >= totalDia ){
-                    printf("Caixa fechado  com sucesso\n");
-                    printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
-                    printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
-                    printf("Valor de abertura de caixa: %.2f R$\n", vAbertura);
-                    printf("Sistema finalizando em 5 segundos");
-                    delay(5);
-                    exit(0);}
-            case 2:
-                menuPrincipal();
-                break;
-
-
-
+    printf("1 - Inserir valor de fechamento\n");
+    printf("2 - Cancelar\n");
+    scanf("%d",&cFechamento);
+    switch (cFechamento){
+        case 1:
+            printf("Informe valor em dinheiro: ");
+            scanf("%f",&vFechamentoD);
+            printf("\nInforme valor em cartao: ");
+            scanf("%f",&vFechamentoC);
+            vFechageral = vFechamentoD+ vFechamentoC+ vAbertura;
+            totalDia += vAbertura;
+            if (vFechageral >= totalDia ){
+                printf("Caixa fechado  com sucesso\n");
+                printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
+                printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
+                printf("Valor de abertura de caixa: %.2f R$\n", vAbertura);
+                printf("Sistema finalizando em 5 segundos");
+                delay(5);
+                exit(0);}
+        case 2:
+            menuPrincipal();
+            break;
      }
-
-
 }
 
-int main()
-{
-    menuPrincipal(); // Funcao Principal
-    return 0;
-}
+
 
 void menuPrincipal() //Funcao do Menu Principal
 {
@@ -923,4 +915,10 @@ void menuPrincipal() //Funcao do Menu Principal
                 menuPrincipal();
     }
   }
+}
+
+int main()
+{
+    menuPrincipal(); // Funcao Principal
+    return 0;
 }
