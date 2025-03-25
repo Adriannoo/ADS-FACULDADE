@@ -34,7 +34,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
     int opcaoUm=0; // Variavel opcao do usuario
 
-    while (opcaoUm!=5)
+    while (opcaoUm!=8)
     {
         system("cls");
         printf("\n   <Menu Principal>\n"); //Print do Menu
@@ -1080,7 +1080,12 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
             case 1:
                 printf("Informe o valor: ");
                 scanf("%f",&vAbertura);
-                system("cls");
+ 
+               while (vAbertura <=0){
+                printf ("\nErro.. digite um novo valor:\n");
+                scanf ("%f", &vAbertura);}
+
+               system("cls");
                 printf("Validando abertura de caixa.");
                 delay(1);
                 system("cls");
@@ -1181,6 +1186,7 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
 }
 
 void menuCancelar(){
+
     int cCancelar = 0;
 
     system("cls");
@@ -1190,6 +1196,7 @@ void menuCancelar(){
 
     scanf("%d",&cCancelar);
     system("cls");
+
 
     switch (cCancelar) {
     case 1:
