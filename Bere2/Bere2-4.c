@@ -1041,7 +1041,7 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
             case 1:
                 printf("Informe o valor: ");
                 scanf("%f",&vAbertura);
- 
+
                while (vAbertura <=0){
                 printf ("\nErro.. digite um novo valor:\n");
                 scanf ("%f", &vAbertura);}
