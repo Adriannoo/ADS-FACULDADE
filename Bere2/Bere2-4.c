@@ -1,3 +1,4 @@
+@ -0,0 +1,1143 @@
 #include <stdio.h>
 #include <math.h> //Bibliotecas
 #include <stdlib.h>
@@ -57,8 +58,11 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
         else if(vAbertura <= 0){
             system("cls");
-            printf("O caixa esta fechado, abra para prosseguir...");
-            delay(3);
+                printf("O caixa esta fechado, realize a abertura");
+                delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
             menuPrincipal();
 
         } else {
@@ -745,14 +749,11 @@ void menuPagamento() // Funcao Menu Pagamento
                 troco= valorCobrado- vTcdesconto;
                 totalDia= totalDia + vTcdesconto;  /* <----------- Soma do total diario */
                 system("cls");
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
-                system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...");
-                delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
                 printf("\nTroco: %.2f R$\n", troco);
                 printf("Pagamento realizado com sucesso!\n");
@@ -770,16 +771,12 @@ void menuPagamento() // Funcao Menu Pagamento
             {
                 totalDia = totalDia + vTcdesconto;
                 system("cls");
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...\n");
-                delay(1);
-                system("cls");
-
                 printf("Pagamento realizado com sucesso!\n");
                 delay(3);
                 vLimpeza = 0;
@@ -790,14 +787,11 @@ void menuPagamento() // Funcao Menu Pagamento
                 vCar = 0;/*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
                 break;
             } else {
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
-                system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...");
-                delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
                 printf("O valor integral sera cobrado!\n");
                 delay(4);
@@ -820,16 +814,12 @@ void menuPagamento() // Funcao Menu Pagamento
             if (cCartao == 51)
             {
                 system("cls");
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...");
-                delay(1);
-                system("cls");
-                printf("\n");
                 printf("Pagamento realizado com sucesso!\n");
                 delay(3);
                 totalDia = totalDia + vTotal; /* <----------- Soma do total di�rio */
@@ -838,14 +828,11 @@ void menuPagamento() // Funcao Menu Pagamento
             else if (cCartao == 52)
             {
                 system("cls");
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
-                system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...");
-                delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
                 printf("\nPagamento nao realizado!\n");
                 delay(3);
@@ -909,14 +896,11 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
                 totalDia = totalDia + fPagar;  /* <----------- Soma do total di�rio */
                 troco = valorCobrado - fPagar;
                 system("cls");
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
-                system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...");
-                delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
                 printf("\nTroco: %.2f R$\n", troco);
                 printf("Pagamento realizado com sucesso!\n\n");
@@ -934,14 +918,11 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
                 fPagar = fPagar - valorCobrado;
                 totalDia=  totalDia + valorCobrado;
                 system("cls");
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
-                system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...");
-                delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
                 printf("\nFalta pagar %.2f R$ \n\n", fPagar);
                 delay(3);
@@ -959,14 +940,11 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
             if (cCartao == 51)
             {
                 system("cls");
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
-                system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...");
-                delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
                 printf("\nPagamento realizado com sucesso!\n\n");
                 delay(3);
@@ -977,14 +955,11 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
             else if (cCartao == 52)
             {
                 system("cls");
-                printf("Processando pagamento.");
+                printf("Processando pagamento");
                 delay(1);
-                system("cls");
-                printf("Processando pagamento..");
-                delay(1);
-                system("cls");
-                printf("Processando pagamento...");
-                delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
                 printf("\nPagamento nao realizado!\n");
                 delay(3);
@@ -1047,16 +1022,13 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
                 scanf ("%f", &vAbertura);}
 
                system("cls");
-                printf("Validando abertura de caixa.");
+                printf("Validando abertura de caixa");
                 delay(1);
+                for ( int j = 0; j <= 2; j++){
+                printf(".");
+                delay(1);}
                 system("cls");
-                printf("Validando abertura de caixa..");
-                delay(1);
-                system("cls");
-                printf("Validando abertura de caixa...");
-                delay(1);
-                system("cls");
-                printf("Caixa aberto com sucesso...\n");
+                printf("Caixa aberto com sucesso!!!\n");
                 delay(1);
                 printf("Valor de abertura de caixa %.2f R$", vAbertura);
                 delay(2);
@@ -1079,14 +1051,11 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
 }
 
 void abrePadaria(){ // Funcao da Abertura da Padaria
-    printf("Abertura da Padaria.");
+    printf("Abertura padaria");
     delay(1);
-    system("cls");
-    printf("Abertura da Padaria..");
-    delay(1);
-    system("cls");
-    printf("Abertura da Padaria...");
-    delay(1);
+    for ( int j = 0; j <= 2; j++){
+    printf(".");
+    delay(1);}
     system("cls");
 
     printf("Digite o estoque de Pao de Forma (pacote): ");
@@ -1158,14 +1127,12 @@ void menuCancelar(){
     scanf("%d",&cCancelar);
     system("cls");
 
-
     switch (cCancelar) {
     case 1:
         vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar=0;
         printf("Venda cancelada com sucesso...\n");
         delay(3);
         menuPrincipal();
-
     case 2:
         menuPrincipal();
     }
