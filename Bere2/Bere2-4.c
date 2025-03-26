@@ -17,7 +17,7 @@ void menufPagamento(void);
 void abrePadaria(void);
 
 float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =0; // Variaveis globais
-float fPagar;
+float fPagar = 0;
 float vCar = 0;
 float vAbertura = 0;
 int totalDetergente = 50, totalsabPo = 30, totalEsponja = 0, totalAmaciante = 20, totalBucha = 100, totalDesinfetante = 15, totalSabao = 60;
@@ -48,89 +48,45 @@ void menuPrincipal(){ // Funcao do Menu Principal
         printf("8. Sair\n");
         printf("Valor total carrinho: %.2f R$", vCar);
 
-        printf("\nValor total de vendas hoje: %.2f  R$ \n",totalDia); // Atualizacao do valor total das vendas
-        printf("\n");
+        printf("\nValor total de vendas hoje: %.2f  R$ \n\n",totalDia); // Atualizacao do valor total das vendas
 
         scanf("%d", &opcaoUm);
 
-        switch(opcaoUm) { // Switch Case para as sessoes do mercadinho
-            case 1:
-                if(vAbertura <= 0){          // 47 até 51 === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                } else {
+        if(vAbertura <= 0){
+            system("cls");
+            printf("O caixa esta fechado, abra para prosseguir...");
+            delay(3);
+            menuPrincipal();
+        } else {
+            switch(opcaoUm) { // Switch Case para as sessoes do mercadinho
+                case 1: // 47 até 51 === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
                     menuLimpeza();
                     break;
-                }
-
-            case 2:
-                if(vAbertura <= 0) {    // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                } else {
+                case 2:
                     menuAlimento();
                     break;
-                }
-
-            case 3:
-                if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                } else {
+                case 3:
                     menuPadaria();
                     break;
-                }
-
-            case 4:
-                if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                } else {
+                case 4:
                     menuPagamento();
                     break;
-                }
-
-            case 5:
-                menuAbertura();
-                break;
-
-            case 6:
-                if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuPrincipal();
-                } else {
+                case 5:
+                    menuAbertura();
+                    break;
+                case 6:
                     menuFechamento();
                     break;
-                }
-
-            case 7:
-                if(vAbertura <= 0){  // VERIFICAÇÃO CAIXA ABERTO
-                    system("cls");
-                    printf("O caixa esta fechado, abra para prosseguir...");
-                    delay(3);
-                    menuCancelar();
-                } else {
+                case 7:
                     menuCancelar();
                     break;
-                }
-
-            case 8:
-                printf("Encerrando o sistema...");
-                exit (0);
-
-            default:
-                printf("Opcao invalida... Tente novamente\n");
-                menuPrincipal();
+                case 8:
+                    printf("Encerrando o sistema...");
+                    exit (0);
+                default:
+                    printf("Opcao invalida... Tente novamente\n");
+                    menuPrincipal();
+            }
         }
     }
 }
@@ -158,8 +114,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
     printf("16. Desinfetante (1Lt)          R$ 7.99    (%d) \n", totalDesinfetante);
     printf("17. Sabao em Barra (UND)         R$ 1.00    (%d) \n", totalSabao);
     printf("18. Voltar ao menu principal\n");
-    printf("Carrinho materiais de limpeza: %.2f", vLimpeza);
-    printf("\n");
+    printf("Carrinho materiais de limpeza: %.2f\n", vLimpeza);
 
     scanf("%d", &cLimpeza);
 
