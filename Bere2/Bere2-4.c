@@ -2,7 +2,6 @@
 #include <math.h> //Bibliotecas
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
 
 /* Funcoes e variaveis globais */
 void menuPrincipal(void);
@@ -52,11 +51,16 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
         scanf("%d", &opcaoUm);
 
-        if(vAbertura <= 0){
+        if (opcaoUm == 5) {
+          menuAbertura();
+        }
+
+        else if(vAbertura <= 0){
             system("cls");
             printf("O caixa esta fechado, abra para prosseguir...");
             delay(3);
             menuPrincipal();
+
         } else {
             switch(opcaoUm) { // Switch Case para as sessoes do mercadinho
                 case 1: // 47 até 51 === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
@@ -1019,12 +1023,14 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
     {
         system("cls");
         printf("Existe um caixa em aberto, finalize para realizar uma nova abertura\n");
-        for ( int i = 5; i != 0; i--){
+        for ( int i = 5; i != 0; i--) {
             printf("Retornando em %d segundos \n",i);
             delay(1);
         }
         menuPrincipal();
+
     } else {
+
         system("cls");
         printf("    <Abertura de caixa>\n");
         printf("1 - Inserir valor de abertura\n");
