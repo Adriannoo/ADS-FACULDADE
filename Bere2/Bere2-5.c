@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h> //Bibliotecas
 #include <stdlib.h>
 #include <time.h>
 
@@ -23,17 +22,42 @@ int totalDetergente = 50, totalsabPo = 30, totalEsponja = 0, totalAmaciante = 20
 int totalCafe = 10, totalLeite = 15, totalArroz = 10, totalFeijao = 5, totalAcucar = 20, totalSal = 6, totalFarinha = 15;
 int tpaoForma, tpaoIntegral, tpaoFrances, tSonho, tBiscoito, tpaoDoce, tSalgado;
 
+
 void delay(int delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
     int mili = 1000 * delayemSegundos;
     clock_t comecoT = clock();
     while (clock() < comecoT + mili);
 }
 
-void printaMenu(int escolhaMenu){
-    int menus[][];
-    if(escolhaMenu == 0){ // Menu principal.
+/*
+        printf("\n   <Menu Principal>\n"); //Print do Menu
+        printf("1. Material de Limpeza\n");
+        printf("2. Alimentos\n");
+        printf("3. Padaria\n");
+        printf("4. Pagamento\n");
+        printf("5. Abertura de caixa\n");
+        printf("6. Fechamento de caixa\n");
+        printf("7. Cancelar venda\n");
+        printf("8. Sair\n");
+        printf("Valor total carrinho: %.2f R$", vCar);
+        */
 
-        printf
+void printMenu(int escolhaMenu){
+    if(escolhaMenu == 0){ // Menu principal.
+        const char* printMenuPrincipal[] =
+            {
+            "|================================================|\n",
+            "|\t\tMercado Dona Bere\t\t|\n",
+            "|================================================|\n",
+            "|\t -------- Menu Principal --------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            "| Cod: 1  - Material de Limpeza\t\t\t|\n"
+
+            };
+        int tamanho = sizeof(printMenuPrincipal) / sizeof(printMenuPrincipal[0]); // Tamanho do Array.
+        for(int i = 0 ; i < tamanho ; i++) {
+            printf("%s", printMenuPrincipal[i]);
+        }
     }
 
     if(escolhaMenu == 2){
@@ -52,6 +76,8 @@ void menuPrincipal(){ // Funcao do Menu Principal
     while (opcaoUm!=8)
     {
         system("cls");
+        printMenu(0);
+        /*
         printf("\n   <Menu Principal>\n"); //Print do Menu
         printf("1. Material de Limpeza\n");
         printf("2. Alimentos\n");
@@ -62,6 +88,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
         printf("7. Cancelar venda\n");
         printf("8. Sair\n");
         printf("Valor total carrinho: %.2f R$", vCar);
+        */
 
         printf("\nValor total de vendas hoje: %.2f  R$ \n\n",totalDia); // Atualizacao do valor total das vendas
 
