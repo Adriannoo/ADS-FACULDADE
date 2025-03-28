@@ -14,7 +14,7 @@ void menuCancelar(void);
 void menufPagamento(void);
 void abrePadaria(void);
 
-float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =0; // Variaveis globais
+float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia = 0; // Variaveis globais
 float fPagar = 0;
 float vCar = 0;
 float vAbertura = 0;
@@ -29,42 +29,39 @@ void delay(int delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>"
     while (clock() < comecoT + mili);
 }
 
-/*
-        printf("\n   <Menu Principal>\n"); //Print do Menu
-        printf("1. Material de Limpeza\n");
-        printf("2. Alimentos\n");
-        printf("3. Padaria\n");
-        printf("4. Pagamento\n");
-        printf("5. Abertura de caixa\n");
-        printf("6. Fechamento de caixa\n");
-        printf("7. Cancelar venda\n");
-        printf("8. Sair\n");
-        printf("Valor total carrinho: %.2f R$", vCar);
-        */
-
 void printMenu(int escolhaMenu){
-    if(escolhaMenu == 0){ // Menu principal.
-        const char* printMenuPrincipal[] =
-            {
-            "|================================================|\n",
+    system("cls");
+    if(escolhaMenu == 0) { // 0 == Menu principal.
+        const char* printMenuPrincipal[] = {
+            "|===============================================|\n",
             "|\t\tMercado Dona Bere\t\t|\n",
-            "|================================================|\n",
+            "|===============================================|\n",
             "|\t -------- Menu Principal --------\t|\n",
-            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "| Cod: 1  - Material de Limpeza\t\t\t|\n"
-
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            "| Cod: 1  - Menu de Materias de Limpeza\t\t|\n",
+            "| Cod: 2  - Menu de Alimentos\t\t\t|\n",
+            "| Cod: 3  - Menu da Padaria\t\t\t|\n",
+            "|...............................................|\n",
+            "| Cod: 4  - Menu de Pagamento \t\t\t|\n",
+            "| Cod: 5  - Abertura de Caixa \t\t\t|\n",
+            "| Cod: 6  - Fechamento de Caixa \t\t|\n",
+            "| Cod: 7  - Cancelar Venda \t\t\t|\n",
+            "| Cod: 8  - Sair do Programa\t\t\t|\n",
+            "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+|\n"
             };
-        int tamanho = sizeof(printMenuPrincipal) / sizeof(printMenuPrincipal[0]); // Tamanho do Array.
+        int const tamanho = sizeof(printMenuPrincipal) / sizeof(printMenuPrincipal[0]); // Tamanho do Array.
         for(int i = 0 ; i < tamanho ; i++) {
             printf("%s", printMenuPrincipal[i]);
         }
+    }            
+
+    if(escolhaMenu == 1){
+        const char* printMenuLimpeza[] = {
+
+        };
     }
 
-    if(escolhaMenu == 2){
-
-    }
-
-    if(escolhaMenu == 1) {
+    if(escolhaMenu == 2) {
 
     }
 }
@@ -75,30 +72,18 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
     while (opcaoUm!=8)
     {
-        system("cls");
         printMenu(0);
-        /*
-        printf("\n   <Menu Principal>\n"); //Print do Menu
-        printf("1. Material de Limpeza\n");
-        printf("2. Alimentos\n");
-        printf("3. Padaria\n");
-        printf("4. Pagamento\n");
-        printf("5. Abertura de caixa\n");
-        printf("6. Fechamento de caixa\n");
-        printf("7. Cancelar venda\n");
-        printf("8. Sair\n");
-        printf("Valor total carrinho: %.2f R$", vCar);
-        */
 
-        printf("\nValor total de vendas hoje: %.2f  R$ \n\n",totalDia); // Atualizacao do valor total das vendas
-
+        printf("| Valor total de vendas hoje: R$ %.2f \t\t|\n",totalDia); // Atualizacao do valor total das vendas
+        printf("|===============================================|\n");
+        printf("Opcao..:  ");
         scanf("%d", &opcaoUm);
 
         if (opcaoUm == 5) {
           menuAbertura();
         }
 
-        else if(vAbertura <= 0){
+        else if(vAbertura <= 0) {
             system("cls");
                 printf("O caixa esta fechado, realize a abertura");
                 delay(1);
