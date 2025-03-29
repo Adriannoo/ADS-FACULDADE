@@ -22,11 +22,15 @@ int totalDetergente = 50, totalsabPo = 30, totalEsponja = 0, totalAmaciante = 20
 int totalCafe = 10, totalLeite = 15, totalArroz = 10, totalFeijao = 5, totalAcucar = 20, totalSal = 6, totalFarinha = 15;
 int tpaoForma, tpaoIntegral, tpaoFrances, tSonho, tBiscoito, tpaoDoce, tSalgado;
 
-
 void delay(int delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
     int mili = 1000 * delayemSegundos;
     clock_t comecoT = clock();
     while (clock() < comecoT + mili);
+}
+
+int pegaTamanho(const int array[]) {
+    int tamanho = sizeof(array) * 2;
+    return tamanho;
 }
 
 void printMenu(int escolhaMenu){
@@ -49,16 +53,32 @@ void printMenu(int escolhaMenu){
             "| Cod: 8  - Sair do Programa\t\t\t|\n",
             "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+|\n"
             };
-        int const tamanho = sizeof(printMenuPrincipal) / sizeof(printMenuPrincipal[0]); // Tamanho do Array.
-        for(int i = 0 ; i < tamanho ; i++) {
+        int const tamanhoPrincipal = pegaTamanho(printMenuPrincipal); // Tamanho do Array.
+        printf("%d", tamanhoPrincipal);
+        for(int i = 0 ; i < tamanhoPrincipal ; i++) {
             printf("%s", printMenuPrincipal[i]);
         }
     }            
 
     if(escolhaMenu == 1){
         const char* printMenuLimpeza[] = {
-
+            "|===============================================|\n",
+            "|\t\tMercado Dona Bere\t\t|\n",
+            "|===============================================|\n",
+            "|\t -------- Menu Principal --------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            "| Cod: 1  - Menu de Materias de Limpeza\t\t|\n",
+            "| Cod: 2  - Menu de Alimentos\t\t\t|\n",
+            "| Cod: 3  - Menu da Padaria\t\t\t|\n",
+            "|...............................................|\n",
+            "| Cod: 4  - Menu de Pagamento \t\t\t|\n",
+            "| Cod: 5  - Abertura de Caixa \t\t\t|\n",
+            "| Cod: 6  - Fechamento de Caixa \t\t|\n",
+            "| Cod: 7  - Cancelar Venda \t\t\t|\n",
+            "| Cod: 8  - Sair do Programa\t\t\t|\n",
+            "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+|\n"
         };
+        int const tamanhoLimpeza;
     }
 
     if(escolhaMenu == 2) {
