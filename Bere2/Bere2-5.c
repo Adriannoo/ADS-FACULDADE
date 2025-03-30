@@ -28,8 +28,11 @@ void delay(int delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>"
     while (clock() < comecoT + mili);
 }
 
-int pegaTamanho(const int array[]) {
-    int tamanho = sizeof(array) * 2;
+int pegaTamanho(char* array[]) {
+    int tamanho = 0;
+    while (array[tamanho] != NULL) {
+        tamanho++;
+    }
     return tamanho;
 }
 
@@ -37,7 +40,7 @@ void printMenu(int escolhaMenu){
     system("cls");
     if(escolhaMenu == 0) { // 0 == Menu principal.
         const char* printMenuPrincipal[] = {
-            "|===============================================|\n",
+            "|=======================================================|\n",
             "|\t\tMercado Dona Bere\t\t|\n",
             "|===============================================|\n",
             "|\t -------- Menu Principal --------\t|\n",
@@ -51,38 +54,45 @@ void printMenu(int escolhaMenu){
             "| Cod: 6  - Fechamento de Caixa \t\t|\n",
             "| Cod: 7  - Cancelar Venda \t\t\t|\n",
             "| Cod: 8  - Sair do Programa\t\t\t|\n",
-            "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+|\n"
-            };
-        int const tamanhoPrincipal = pegaTamanho(printMenuPrincipal); // Tamanho do Array.
-        printf("%d", tamanhoPrincipal);
-        for(int i = 0 ; i < tamanhoPrincipal ; i++) {
+            "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+|\n",
+            NULL // Finaliza o Array de Strings
+            };// Tamanho do Array.
+        for(int i = 0 ; i < pegaTamanho(menuPrincipal) ; i++) {
             printf("%s", printMenuPrincipal[i]);
         }
-    }            
-
-    if(escolhaMenu == 1){
-        const char* printMenuLimpeza[] = {
-            "|===============================================|\n",
-            "|\t\tMercado Dona Bere\t\t|\n",
-            "|===============================================|\n",
-            "|\t -------- Menu Principal --------\t|\n",
-            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "| Cod: 1  - Menu de Materias de Limpeza\t\t|\n",
-            "| Cod: 2  - Menu de Alimentos\t\t\t|\n",
-            "| Cod: 3  - Menu da Padaria\t\t\t|\n",
-            "|...............................................|\n",
-            "| Cod: 4  - Menu de Pagamento \t\t\t|\n",
-            "| Cod: 5  - Abertura de Caixa \t\t\t|\n",
-            "| Cod: 6  - Fechamento de Caixa \t\t|\n",
-            "| Cod: 7  - Cancelar Venda \t\t\t|\n",
-            "| Cod: 8  - Sair do Programa\t\t\t|\n",
-            "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+|\n"
-        };
-        int const tamanhoLimpeza;
     }
 
-    if(escolhaMenu == 2) {
+    if (escolhaMenu == 1) { // 1 == Menu Limpeza.
 
+        /*
+        printf("  <Material de limpeza>\n");
+        printf("11. Detergente                  R$ 1,99    (%d) \n", totalDetergente);
+        printf("12. Sabao em po 1kg             R$ 8,99    (%d) \n", totalsabPo);
+        printf("13. Esponja                     R$ 1,50    (%d) \n", totalEsponja);
+        printf("14. Amaciante 1lt               R$ 15,00   (%d) \n", totalAmaciante);   // Menu Limpeza
+        printf("15. Bucha de Pia (Kit c/3)      R$ 4.99    (%d) \n", totalBucha);
+        printf("16. Desinfetante (1Lt)          R$ 7.99    (%d) \n", totalDesinfetante);
+        printf("17. Sabao em Barra (UND)         R$ 1.00    (%d) \n", totalSabao);
+        printf("18. Voltar ao menu principal\n");
+        printf("Carrinho materiais de limpeza: %.2f\n", vLimpeza);
+        */
+
+        const char* printMenuLimpeza[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|\t------------ Menu de Limpeza ------------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            NULL // Finaliza o Array de Strings
+        };
+        for (int i = 0; i < pegaTamanho(printMenuLimpeza); i++) {
+            printf("%s", printMenuLimpeza[i]);
+        }
+        printf("|   Cod: 11 - Detergente\t\t R$ 1,99  (%d)\t|\n", totalDetergente);
+        printf("|   Cod: 12 - Sabao em Po 1kg\t\t R$ 8,99  (%d)\t|\n", totalsabPo);
+        printf("|   Cod: 13 - Esponja\t\t\t R$ 1,50  (%d)\t|\n", totalEsponja);
+        printf("|   Cod: 14 - Amaciante 1lt\t\t R$ 15,00 (%d)\t|\n", totalAmaciante);
+        printf("|   Cod: 15 - Bucha de Pia (Kit c/3)\t R$ 4,99  (%d)\t|\n", totalBucha);
     }
 }
 
@@ -92,7 +102,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
     while (opcaoUm!=8)
     {
-        printMenu(0);
+        printMenu(1);
 
         printf("| Valor total de vendas hoje: R$ %.2f \t\t|\n",totalDia); // Atualizacao do valor total das vendas
         printf("|===============================================|\n");
@@ -106,10 +116,10 @@ void menuPrincipal(){ // Funcao do Menu Principal
         else if(vAbertura <= 0) {
             system("cls");
                 printf("O caixa esta fechado, realize a abertura");
-                delay(1);
+                delay(0.5);
                 for ( int j = 0; j <= 2; j++){
                     printf(".");
-                    delay(1);
+                    delay(0.5);
                 }
             menuPrincipal();
 
@@ -160,7 +170,9 @@ void menuLimpeza(){ // Funcao Menu Limpeza
     pSabao = 1.00;
     pDesinfetante = 7.99;
 
-    system("cls"); //Funcao de limpar tela (CLEAR SYSTEM)
+    printMenu(1);
+
+    // system("cls"); //Funcao de limpar tela (CLEAR SYSTEM)
     printf("  <Material de limpeza>\n");
     printf("11. Detergente                  R$ 1,99    (%d) \n", totalDetergente);
     printf("12. Sabao em po 1kg             R$ 8,99    (%d) \n", totalsabPo);
@@ -1108,10 +1120,10 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
 
 void abrePadaria(){ // Funcao da Abertura da Padaria
     printf("Abertura padaria");
-    delay(1);
+    delay(0.5);
     for ( int j = 0; j <= 2; j++){
     printf(".");
-    delay(1);}
+    delay(0.5);}
     system("cls");
 
     printf("Digite o estoque de Pao de Forma (pacote): ");
