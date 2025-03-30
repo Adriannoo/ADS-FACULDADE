@@ -21,6 +21,13 @@ float vAbertura = 0;
 int totalDetergente = 50, totalsabPo = 30, totalEsponja = 0, totalAmaciante = 20, totalBucha = 100, totalDesinfetante = 15, totalSabao = 60;
 int totalCafe = 10, totalLeite = 15, totalArroz = 10, totalFeijao = 5, totalAcucar = 20, totalSal = 6, totalFarinha = 15;
 int tpaoForma, tpaoIntegral, tpaoFrances, tSonho, tBiscoito, tpaoDoce, tSalgado;
+/* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
+float precosLimpeza[6] =
+     {1.99, 8.99, 15.00, 4.99, 7.99, 1.00};
+float precosPadaria[7] =
+     {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
+float precosAlimentos[7] =
+     {19.99, 5.90, 4.50, 8.00, 5.00, 2.00, 5.00};
 
 void delay(int delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
     int mili = 1000 * delayemSegundos;
@@ -158,11 +165,8 @@ void menuPrincipal(){ // Funcao do Menu Principal
 }
 
 void menuLimpeza(){ // Funcao Menu Limpeza
+
     int cLimpeza; // Opcao do usuario
-    /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
-    /* LIMPEZA */
-    float precosLimpeza[6] =
-     {1.99, 8.99, 15.00, 4.99, 7.99, 1.00};
     float qnt;
 
     //printMenu(1);
@@ -351,10 +355,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 }
 
 void menuAlimento(){ // Funcao Menu Alimentos
-        /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
-    /* Alimento */
-    float precosAlimentos[7] =
-     {19.99, 5.90, 4.50, 8.00, 5.00, 2.00, 5.00};
+
     int cAlimento;
     float qnt;
 
@@ -549,10 +550,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
 }
 
 void menuPadaria(){ // Funcao Menu Padaria
-            /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
-    /* Alimento */
-    float precosPadaria[7] =
-     {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
+
     int cPadaria;
     float qnt;
 
