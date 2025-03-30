@@ -36,7 +36,7 @@ int pegaTamanho(char* array[]) {
     return tamanho;
 }
 
-void printMenu(int escolhaMenu){
+/*void printMenu(int escolhaMenu){
     system("cls");
     if(escolhaMenu == 0) { // 0 == Menu principal.
         const char* printMenuPrincipal[] = {
@@ -77,7 +77,7 @@ void printMenu(int escolhaMenu){
         printf("Carrinho materiais de limpeza: %.2f\n", vLimpeza);
         */
 
-        const char* printMenuLimpeza[] = {
+ /*       const char* printMenuLimpeza[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
             "|=======================================================|\n",
@@ -94,7 +94,7 @@ void printMenu(int escolhaMenu){
         printf("|   Cod: 14 - Amaciante 1lt\t\t R$ 15,00 (%d)\t|\n", totalAmaciante);
         printf("|   Cod: 15 - Bucha de Pia (Kit c/3)\t R$ 4,99  (%d)\t|\n", totalBucha);
     }
-}
+}*/
 
 void menuPrincipal(){ // Funcao do Menu Principal
 
@@ -102,7 +102,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
     while (opcaoUm!=8)
     {
-        printMenu(1);
+       // printMenu(1);
 
         printf("| Valor total de vendas hoje: R$ %.2f \t\t|\n",totalDia); // Atualizacao do valor total das vendas
         printf("|===============================================|\n");
@@ -159,18 +159,13 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
 void menuLimpeza(){ // Funcao Menu Limpeza
     int cLimpeza; // Opcao do usuario
-    float pDetergente, pSabaopo, pAmaciante, pBucha, pSabao, pDesinfetante; /* <<< PRODUTOS DE LIMPEZA */
+    /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
+    /* LIMPEZA */
+    float precosLimpeza[6] =
+     {1.99, 8.99, 15.00, 4.99, 7.99, 1.00};
     float qnt;
-        /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
-            /* LIMPEZA */
-    pDetergente = 1.99;
-    pSabaopo = 8.99;
-    pAmaciante = 15.00; // Valores dos produtos
-    pBucha = 4.99;
-    pSabao = 1.00;
-    pDesinfetante = 7.99;
 
-    printMenu(1);
+    //printMenu(1);
 
     // system("cls"); //Funcao de limpar tela (CLEAR SYSTEM)
     printf("  <Material de limpeza>\n");
@@ -184,11 +179,12 @@ void menuLimpeza(){ // Funcao Menu Limpeza
     printf("18. Voltar ao menu principal\n");
     printf("Carrinho materiais de limpeza: %.2f\n", vLimpeza);
 
+    printf("Selecione uma opcao\n");
     scanf("%d", &cLimpeza);
 
     switch(cLimpeza){ // Switch case para selecao dos produtos
         case 11:    /*<----- DETERGENTE */
-            printf("\nDetergente: \n");
+            printf("\nDetergente \n");
             if (totalDetergente == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
@@ -205,13 +201,13 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             printf("%.2f x Detergente adicionado ao carrinho.\n",qnt);
             delay(3);
             totalDetergente = totalDetergente - qnt;
-            vLimpeza += pDetergente * qnt;
-            vCar += pDetergente * qnt;
+            vLimpeza += precosLimpeza[0] * qnt;
+            vCar += precosLimpeza[0] * qnt;
             menuLimpeza();
             break;
 
         case 12:    /*<----- SABAO EM PO */
-            printf("\nSabao em po: \n");
+            printf("\nSabao em po \n");
             if (totalsabPo == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
@@ -230,20 +226,20 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             printf("%.2f x Sabao em po adicionado ao carrinho.\n",qnt);
             delay(3);
             totalsabPo = totalsabPo - qnt;
-            vLimpeza += pSabaopo * qnt;
-            vCar += pSabaopo * qnt;
+            vLimpeza += precosLimpeza[1] * qnt;
+            vCar += precosLimpeza[1] * qnt;
             menuLimpeza();
             break;
 
         case 13:    /*<----- ESPONJA*/
-            printf("\nEsponja: \n");
+            printf("\nEsponja \n");
             printf("Infelizmente o item nao registra estoque, digite um novo item\n");
             delay(3);
             menuLimpeza();
             break;
 
         case 14:    /*<----- AMACIANTE*/
-            printf("\nAmaciante: \n");
+            printf("\nAmaciante \n");
             if (totalAmaciante == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
@@ -261,13 +257,13 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             printf("%.2f x Amaciante adicionado ao carrinho.\n",qnt);
             delay(3);
             totalAmaciante = totalAmaciante - qnt;
-            vLimpeza += pAmaciante * qnt;
-            vCar += pAmaciante * qnt;
+            vLimpeza += precosLimpeza[2] * qnt;
+            vCar += precosLimpeza[2] * qnt;
             menuLimpeza();
             break;
 
         case 15:    /*<----- BUCHA DE PIA*/
-            printf("Bucha de Pia (Kit c/3): \n");
+            printf("Bucha de Pia (Kit c/3) \n");
             if (totalBucha == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
@@ -285,14 +281,14 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             printf("%.2f x Bucha de Pia adicionada ao carrinho.\n",qnt);
             delay(3);
             totalBucha = totalBucha - qnt;
-            vLimpeza += pBucha * qnt;
-            vCar += pBucha * qnt;
+            vLimpeza += precosLimpeza[3] * qnt;
+            vCar += precosLimpeza[3] * qnt;
             menuLimpeza();
             break;
 
         case 16:    /*<----- DESINFETANTE*/
             printf("\n");
-            printf("Desinfetante (1LT): \n");
+            printf("Desinfetante (1LT) \n");
             if (totalDesinfetante == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
@@ -311,14 +307,14 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             printf("%.2f x Desinfetante adicionado ao carrinho.\n",qnt);
             delay(3);
             totalDesinfetante = totalDesinfetante - qnt;
-            vLimpeza += pDesinfetante * qnt;
-            vCar += pDesinfetante * qnt;
+            vLimpeza += precosLimpeza[4] * qnt;
+            vCar += precosLimpeza[4] * qnt;
             menuLimpeza();
             break;
 
         case 17:    /*<----- SABAO EM BARRA*/
             printf("\n");
-            printf("Sabao em Barra (UN): \n");
+            printf("Sabao em Barra (UN) \n");
             if (totalSabao == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
@@ -335,8 +331,8 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             printf("%.2f x Sabao em Barra adicionado ao carrinho.\n",qnt);
             delay(3);
             totalSabao = totalSabao - qnt;
-            vLimpeza += pSabao * qnt;
-            vCar += pSabao * qnt;
+            vLimpeza += precosLimpeza[5] * qnt;
+            vCar += precosLimpeza[5] * qnt;
             menuLimpeza();
             break;
 
@@ -355,17 +351,13 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 }
 
 void menuAlimento(){ // Funcao Menu Alimentos
+        /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
+    /* Alimento */
+    float precosAlimentos[7] =
+     {19.99, 5.90, 4.50, 8.00, 5.00, 2.00, 5.00};
     int cAlimento;
-    float pCafe, pFeijaop, pAcucar, pLeite, pArroz, pSal, pFarinha; /* <<< ALIMENTOS */
     float qnt;
-            /* ALIMENTOS */
-    pCafe = 19.99;
-    pLeite = 5.90;
-    pArroz = 4.50; // Valores dos produtos
-    pFeijaop = 8.00;
-    pAcucar = 5.00;
-    pSal = 2.00;
-    pFarinha = 5.00;
+
 
     system("cls");
     printf("   <Alimentos>\n");
@@ -379,6 +371,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
     printf("28. Voltar ao menu principal\n");
     printf("Carrinho alimentos: %.2f\n", vAlimento);
 
+    printf("Selecione uma opcao\n");
     scanf("%d", &cAlimento);
 
     switch(cAlimento){ // Switch case para selecao dos produtos
@@ -400,8 +393,8 @@ void menuAlimento(){ // Funcao Menu Alimentos
             printf("%.2f x Cafe adicionado ao carrinho.\n",qnt);
             delay(3);
             totalCafe = totalCafe - qnt;
-            vAlimento += pCafe * qnt;
-            vCar += pCafe * qnt;
+            vAlimento += precosAlimentos[0] * qnt;
+            vCar += precosAlimentos[0] * qnt;
             menuAlimento();
             break;
 
@@ -424,8 +417,8 @@ void menuAlimento(){ // Funcao Menu Alimentos
             printf("%.2f x Leite adicionado ao carrinho.\n",qnt);
             delay(3);
             totalLeite = totalLeite - qnt;
-            vAlimento += pLeite * qnt;
-            vCar += pLeite * qnt;
+            vAlimento += precosAlimentos[1] * qnt;
+            vCar += precosAlimentos[1] * qnt;
             menuAlimento();
             break;
 
@@ -447,8 +440,8 @@ void menuAlimento(){ // Funcao Menu Alimentos
             printf("%.2f x Arroz 1kg adicionado ao carrinho.\n",qnt);
             delay(3);
             totalArroz = totalArroz - qnt;
-            vAlimento += pArroz * qnt;
-            vCar += pArroz * qnt;
+            vAlimento += precosAlimentos[2] * qnt;
+            vCar += precosAlimentos[2] * qnt;
             menuAlimento();
             break;
 
@@ -470,8 +463,8 @@ void menuAlimento(){ // Funcao Menu Alimentos
             printf("%.2f x Feijao preto 1kg adicionado ao carrinho.\n",qnt);
             delay(3);
             totalFeijao = totalFeijao - qnt;
-            vAlimento += pFeijaop * qnt;
-            vCar += pFeijaop * qnt;
+            vAlimento += precosAlimentos[3] * qnt;
+            vCar += precosAlimentos[3] * qnt;
             menuAlimento();
             break;
 
@@ -493,8 +486,8 @@ void menuAlimento(){ // Funcao Menu Alimentos
             printf("%.2f x Acucar 1kg adicionado ao carrinho.\n",qnt);
             delay(3);
             totalAcucar = totalAcucar - qnt;
-            vAlimento += pAcucar * qnt;
-            vCar += pAcucar * qnt;
+            vAlimento += precosAlimentos[4] * qnt;
+            vCar += precosAlimentos[4] * qnt;
             menuAlimento();
             break;
 
@@ -516,8 +509,8 @@ void menuAlimento(){ // Funcao Menu Alimentos
             printf("%.2f x Sal 1kg adicionado ao carrinho.\n",qnt);
             delay(3);
             totalSal = totalSal - qnt;
-            vAlimento += pSal * qnt;
-            vCar += pSal * qnt;
+            vAlimento += precosAlimentos[5] * qnt;
+            vCar += precosAlimentos[5] * qnt;
             menuAlimento();
             break;
 
@@ -539,8 +532,8 @@ void menuAlimento(){ // Funcao Menu Alimentos
             printf("%.2f x Farinha de Trigo 1kg adicionada ao carrinho.\n",qnt);
             delay(3);
             totalFarinha = totalFarinha - qnt;
-            vAlimento += pFarinha * qnt;
-            vCar += pFarinha * qnt;
+            vAlimento += precosAlimentos[6] * qnt;
+            vCar += precosAlimentos[6] * qnt;
             menuAlimento();
             break;
 
@@ -556,17 +549,12 @@ void menuAlimento(){ // Funcao Menu Alimentos
 }
 
 void menuPadaria(){ // Funcao Menu Padaria
+            /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
+    /* Alimento */
+    float precosPadaria[7] =
+     {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
     int cPadaria;
-    float pPaoforma, pPaointegral, pSonho, pPaofrances, pBiscoito, pPaodoce, pSalgado; /* <<< PADARIA */
     float qnt;
-    /* PADARIA */
-    pPaoforma = 9.50;
-    pPaointegral = 12.50; // Valores dos produtos
-    pPaofrances = 1.90;
-    pSonho = 8.50;
-    pBiscoito = 12.50;
-    pPaodoce = 2.50;
-    pSalgado = 17.50;
 
     system("cls");
     printf("        <Padaria>  \n");
@@ -581,6 +569,7 @@ void menuPadaria(){ // Funcao Menu Padaria
     printf("Carrinho padaria: %.2f", vPadaria);
     printf("\n");
 
+    printf("Selecione uma opcao\n");
     scanf("%d", &cPadaria);
 
     switch(cPadaria){ // Switch case para selecao dos protudos
@@ -602,8 +591,8 @@ void menuPadaria(){ // Funcao Menu Padaria
             printf("%.2f x Pao de Forma adicionado ao carrinho.\n",qnt);
             delay(2);
             tpaoForma = tpaoForma - qnt;
-            vPadaria += pPaoforma * qnt;
-            vCar += pPaoforma * qnt;
+            vPadaria += precosPadaria[0] * qnt;
+            vCar += precosPadaria[0] * qnt;
             menuPadaria();
             break;
 
@@ -625,8 +614,8 @@ void menuPadaria(){ // Funcao Menu Padaria
             printf("%.2f x Pao integral adicionado ao carrinho.\n",qnt);
             delay(2);
             tpaoIntegral = tpaoIntegral - qnt;
-            vPadaria += pPaointegral * qnt;
-            vCar += pPaointegral * qnt;
+            vPadaria += precosPadaria[1] * qnt;
+            vCar += precosPadaria[1] * qnt;
             menuPadaria();
             break;
 
@@ -648,8 +637,8 @@ void menuPadaria(){ // Funcao Menu Padaria
             printf("%.2f x Pao frances adicionado ao carrinho.\n",qnt);
             delay(2);
             tpaoFrances = tpaoFrances - qnt;
-            vPadaria += pPaofrances * qnt;
-            vCar += pPaofrances * qnt;
+            vPadaria += precosPadaria[2] * qnt;
+            vCar += precosPadaria[2] * qnt;
             menuPadaria();
             break;
 
@@ -671,8 +660,8 @@ void menuPadaria(){ // Funcao Menu Padaria
             printf("%.2f x Sonho adicionado ao carrinho.\n",qnt);
             delay(2);
             tSonho = tSonho - qnt;
-            vPadaria += pSonho * qnt;
-            vCar += pSonho * qnt;
+            vPadaria += precosPadaria[3] * qnt;
+            vCar += precosPadaria[3] * qnt;
             menuPadaria();
             break;
 
@@ -694,8 +683,8 @@ void menuPadaria(){ // Funcao Menu Padaria
             printf("%.2f x Biscoito adicionado ao carrinho.\n",qnt);
             delay(2);
             tBiscoito = tBiscoito - qnt;
-            vPadaria += pBiscoito * qnt;
-            vCar += pBiscoito * qnt;
+            vPadaria += precosPadaria[4] * qnt;
+            vCar += precosPadaria[4] * qnt;
             menuPadaria();
             break;
 
@@ -717,8 +706,8 @@ void menuPadaria(){ // Funcao Menu Padaria
             printf("%.2f x Pao Doce adicionado ao carrinho.\n",qnt);
             delay(2);
             tpaoDoce = tpaoDoce - qnt;
-            vPadaria += pPaodoce * qnt;
-            vCar += pPaodoce * qnt;
+            vPadaria += precosPadaria[5] * qnt;
+            vCar += precosPadaria[5] * qnt;
             menuPadaria();
             break;
 
@@ -740,8 +729,8 @@ void menuPadaria(){ // Funcao Menu Padaria
             printf("%.2f x Salgado adicionado ao carrinho.\n",qnt);
             delay(2);
             tSalgado = tSalgado - qnt;
-            vPadaria += pSalgado * qnt;
-            vCar += pSalgado * qnt;
+            vPadaria += precosPadaria[6] * qnt;
+            vCar += precosPadaria[6] * qnt;
             menuPadaria();
             break;
 
