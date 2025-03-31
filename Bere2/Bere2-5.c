@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-/* Funcoes e variaveis globais */
+/* Funcoes e variaveis globais *///
 void menuPrincipal(void);
 void menuLimpeza(void);
 void menuAlimento(void); // Declaracoes das Funcoes
