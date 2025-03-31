@@ -802,7 +802,7 @@ void menuPagamento() // Funcao Menu Pagamento
     float vTotal = 0, vTcdesconto = 0, qnt = 0, troco = 0, valorCobrado = 0, descontoReal =0;
 
     /* <<< VARIAVEIS DE ARMAZENAMENTO FIXO */
-    float descontoCinco, descontoDez, descontoDezoito, descontoInformado, descontoBruto ;
+    float descontoCinco, descontoDez, descontoDezoito, descontoInformado, descontoBruto;
 
         /* DESCONTOS */
     descontoCinco = 0.05;   /* <<<- 5% desconto */
@@ -838,7 +838,7 @@ void menuPagamento() // Funcao Menu Pagamento
             {
                 printf("Informe a porcentagem de desconto:");
                     scanf("%f",&descontoBruto);
-                        printf("O desconto de %d porcento sera aplicado\n", descontoBruto);
+                        printf("O desconto de %.0f porcento sera aplicado\n", descontoBruto);
                     descontoInformado = descontoBruto / 100;
                     descontoReal = vTotal * descontoInformado;
             }
@@ -979,12 +979,6 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
     int cPagamento= 0, cCartao= 0;
     float troco = 0, valorCobrado = 0; /* <<< VARIAVEIS DE ARMAZENAMENTO TEMPOR�RIO */
 
-    float descontoCinco, descontoDez, descontoDezoito ; /* <<< VARIAVEIS DE ARMAZENAMENTO FIXO */
-                /* DESCONTOS */
-    descontoCinco = 0.05;   /* <<<- 5% desconto */
-    descontoDez = 0.10;  /* <<<- 10% desconto */
-    descontoDezoito = 0.18;  /* <<<- 18% desconto */
-
     system("cls");
     printf("\nForma de Pagamento:\n\n");
     printf("41. Dinheiro\n");
@@ -1017,7 +1011,8 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
                 vLimpeza= 0;
                 vAlimento= 0;
                 vPadaria= 0;
-                fPagar= 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
+                fPagar= 0;
+                vCar = 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
                 menuPrincipal();
                 break;
             }
