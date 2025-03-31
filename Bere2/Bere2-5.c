@@ -101,82 +101,8 @@ void printMenu(int escolhaMenu){
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 2) { // 2 == Menu Alimentos.
-        const char* nomesProdutosAlimento[] = {
-            "Cafe",
-            "Leite Caixa",
-            "Arroz 1KG",
-            "Feijao Preto 1KG",
-            "Acucar 1KG",
-            "Sal 1KG",
-            "Farinha de Trigo 1KG",
-            NULL
-        };
-
-        const char* printMenuAlimentos[] = {
-            "|=======================================================|\n",
-            "|\t\t    Mercado Dona Bere\t\t\t|\n",
-            "|=======================================================|\n",
-            "|      ------------ Menu de Alimentos ------------\t|\n",
-            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            NULL // Finaliza o Array de Strings
-        };
-
-        for(i = 0; i < pegaTamanho(printMenuAlimentos); i++) {
-            printf("%s", printMenuAlimentos[i]);
-        }
-
-        for (i = 0; i < pegaTamanho(nomesProdutosAlimento); i++) {
-            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
-                21 + i, nomesProdutosAlimento[i], precosAlimentos[i], totalArroz);
-        }
-
-        printf("|.......................................................|\n");
-        printf("| -> Cod: 28 - Voltar ao Menu Principal \t\t|\n");
-        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
-        printf("|\t $ - Carrinho de Alimentos:  R$ %.2f - $\t|\n", vAlimento);
-        printf("|=======================================================|\n");
-        printf("Opcao..:  ");
-
-    }
-
-    if (escolhaMenu == 3) { // 3 == Menu Padaria.
-        const char* nomesProdutosPadaria[]= {
-            "Pao de Forma PCT",
-            "Pao Integral PCT",
-            "Pao Frances UND",
-            "Sonho UND",
-            "Biscoito KG",
-            "Pao Doce UND",
-            "Salgado",
-            NULL
-        };
-
-        const char* printMenuPadaria[] = {
-            "|=======================================================|\n",
-            "|\t\t    Mercado Dona Bere\t\t\t|\n",
-            "|=======================================================|\n",
-            "|      ------------ Menu da Padaria ------------\t|\n",
-            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            NULL // Finaliza o Array de Strings
-        };
-
-        for(i = 0; i < pegaTamanho(printMenuPadaria); i++) {
-            printf("%s", printMenuPadaria[i]);
-        }
-
-        for(i = 0; i < pegaTamanho(nomesProdutosPadaria); i++) {
-            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
-                31 + i, nomesProdutosPadaria[i], precosPadaria[i], tpaoForma);
-        }
-
-        printf("|.......................................................|\n");
-        printf("| -> Cod: 38 - Voltar ao Menu Principal \t\t|\n");
-        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
-        printf("|\t  $ - Carrinho da Padaria:  R$ %.2f - $\t\t|\n", vPadaria);
-        printf("|=======================================================|\n");
-        printf("Opcao..:  ");
-
+    if (escolhaMenu == 2) {
+        
     }
 }
 
@@ -608,7 +534,18 @@ void menuPadaria(){ // Funcao Menu Padaria
     int cPadaria;
     float qnt;
 
-    printMenu(3); // 3 == Menu Padaria
+    system("cls");
+    printf("        <Padaria>  \n");
+    printf("31. Pao de Forma (PCT)  R$ 9,50         (%d)\n", tpaoForma);
+    printf("32. Pao Integral (PCT)  R$ 12,50        (%d)\n", tpaoIntegral);
+    printf("33. Pao Frances (UND)   R$ 1,90         (%d)\n", tpaoFrances);
+    printf("34. Sonho (UND)         R$ 8,50         (%d)\n", tSonho);
+    printf("35. Biscoito (KG)       R$ 12,50        (%d)\n", tBiscoito);
+    printf("36. Pao Doce (UND)      R$ 2,50         (%d)\n", tpaoDoce);
+    printf("37. Salgado (UND)       R$ 17,50        (%d)\n", tSalgado);
+    printf("38. Voltar ao menu principal\n");
+    printf("Carrinho padaria: %.2f", vPadaria);
+    printf("\n");
 
     printf("Selecione uma opcao\n");
     scanf("%d", &cPadaria);
