@@ -98,14 +98,20 @@ void printMenu(int escolhaMenu){
         }
 
         for (int i = 0; i < pegaTamanho(nomesProdutosLimpeza); i++) {
-            printf("|   Cod: %d - %-25s R$ %.2f (%d)\t|\n",
+            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
                 11 + i, nomesProdutosLimpeza[i], precosLimpeza[i], totalDesinfetante);
         }
 
         printf("|.......................................................|\n");
-        printf("|   Cod: 18 - Voltar ao Menu Principal \t\t\t|\n");
+        printf("| -> Cod: 18 - Voltar ao Menu Principal \t\t|\n");
+        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
+        printf("|    $ - Carrinho materiais de limpeza:  R$ %.2f - $\t|\n", vLimpeza);
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
+    }
+
+    if (escolhaMenu == 2) {
+        
     }
 }
 
@@ -115,7 +121,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
     while (opcaoUm!=8)
     {
-        printMenu(0); // 0 == Menu Principal
+        printMenu(1); // 0 == Menu Principal
 
         scanf("%d", &opcaoUm);
 
