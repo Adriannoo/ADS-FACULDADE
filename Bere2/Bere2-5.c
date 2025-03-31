@@ -27,8 +27,8 @@ float precosLimpeza[6] = {1.99, 8.99, 15.00, 4.99, 7.99, 1.00};
 float precosPadaria[7] = {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
 float precosAlimentos[7] = {19.99, 5.90, 4.50, 8.00, 5.00, 2.00, 5.00};
 
-void delay(int delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
-    int mili = 1000 * delayemSegundos;
+void delay(float delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
+    float mili = 1000 * delayemSegundos;
     clock_t comecoT = clock();
     while (clock() < comecoT + mili);
 }
@@ -42,6 +42,7 @@ int pegaTamanho(char* array[]) {
 }
 
 void printMenu(int escolhaMenu){
+    int i = 0;
     system("cls");
     if(escolhaMenu == 0) { // 0 == Menu principal.
         const char* printMenuPrincipal[] = {
@@ -63,7 +64,7 @@ void printMenu(int escolhaMenu){
             NULL // Finaliza o Array de Strings
             };// Tamanho do Array.
 
-        for(int i = 0 ; i < pegaTamanho(printMenuPrincipal) ; i++) {
+        for(i = 0 ; i < pegaTamanho(printMenuPrincipal) ; i++) {
             printf("%s", printMenuPrincipal[i]);
         }
 
@@ -93,11 +94,11 @@ void printMenu(int escolhaMenu){
             NULL // Finaliza o Array de Strings
         };
 
-        for (int i = 0; i < pegaTamanho(printMenuLimpeza); i++) {
+        for (i = 0; i < pegaTamanho(printMenuLimpeza); i++) {
             printf("%s", printMenuLimpeza[i]);
         }
 
-        for (int i = 0; i < pegaTamanho(nomesProdutosLimpeza); i++) {
+        for (i = 0; i < pegaTamanho(nomesProdutosLimpeza); i++) {
             printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
                 11 + i, nomesProdutosLimpeza[i], precosLimpeza[i], totalDesinfetante);
         }
@@ -110,8 +111,82 @@ void printMenu(int escolhaMenu){
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 2) {
-        
+    if (escolhaMenu == 2) { // 2 == Menu Alimentos.
+        const char* nomesProdutosAlimento[] = {
+            "Cafe",
+            "Leite Caixa",
+            "Arroz 1KG",
+            "Feijao Preto 1KG",
+            "Acucar 1KG",
+            "Sal 1KG",
+            "Farinha de Trigo 1KG",
+            NULL
+        };
+
+        const char* printMenuAlimentos[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|      ------------ Menu de Alimentos ------------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            NULL // Finaliza o Array de Strings
+        };
+
+        for(i = 0; i < pegaTamanho(printMenuAlimentos); i++) {
+            printf("%s", printMenuAlimentos[i]);
+        }
+
+        for (i = 0; i < pegaTamanho(nomesProdutosAlimento); i++) {
+            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
+                21 + i, nomesProdutosAlimento[i], precosAlimentos[i], totalArroz);
+        }
+
+        printf("|.......................................................|\n");
+        printf("| -> Cod: 28 - Voltar ao Menu Principal \t\t|\n");
+        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
+        printf("|\t $ - Carrinho de Alimentos:  R$ %.2f - $\t|\n", vAlimento);
+        printf("|=======================================================|\n");
+        printf("Opcao..:  ");
+
+    }
+
+    if (escolhaMenu == 3) { // 3 == Menu Padaria.
+        const char* nomesProdutosPadaria[]= {
+            "Pao de Forma PCT",
+            "Pao Integral PCT",
+            "Pao Frances UND",
+            "Sonho UND",
+            "Biscoito KG",
+            "Pao Doce UND",
+            "Salgado",
+            NULL
+        };
+
+        const char* printMenuPadaria[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|      ------------ Menu da Padaria ------------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            NULL // Finaliza o Array de Strings
+        };
+
+        for(i = 0; i < pegaTamanho(printMenuPadaria); i++) {
+            printf("%s", printMenuPadaria[i]);
+        }
+
+        for(i = 0; i < pegaTamanho(nomesProdutosPadaria); i++) {
+            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
+                31 + i, nomesProdutosPadaria[i], precosPadaria[i], tpaoForma);
+        }
+
+        printf("|.......................................................|\n");
+        printf("| -> Cod: 38 - Voltar ao Menu Principal \t\t|\n");
+        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
+        printf("|\t  $ - Carrinho da Padaria:  R$ %.2f - $\t\t|\n", vPadaria);
+        printf("|=======================================================|\n");
+        printf("Opcao..:  ");
+
     }
 }
 
@@ -121,7 +196,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
     while (opcaoUm!=8)
     {
-        printMenu(1); // 0 == Menu Principal
+        printMenu(0); // 0 == Menu Principal
 
         scanf("%d", &opcaoUm);
 
@@ -178,19 +253,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
     int cLimpeza; // Opcao do usuario
     float qnt;
 
-    //printMenu(1);
-
-    // system("cls"); //Funcao de limpar tela (CLEAR SYSTEM)
-    printf("  <Material de limpeza>\n");
-    printf("11. Detergente                  R$ 1,99    (%d) \n", totalDetergente);
-    printf("12. Sabao em po 1kg             R$ 8,99    (%d) \n", totalsabPo);
-    printf("13. Esponja                     R$ 1,50    (%d) \n", totalEsponja);
-    printf("14. Amaciante 1lt               R$ 15,00   (%d) \n", totalAmaciante);   // Menu Limpeza
-    printf("15. Bucha de Pia (Kit c/3)      R$ 4.99    (%d) \n", totalBucha);
-    printf("16. Desinfetante (1Lt)          R$ 7.99    (%d) \n", totalDesinfetante);
-    printf("17. Sabao em Barra (UND)         R$ 1.00    (%d) \n", totalSabao);
-    printf("18. Voltar ao menu principal\n");
-    printf("Carrinho materiais de limpeza: %.2f\n", vLimpeza);
+    printMenu(1);
 
     scanf("%d", &cLimpeza);
 
@@ -367,20 +430,8 @@ void menuAlimento(){ // Funcao Menu Alimentos
     int cAlimento;
     float qnt;
 
+    printMenu(2); // 2 == Menu de Alimentos
 
-    system("cls");
-    printf("   <Alimentos>\n");
-    printf("21. Cafe                    R$ 19,99        (%d)\n", totalCafe);
-    printf("22. Leite Cx                R$ 5,90         (%d)\n", totalLeite);
-    printf("23. Arroz 1KG               R$ 4,50         (%d)\n", totalArroz);
-    printf("24. Feijao Preto 1KG        R$ 8,00         (%d)\n", totalFeijao);
-    printf("25. Acucar 1KG              R$ 5,00         (%d)\n", totalAcucar);
-    printf("26. Sal(1KG)                R$ 2,00         (%d)\n", totalSal);
-    printf("27. Farinha de Trigo (1kg)  R$ 5.00         (%d)\n", totalFarinha);
-    printf("28. Voltar ao menu principal\n");
-    printf("Carrinho alimentos: %.2f\n", vAlimento);
-
-    printf("Selecione uma opcao\n");
     scanf("%d", &cAlimento);
 
     switch(cAlimento){ // Switch case para selecao dos produtos
@@ -562,20 +613,8 @@ void menuPadaria(){ // Funcao Menu Padaria
     int cPadaria;
     float qnt;
 
-    system("cls");
-    printf("        <Padaria>  \n");
-    printf("31. Pao de Forma (PCT)  R$ 9,50         (%d)\n", tpaoForma);
-    printf("32. Pao Integral (PCT)  R$ 12,50        (%d)\n", tpaoIntegral);
-    printf("33. Pao Frances (UND)   R$ 1,90         (%d)\n", tpaoFrances);
-    printf("34. Sonho (UND)         R$ 8,50         (%d)\n", tSonho);
-    printf("35. Biscoito (KG)       R$ 12,50        (%d)\n", tBiscoito);
-    printf("36. Pao Doce (UND)      R$ 2,50         (%d)\n", tpaoDoce);
-    printf("37. Salgado (UND)       R$ 17,50        (%d)\n", tSalgado);
-    printf("38. Voltar ao menu principal\n");
-    printf("Carrinho padaria: %.2f", vPadaria);
-    printf("\n");
+    printMenu(3); // 3 == Menu Padaria
 
-    printf("Selecione uma opcao\n");
     scanf("%d", &cPadaria);
 
     switch(cPadaria){ // Switch case para selecao dos protudos
