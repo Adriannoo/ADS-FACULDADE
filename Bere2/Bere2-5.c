@@ -21,13 +21,11 @@ float vAbertura = 0;
 int totalDetergente = 50, totalsabPo = 30, totalEsponja = 0, totalAmaciante = 20, totalBucha = 100, totalDesinfetante = 15, totalSabao = 60;
 int totalCafe = 10, totalLeite = 15, totalArroz = 10, totalFeijao = 5, totalAcucar = 20, totalSal = 6, totalFarinha = 15;
 int tpaoForma, tpaoIntegral, tpaoFrances, tSonho, tBiscoito, tpaoDoce, tSalgado;
+
 /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
-float precosLimpeza[6] =
-     {1.99, 8.99, 15.00, 4.99, 7.99, 1.00};
-float precosPadaria[7] =
-     {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
-float precosAlimentos[7] =
-     {19.99, 5.90, 4.50, 8.00, 5.00, 2.00, 5.00};
+float precosLimpeza[6] = {1.99, 8.99, 15.00, 4.99, 7.99, 1.00};
+float precosPadaria[7] = {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
+float precosAlimentos[7] = {19.99, 5.90, 4.50, 8.00, 5.00, 2.00, 5.00};
 
 void delay(int delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
     int mili = 1000 * delayemSegundos;
@@ -43,48 +41,50 @@ int pegaTamanho(char* array[]) {
     return tamanho;
 }
 
-/*void printMenu(int escolhaMenu){
+void printMenu(int escolhaMenu){
     system("cls");
     if(escolhaMenu == 0) { // 0 == Menu principal.
         const char* printMenuPrincipal[] = {
             "|=======================================================|\n",
-            "|\t\tMercado Dona Bere\t\t|\n",
-            "|===============================================|\n",
-            "|\t -------- Menu Principal --------\t|\n",
-            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "| Cod: 1  - Menu de Materias de Limpeza\t\t|\n",
-            "| Cod: 2  - Menu de Alimentos\t\t\t|\n",
-            "| Cod: 3  - Menu da Padaria\t\t\t|\n",
-            "|...............................................|\n",
-            "| Cod: 4  - Menu de Pagamento \t\t\t|\n",
-            "| Cod: 5  - Abertura de Caixa \t\t\t|\n",
-            "| Cod: 6  - Fechamento de Caixa \t\t|\n",
-            "| Cod: 7  - Cancelar Venda \t\t\t|\n",
-            "| Cod: 8  - Sair do Programa\t\t\t|\n",
-            "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|\t ------------ Menu Principal ------------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            "| -> Cod: 1  - Menu de Materias de Limpeza \t\t|\n",
+            "| -> Cod: 2  - Menu de Alimentos \t\t\t|\n",
+            "| -> Cod: 3  - Menu da Padaria \t\t\t\t|\n",
+            "|.......................................................|\n",
+            "| -> Cod: 4  - Menu de Pagamento \t\t\t|\n",
+            "| -> Cod: 5  - Abertura de Caixa \t\t\t|\n",
+            "| -> Cod: 6  - Fechamento de Caixa \t\t\t|\n",
+            "| -> Cod: 7  - Cancelar Venda \t\t\t\t|\n",
+            "| -> Cod: 8  - Sair do Programa \t\t\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL // Finaliza o Array de Strings
             };// Tamanho do Array.
-        for(int i = 0 ; i < pegaTamanho(menuPrincipal) ; i++) {
+
+        for(int i = 0 ; i < pegaTamanho(printMenuPrincipal) ; i++) {
             printf("%s", printMenuPrincipal[i]);
         }
+
+        printf("|      $ - Valor total de vendas hoje: R$ %.2f - $\t|\n",totalDia); // Atualizacao do valor total das vendas
+        printf("|=======================================================|\n");
+        printf("Opcao..:  ");
     }
 
     if (escolhaMenu == 1) { // 1 == Menu Limpeza.
+        const char* nomesProdutosLimpeza[] = {
+            "Detergente",
+            "Sabao em Po 1KG",
+            "Esponja",
+            "Amaciante 1LT",
+            "Bucha de Pia (KIT C/3)",
+            "Desinfetante 1LT",
+            "Sabao em Barra (UND)",
+            NULL
+        };
 
-        /*
-        printf("  <Material de limpeza>\n");
-        printf("11. Detergente                  R$ 1,99    (%d) \n", totalDetergente);
-        printf("12. Sabao em po 1kg             R$ 8,99    (%d) \n", totalsabPo);
-        printf("13. Esponja                     R$ 1,50    (%d) \n", totalEsponja);
-        printf("14. Amaciante 1lt               R$ 15,00   (%d) \n", totalAmaciante);   // Menu Limpeza
-        printf("15. Bucha de Pia (Kit c/3)      R$ 4.99    (%d) \n", totalBucha);
-        printf("16. Desinfetante (1Lt)          R$ 7.99    (%d) \n", totalDesinfetante);
-        printf("17. Sabao em Barra (UND)         R$ 1.00    (%d) \n", totalSabao);
-        printf("18. Voltar ao menu principal\n");
-        printf("Carrinho materiais de limpeza: %.2f\n", vLimpeza);
-        */
-
- /*       const char* printMenuLimpeza[] = {
+        const char* printMenuLimpeza[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
             "|=======================================================|\n",
@@ -92,28 +92,31 @@ int pegaTamanho(char* array[]) {
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL // Finaliza o Array de Strings
         };
+
         for (int i = 0; i < pegaTamanho(printMenuLimpeza); i++) {
             printf("%s", printMenuLimpeza[i]);
         }
-        printf("|   Cod: 11 - Detergente\t\t R$ 1,99  (%d)\t|\n", totalDetergente);
-        printf("|   Cod: 12 - Sabao em Po 1kg\t\t R$ 8,99  (%d)\t|\n", totalsabPo);
-        printf("|   Cod: 13 - Esponja\t\t\t R$ 1,50  (%d)\t|\n", totalEsponja);
-        printf("|   Cod: 14 - Amaciante 1lt\t\t R$ 15,00 (%d)\t|\n", totalAmaciante);
-        printf("|   Cod: 15 - Bucha de Pia (Kit c/3)\t R$ 4,99  (%d)\t|\n", totalBucha);
+
+        for (int i = 0; i < pegaTamanho(nomesProdutosLimpeza); i++) {
+            printf("|   Cod: %d - %-25s R$ %.2f (%d)\t|\n",
+                11 + i, nomesProdutosLimpeza[i], precosLimpeza[i], totalDesinfetante);
+        }
+
+        printf("|.......................................................|\n");
+        printf("|   Cod: 18 - Voltar ao Menu Principal \t\t\t|\n");
+        printf("|=======================================================|\n");
+        printf("Opcao..:  ");
     }
-}*/
+}
 
 void menuPrincipal(){ // Funcao do Menu Principal
 
-    int opcaoUm=0; // Variavel opcao do usuario
+    int opcaoUm = 0; // Variavel opcao do usuario
 
     while (opcaoUm!=8)
     {
-       // printMenu(1);
+        printMenu(0); // 0 == Menu Principal
 
-        printf("| Valor total de vendas hoje: R$ %.2f \t\t|\n",totalDia); // Atualizacao do valor total das vendas
-        printf("|===============================================|\n");
-        printf("Opcao..:  ");
         scanf("%d", &opcaoUm);
 
         if (opcaoUm == 5) {
@@ -183,7 +186,6 @@ void menuLimpeza(){ // Funcao Menu Limpeza
     printf("18. Voltar ao menu principal\n");
     printf("Carrinho materiais de limpeza: %.2f\n", vLimpeza);
 
-    printf("Selecione uma opcao\n");
     scanf("%d", &cLimpeza);
 
     switch(cLimpeza){ // Switch case para selecao dos produtos
