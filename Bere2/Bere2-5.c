@@ -41,20 +41,30 @@ int pegaTamanho(char* array[]) {
     return tamanho;
 }
 
-void printMenu(int escolhaMenu){
-    if(escolhaMenu == 0){ // Menu principal.
-        const char* printMenuPrincipal[] =
-            {
-            "|================================================|\n",
-            "|\t\tMercado Dona Bere\t\t|\n",
-            "|================================================|\n",
-            "|\t -------- Menu Principal --------\t|\n",
-            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "| Cod: 1  - Material de Limpeza\t\t\t|\n"
-
+void printMenu(int escolhaMenu) {
+    int i = 0;
+    system("cls");
+    if(escolhaMenu == 0) { // 0 == Menu principal.
+        const char* printMenuPrincipal[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|\t ------------ Menu Principal ------------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            "| -> Cod: 1  - Menu de Materias de Limpeza \t\t|\n",
+            "| -> Cod: 2  - Menu de Alimentos \t\t\t|\n",
+            "| -> Cod: 3  - Menu da Padaria \t\t\t\t|\n",
+            "|.......................................................|\n",
+            "| -> Cod: 4  - Menu de Pagamento \t\t\t|\n",
+            "| -> Cod: 5  - Abertura de Caixa \t\t\t|\n",
+            "| -> Cod: 6  - Fechamento de Caixa \t\t\t|\n",
+            "| -> Cod: 7  - Cancelar Venda \t\t\t\t|\n",
+            "| -> Cod: 8  - Sair do Programa \t\t\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            NULL // Finaliza o Array de Strings
             };
-        int tamanho = sizeof(printMenuPrincipal) / sizeof(printMenuPrincipal[0]); // Tamanho do Array.
-        for(int i = 0 ; i < tamanho ; i++) {
+
+        for(i = 0 ; i < pegaTamanho(printMenuPrincipal) ; i++) {
             printf("%s", printMenuPrincipal[i]);
         }
 
@@ -90,7 +100,7 @@ void printMenu(int escolhaMenu){
 
         for (i = 0; i < pegaTamanho(nomesProdutosLimpeza); i++) {
             printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
-                11 + i, nomesProdutosLimpeza[i], precosLimpeza[i], totalDesinfetante);
+                11 + i, nomesProdutosLimpeza[i], precosLimpeza[i], estoqueLimpeza[i]);
         }
 
         printf("|.......................................................|\n");
@@ -101,8 +111,81 @@ void printMenu(int escolhaMenu){
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 2) {
-        
+    if (escolhaMenu == 2) { // 2 == Menu Alimentos.
+        const char* nomesProdutosAlimento[] = {
+            "Cafe",
+            "Leite Caixa",
+            "Arroz 1KG",
+            "Feijao Preto 1KG",
+            "Acucar 1KG",
+            "Sal 1KG",
+            "Farinha de Trigo 1KG",
+            NULL
+        };
+
+        const char* printMenuAlimentos[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|      ------------ Menu de Alimentos ------------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            NULL // Finaliza o Array de Strings
+        };
+
+        for(i = 0; i < pegaTamanho(printMenuAlimentos); i++) {
+            printf("%s", printMenuAlimentos[i]);
+        }
+
+        for (i = 0; i < pegaTamanho(nomesProdutosAlimento); i++) {
+            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
+                21 + i, nomesProdutosAlimento[i], precosAlimentos[i], estoqueAlimentos[i]);
+        }
+
+        printf("|.......................................................|\n");
+        printf("| -> Cod: 28 - Voltar ao Menu Principal \t\t|\n");
+        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
+        printf("|\t $ - Carrinho de Alimentos:  R$ %.2f - $\t|\n", vAlimento);
+        printf("|=======================================================|\n");
+        printf("Opcao..:  ");
+
+    }
+
+    if (escolhaMenu == 3) { // 3 == Menu Padaria.
+        const char* nomesProdutosPadaria[]= {
+            "Pao de Forma PCT",
+            "Pao Integral PCT",
+            "Pao Frances UND",
+            "Sonho UND",
+            "Biscoito KG",
+            "Pao Doce UND",
+            "Salgado",
+            NULL
+        };
+
+        const char* printMenuPadaria[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|      ------------ Menu da Padaria ------------\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            NULL // Finaliza o Array de Strings
+        };
+
+        for(i = 0; i < pegaTamanho(printMenuPadaria); i++) {
+            printf("%s", printMenuPadaria[i]);
+        }
+
+        for(i = 0; i < pegaTamanho(nomesProdutosPadaria); i++) {
+            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
+                31 + i, nomesProdutosPadaria[i], precosPadaria[i], estoquePadaria[i]);
+        }
+
+        printf("|.......................................................|\n");
+        printf("| -> Cod: 38 - Voltar ao Menu Principal \t\t|\n");
+        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
+        printf("|\t  $ - Carrinho da Padaria:  R$ %.2f - $\t\t|\n", vPadaria);
+        printf("|=======================================================|\n");
+        printf("Opcao..:  ");
     }
 }
 
@@ -534,20 +617,8 @@ void menuPadaria(){ // Funcao Menu Padaria
     int cPadaria;
     float qnt;
 
-    system("cls");
-    printf("        <Padaria>  \n");
-    printf("31. Pao de Forma (PCT)  R$ 9,50         (%d)\n", tpaoForma);
-    printf("32. Pao Integral (PCT)  R$ 12,50        (%d)\n", tpaoIntegral);
-    printf("33. Pao Frances (UND)   R$ 1,90         (%d)\n", tpaoFrances);
-    printf("34. Sonho (UND)         R$ 8,50         (%d)\n", tSonho);
-    printf("35. Biscoito (KG)       R$ 12,50        (%d)\n", tBiscoito);
-    printf("36. Pao Doce (UND)      R$ 2,50         (%d)\n", tpaoDoce);
-    printf("37. Salgado (UND)       R$ 17,50        (%d)\n", tSalgado);
-    printf("38. Voltar ao menu principal\n");
-    printf("Carrinho padaria: %.2f", vPadaria);
-    printf("\n");
+    printMenu(3); // 3 == Menu Padaria
 
-    printf("Selecione uma opcao\n");
     scanf("%d", &cPadaria);
 
     switch(cPadaria){ // Switch case para selecao dos protudos
