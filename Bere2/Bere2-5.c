@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-/* Funcoes e variaveis globais */
+/* Funcoes e variaveis globais *///
 void menuPrincipal(void);
 void menuLimpeza(void);
 void menuAlimento(void); // Declaracoes das Funcoes
@@ -18,14 +18,14 @@ float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia = 0; // Variaveis glob
 float fPagar = 0;
 float vCar = 0;
 float vAbertura = 0;
-int totalDetergente = 50, totalsabPo = 30, totalEsponja = 0, totalAmaciante = 20, totalBucha = 100, totalDesinfetante = 15, totalSabao = 60;
-int totalCafe = 10, totalLeite = 15, totalArroz = 10, totalFeijao = 5, totalAcucar = 20, totalSal = 6, totalFarinha = 15;
-int tpaoForma, tpaoIntegral, tpaoFrances, tSonho, tBiscoito, tpaoDoce, tSalgado;
-
 /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
-float precosLimpeza[6] = {1.99, 8.99, 15.00, 4.99, 7.99, 1.00};
+float precosLimpeza[7] = {1.99, 8.99, 1.50, 15.00, 4.99, 7.99, 1.00};
 float precosPadaria[7] = {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
 float precosAlimentos[7] = {19.99, 5.90, 4.50, 8.00, 5.00, 2.00, 5.00};
+/* <<<<<<< ESTOQUE DOS PRODUTOS >>>>>>> */
+int estoqueLimpeza[7] = {50, 30, 0, 20, 100, 15, 60};
+int estoqueAlimentos[7] = {10, 15, 10, 5, 20, 6, 15};
+int estoquePadaria[7] = {};
 
 void delay(float delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
     float mili = 1000 * delayemSegundos;
@@ -111,82 +111,8 @@ void printMenu(int escolhaMenu){
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 2) { // 2 == Menu Alimentos.
-        const char* nomesProdutosAlimento[] = {
-            "Cafe",
-            "Leite Caixa",
-            "Arroz 1KG",
-            "Feijao Preto 1KG",
-            "Acucar 1KG",
-            "Sal 1KG",
-            "Farinha de Trigo 1KG",
-            NULL
-        };
-
-        const char* printMenuAlimentos[] = {
-            "|=======================================================|\n",
-            "|\t\t    Mercado Dona Bere\t\t\t|\n",
-            "|=======================================================|\n",
-            "|      ------------ Menu de Alimentos ------------\t|\n",
-            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            NULL // Finaliza o Array de Strings
-        };
-
-        for(i = 0; i < pegaTamanho(printMenuAlimentos); i++) {
-            printf("%s", printMenuAlimentos[i]);
-        }
-
-        for (i = 0; i < pegaTamanho(nomesProdutosAlimento); i++) {
-            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
-                21 + i, nomesProdutosAlimento[i], precosAlimentos[i], totalArroz);
-        }
-
-        printf("|.......................................................|\n");
-        printf("| -> Cod: 28 - Voltar ao Menu Principal \t\t|\n");
-        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
-        printf("|\t $ - Carrinho de Alimentos:  R$ %.2f - $\t|\n", vAlimento);
-        printf("|=======================================================|\n");
-        printf("Opcao..:  ");
-
-    }
-
-    if (escolhaMenu == 3) { // 3 == Menu Padaria.
-        const char* nomesProdutosPadaria[]= {
-            "Pao de Forma PCT",
-            "Pao Integral PCT",
-            "Pao Frances UND",
-            "Sonho UND",
-            "Biscoito KG",
-            "Pao Doce UND",
-            "Salgado",
-            NULL
-        };
-
-        const char* printMenuPadaria[] = {
-            "|=======================================================|\n",
-            "|\t\t    Mercado Dona Bere\t\t\t|\n",
-            "|=======================================================|\n",
-            "|      ------------ Menu da Padaria ------------\t|\n",
-            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            NULL // Finaliza o Array de Strings
-        };
-
-        for(i = 0; i < pegaTamanho(printMenuPadaria); i++) {
-            printf("%s", printMenuPadaria[i]);
-        }
-
-        for(i = 0; i < pegaTamanho(nomesProdutosPadaria); i++) {
-            printf("| -> Cod: %d - %-23s R$ %.2f  (%d)\t|\n",
-                31 + i, nomesProdutosPadaria[i], precosPadaria[i], tpaoForma);
-        }
-
-        printf("|.......................................................|\n");
-        printf("| -> Cod: 38 - Voltar ao Menu Principal \t\t|\n");
-        printf("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
-        printf("|\t  $ - Carrinho da Padaria:  R$ %.2f - $\t\t|\n", vPadaria);
-        printf("|=======================================================|\n");
-        printf("Opcao..:  ");
-
+    if (escolhaMenu == 2) {
+        
     }
 }
 
@@ -260,7 +186,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
     switch(cLimpeza){ // Switch case para selecao dos produtos
         case 11:    /*<----- DETERGENTE */
             printf("\nDetergente \n");
-            if (totalDetergente == 0) {
+            if (estoqueLimpeza[0] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuLimpeza();
@@ -268,14 +194,14 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalDetergente) {
+            while (qnt > estoqueLimpeza[0]) {
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Detergente adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalDetergente = totalDetergente - qnt;
+            estoqueLimpeza[0] = estoqueLimpeza[0] - qnt;
             vLimpeza += precosLimpeza[0] * qnt;
             vCar += precosLimpeza[0] * qnt;
             menuLimpeza();
@@ -283,7 +209,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 
         case 12:    /*<----- SABAO EM PO */
             printf("\nSabao em po \n");
-            if (totalsabPo == 0) {
+            if (estoqueLimpeza[1] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuLimpeza();
@@ -292,7 +218,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalsabPo) {
+            while (qnt > estoqueLimpeza[1]) {
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
@@ -300,13 +226,15 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 
             printf("%.2f x Sabao em po adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalsabPo = totalsabPo - qnt;
+            estoqueLimpeza[1] = estoqueLimpeza[1] - qnt;
             vLimpeza += precosLimpeza[1] * qnt;
             vCar += precosLimpeza[1] * qnt;
             menuLimpeza();
             break;
 
         case 13:    /*<----- ESPONJA*/
+            estoqueLimpeza[2];
+            precosLimpeza[2];
             printf("\nEsponja \n");
             printf("Infelizmente o item nao registra estoque, digite um novo item\n");
             delay(3);
@@ -315,7 +243,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 
         case 14:    /*<----- AMACIANTE*/
             printf("\nAmaciante \n");
-            if (totalAmaciante == 0) {
+            if (estoqueLimpeza[3] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuLimpeza();
@@ -323,7 +251,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalAmaciante){
+            while (qnt > estoqueLimpeza[3]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
@@ -331,15 +259,15 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 
             printf("%.2f x Amaciante adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalAmaciante = totalAmaciante - qnt;
-            vLimpeza += precosLimpeza[2] * qnt;
-            vCar += precosLimpeza[2] * qnt;
+            estoqueLimpeza[3] = estoqueLimpeza[3] - qnt;
+            vLimpeza += precosLimpeza[3] * qnt;
+            vCar += precosLimpeza[3] * qnt;
             menuLimpeza();
             break;
 
         case 15:    /*<----- BUCHA DE PIA*/
             printf("Bucha de Pia (Kit c/3) \n");
-            if (totalBucha == 0) {
+            if (estoqueLimpeza[4] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuLimpeza();
@@ -348,23 +276,23 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalBucha){
+            while (qnt > estoqueLimpeza[4]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Bucha de Pia adicionada ao carrinho.\n",qnt);
             delay(3);
-            totalBucha = totalBucha - qnt;
-            vLimpeza += precosLimpeza[3] * qnt;
-            vCar += precosLimpeza[3] * qnt;
+            estoqueLimpeza[4] = estoqueLimpeza[4] - qnt;
+            vLimpeza += precosLimpeza[4] * qnt;
+            vCar += precosLimpeza[4] * qnt;
             menuLimpeza();
             break;
 
         case 16:    /*<----- DESINFETANTE*/
             printf("\n");
             printf("Desinfetante (1LT) \n");
-            if (totalDesinfetante == 0) {
+            if (estoqueLimpeza[5]== 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuLimpeza();
@@ -373,7 +301,7 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalDesinfetante){
+            while (qnt > estoqueLimpeza[5]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
@@ -381,16 +309,16 @@ void menuLimpeza(){ // Funcao Menu Limpeza
 
             printf("%.2f x Desinfetante adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalDesinfetante = totalDesinfetante - qnt;
-            vLimpeza += precosLimpeza[4] * qnt;
-            vCar += precosLimpeza[4] * qnt;
+            estoqueLimpeza[5] = estoqueLimpeza[5] - qnt;
+            vLimpeza += precosLimpeza[5] * qnt;
+            vCar += precosLimpeza[5] * qnt;
             menuLimpeza();
             break;
 
         case 17:    /*<----- SABAO EM BARRA*/
             printf("\n");
             printf("Sabao em Barra (UN) \n");
-            if (totalSabao == 0) {
+            if (estoqueLimpeza[6] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuLimpeza();
@@ -398,16 +326,16 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalSabao){
+            while (qnt > estoqueLimpeza[6]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Sabao em Barra adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalSabao = totalSabao - qnt;
-            vLimpeza += precosLimpeza[5] * qnt;
-            vCar += precosLimpeza[5] * qnt;
+            estoqueLimpeza[6] = estoqueLimpeza[6] - qnt;
+            vLimpeza += precosLimpeza[6] * qnt;
+            vCar += precosLimpeza[6] * qnt;
             menuLimpeza();
             break;
 
@@ -437,7 +365,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
     switch(cAlimento){ // Switch case para selecao dos produtos
         case 21:    /*<----- CAFE */
             printf("\nCafe:\n");
-            if (totalCafe == 0) {
+            if (estoqueAlimentos[0] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuAlimento();
@@ -445,14 +373,14 @@ void menuAlimento(){ // Funcao Menu Alimentos
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalCafe){
+            while (qnt > estoqueAlimentos[0]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Cafe adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalCafe = totalCafe - qnt;
+            estoqueAlimentos[0] = estoqueAlimentos[0] - qnt;
             vAlimento += precosAlimentos[0] * qnt;
             vCar += precosAlimentos[0] * qnt;
             menuAlimento();
@@ -461,7 +389,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
         case 22:    /*<----- LEITE */
             printf("\n");
             printf("\nLeite:\n");
-            if (totalLeite == 0) {
+            if (estoqueAlimentos[1] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuAlimento();
@@ -469,14 +397,14 @@ void menuAlimento(){ // Funcao Menu Alimentos
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalLeite){
+            while (qnt > estoqueAlimentos[1]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Leite adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalLeite = totalLeite - qnt;
+            estoqueAlimentos[1] = estoqueAlimentos[1] - qnt;
             vAlimento += precosAlimentos[1] * qnt;
             vCar += precosAlimentos[1] * qnt;
             menuAlimento();
@@ -484,7 +412,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
 
         case 23:    /*<----- ARROZ*/
             printf("Arroz 1kg:\n");
-            if (totalArroz == 0) {
+            if (estoqueAlimentos[2] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuAlimento();
@@ -492,14 +420,14 @@ void menuAlimento(){ // Funcao Menu Alimentos
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalArroz){
+            while (qnt > estoqueAlimentos[2]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Arroz 1kg adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalArroz = totalArroz - qnt;
+            estoqueAlimentos[2] = estoqueAlimentos[2] - qnt;
             vAlimento += precosAlimentos[2] * qnt;
             vCar += precosAlimentos[2] * qnt;
             menuAlimento();
@@ -507,7 +435,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
 
         case 24:    /*<----- FEIJAO PRETO*/
             printf("\nFeijao Preto 1kg:\n");
-            if (totalFeijao == 0) {
+            if (estoqueAlimentos[3] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuAlimento();
@@ -515,14 +443,14 @@ void menuAlimento(){ // Funcao Menu Alimentos
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalFeijao){
+            while (qnt > estoqueAlimentos[3]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Feijao preto 1kg adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalFeijao = totalFeijao - qnt;
+            estoqueAlimentos[3] = estoqueAlimentos[3] - qnt;
             vAlimento += precosAlimentos[3] * qnt;
             vCar += precosAlimentos[3] * qnt;
             menuAlimento();
@@ -530,7 +458,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
 
         case 25:    /*<----- ACUCAR*/
             printf("\nAcucar 1kg:\n");
-            if (totalAcucar == 0) {
+            if (estoqueAlimentos[4] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuAlimento();
@@ -538,14 +466,14 @@ void menuAlimento(){ // Funcao Menu Alimentos
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalAcucar){
+            while (qnt > estoqueAlimentos[4]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Acucar 1kg adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalAcucar = totalAcucar - qnt;
+            estoqueAlimentos[4] = estoqueAlimentos[4] - qnt;
             vAlimento += precosAlimentos[4] * qnt;
             vCar += precosAlimentos[4] * qnt;
             menuAlimento();
@@ -553,7 +481,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
 
         case 26:    /*<----- ACUCAR*/
             printf("\nSal 1kg:\n");
-            if (totalSal == 0) {
+            if (estoqueAlimentos[5] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuAlimento();
@@ -561,14 +489,14 @@ void menuAlimento(){ // Funcao Menu Alimentos
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalSal){
+            while (qnt > estoqueAlimentos[5]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Sal 1kg adicionado ao carrinho.\n",qnt);
             delay(3);
-            totalSal = totalSal - qnt;
+            estoqueAlimentos[5] = estoqueAlimentos[5] - qnt;
             vAlimento += precosAlimentos[5] * qnt;
             vCar += precosAlimentos[5] * qnt;
             menuAlimento();
@@ -576,7 +504,7 @@ void menuAlimento(){ // Funcao Menu Alimentos
 
         case 27:    /*<----- ACUCAR*/
             printf("\nFarinha de Trigo 1kg:\n");
-            if (totalFarinha == 0) {
+            if (estoqueAlimentos[6] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuAlimento();
@@ -584,14 +512,14 @@ void menuAlimento(){ // Funcao Menu Alimentos
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > totalFarinha){
+            while (qnt > estoqueAlimentos[6]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Farinha de Trigo 1kg adicionada ao carrinho.\n",qnt);
             delay(3);
-            totalFarinha = totalFarinha - qnt;
+            estoqueAlimentos[6] = estoqueAlimentos[6] - qnt;
             vAlimento += precosAlimentos[6] * qnt;
             vCar += precosAlimentos[6] * qnt;
             menuAlimento();
@@ -613,14 +541,26 @@ void menuPadaria(){ // Funcao Menu Padaria
     int cPadaria;
     float qnt;
 
-    printMenu(3); // 3 == Menu Padaria
+    system("cls");
+    printf("        <Padaria>  \n");
+    printf("31. Pao de Forma (PCT)  R$ 9,50         (%d)\n", tpaoForma);
+    printf("32. Pao Integral (PCT)  R$ 12,50        (%d)\n", tpaoIntegral);
+    printf("33. Pao Frances (UND)   R$ 1,90         (%d)\n", tpaoFrances);
+    printf("34. Sonho (UND)         R$ 8,50         (%d)\n", tSonho);
+    printf("35. Biscoito (KG)       R$ 12,50        (%d)\n", tBiscoito);
+    printf("36. Pao Doce (UND)      R$ 2,50         (%d)\n", tpaoDoce);
+    printf("37. Salgado (UND)       R$ 17,50        (%d)\n", tSalgado);
+    printf("38. Voltar ao menu principal\n");
+    printf("Carrinho padaria: %.2f", vPadaria);
+    printf("\n");
 
+    printf("Selecione uma opcao\n");
     scanf("%d", &cPadaria);
 
     switch(cPadaria){ // Switch case para selecao dos protudos
         case 31:   /*<----- PAO DE FORMA */
             printf("\nPao de Forma(PCT):\n");
-            if (tpaoForma == 0) {
+            if (estoquePadaria[0] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuPadaria();
@@ -628,14 +568,14 @@ void menuPadaria(){ // Funcao Menu Padaria
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > tpaoForma){
+            while (qnt > estoquePadaria[0]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Pao de Forma adicionado ao carrinho.\n",qnt);
             delay(2);
-            tpaoForma = tpaoForma - qnt;
+            estoquePadaria[0] = estoquePadaria[0] - qnt;
             vPadaria += precosPadaria[0] * qnt;
             vCar += precosPadaria[0] * qnt;
             menuPadaria();
@@ -643,7 +583,7 @@ void menuPadaria(){ // Funcao Menu Padaria
 
         case 32:    /*<----- PAO INTEGRAL */
             printf("\nPao Integral(PCT):\n");
-            if (tpaoIntegral == 0) {
+            if (estoquePadaria[1] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuPadaria();
@@ -651,14 +591,14 @@ void menuPadaria(){ // Funcao Menu Padaria
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > tpaoIntegral){
+            while (qnt > estoquePadaria[1]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Pao integral adicionado ao carrinho.\n",qnt);
             delay(2);
-            tpaoIntegral = tpaoIntegral - qnt;
+            estoquePadaria[1] = estoquePadaria[1] - qnt;
             vPadaria += precosPadaria[1] * qnt;
             vCar += precosPadaria[1] * qnt;
             menuPadaria();
@@ -666,7 +606,7 @@ void menuPadaria(){ // Funcao Menu Padaria
 
         case 33:    /*<----- PAO FRANCES*/
             printf("\nPao Frances(UND):\n");
-            if (tpaoFrances == 0) {
+            if (estoquePadaria[2] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuPadaria();
@@ -674,14 +614,14 @@ void menuPadaria(){ // Funcao Menu Padaria
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > tpaoFrances){
+            while (qnt > estoquePadaria[2]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Pao frances adicionado ao carrinho.\n",qnt);
             delay(2);
-            tpaoFrances = tpaoFrances - qnt;
+            estoquePadaria[2] = estoquePadaria[2] - qnt;
             vPadaria += precosPadaria[2] * qnt;
             vCar += precosPadaria[2] * qnt;
             menuPadaria();
@@ -689,7 +629,7 @@ void menuPadaria(){ // Funcao Menu Padaria
 
         case 34:    /*<----- SONHO*/
             printf("\nSonho(UND):\n");
-            if (tSonho == 0) {
+            if (estoquePadaria[3] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuPadaria();
@@ -697,14 +637,14 @@ void menuPadaria(){ // Funcao Menu Padaria
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > tSonho){
+            while (qnt > estoquePadaria[3]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Sonho adicionado ao carrinho.\n",qnt);
             delay(2);
-            tSonho = tSonho - qnt;
+            estoquePadaria[3] = estoquePadaria[3] - qnt;
             vPadaria += precosPadaria[3] * qnt;
             vCar += precosPadaria[3] * qnt;
             menuPadaria();
@@ -712,7 +652,7 @@ void menuPadaria(){ // Funcao Menu Padaria
 
         case 35:    /*<----- SONHO*/
             printf("\nBiscoito(KG): \n");
-            if (tBiscoito == 0) {
+            if (estoquePadaria[4] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuPadaria();
@@ -720,14 +660,14 @@ void menuPadaria(){ // Funcao Menu Padaria
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > tBiscoito){
+            while (qnt > estoquePadaria[4]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Biscoito adicionado ao carrinho.\n",qnt);
             delay(2);
-            tBiscoito = tBiscoito - qnt;
+            estoquePadaria[4] = estoquePadaria[4] - qnt;
             vPadaria += precosPadaria[4] * qnt;
             vCar += precosPadaria[4] * qnt;
             menuPadaria();
@@ -735,7 +675,7 @@ void menuPadaria(){ // Funcao Menu Padaria
 
         case 36:    /*<----- SONHO*/
             printf("\nPao Doce(UND):\n");
-            if (tpaoDoce == 0) {
+            if (estoquePadaria[5] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuPadaria();
@@ -743,14 +683,14 @@ void menuPadaria(){ // Funcao Menu Padaria
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > tpaoDoce){
+            while (qnt > estoquePadaria[5]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Pao Doce adicionado ao carrinho.\n",qnt);
             delay(2);
-            tpaoDoce = tpaoDoce - qnt;
+            estoquePadaria[5] = estoquePadaria[5] - qnt;
             vPadaria += precosPadaria[5] * qnt;
             vCar += precosPadaria[5] * qnt;
             menuPadaria();
@@ -758,7 +698,7 @@ void menuPadaria(){ // Funcao Menu Padaria
 
         case 37:    /*<----- SONHO*/
             printf("\nSalgado(UND):\n");
-            if (tSalgado == 0) {
+            if (estoquePadaria[6] == 0) {
                 printf("Infelizmente o item nao registra estoque, digite um novo item\n");
                 delay(3);
                 menuPadaria();
@@ -766,14 +706,14 @@ void menuPadaria(){ // Funcao Menu Padaria
             }
             printf("Inserir quantidade: ");
             scanf("%f", &qnt);
-            while (qnt > tSalgado){
+            while (qnt > estoquePadaria[6]){
                 printf("Quantidade insuficiente, digite um novo valor: \n");
                 delay(3);
                 scanf("%f", &qnt);
             }
             printf("%.2f x Salgado adicionado ao carrinho.\n",qnt);
             delay(2);
-            tSalgado = tSalgado - qnt;
+            estoquePadaria[6] = estoquePadaria[6] - qnt;
             vPadaria += precosPadaria[6] * qnt;
             vCar += precosPadaria[6] * qnt;
             menuPadaria();
@@ -798,7 +738,7 @@ void menuPagamento() // Funcao Menu Pagamento
     float vTotal = 0, vTcdesconto = 0, qnt = 0, troco = 0, valorCobrado = 0, descontoReal =0;
 
     /* <<< VARIAVEIS DE ARMAZENAMENTO FIXO */
-    float descontoCinco, descontoDez, descontoDezoito ;
+    float descontoCinco, descontoDez, descontoDezoito, descontoInformado, descontoBruto ;
 
         /* DESCONTOS */
     descontoCinco = 0.05;   /* <<<- 5% desconto */
@@ -820,17 +760,23 @@ void menuPagamento() // Funcao Menu Pagamento
 
             if (vTotal <= 50)
             {
+                printf("O desconto de 5 porcento sera aplicado\n");
                 descontoReal = vTotal * descontoCinco;
             }
 
-            else if (vTotal > 50 && vTotal < 100)
+            else if (vTotal > 50 && vTotal < 200)
             {
+                printf("O desconto de 10 porcento sera aplicado\n");
                 descontoReal = vTotal * descontoDez;
             }
 
-            else if (vTotal >=100)
+            else if (vTotal >200)
             {
-                    descontoReal = vTotal * descontoDezoito;
+                printf("Informe a porcentagem de desconto:");
+                    scanf("%f",&descontoBruto);
+                        printf("O desconto de %d porcento sera aplicado\n", descontoBruto);
+                    descontoInformado = descontoBruto / 100;
+                    descontoReal = vTotal * descontoInformado;
             }
 
             vTcdesconto = vTotal - descontoReal; // Calculo valor total com desconto
@@ -1161,25 +1107,25 @@ void abrePadaria(){ // Funcao da Abertura da Padaria
     system("cls");
 
     printf("Digite o estoque de Pao de Forma (pacote): ");
-    scanf("%d", &tpaoForma);
+    scanf("%d", &estoquePadaria[0]);
     system("cls");
     printf("Digite o estoque de Pao Integral (pacote): ");
-    scanf("%d", &tpaoIntegral);
+    scanf("%d", &estoquePadaria[1]);
     system("cls");
     printf("Digite o estoque de pao Frances (Unidade): ");
-    scanf("%d", &tpaoFrances);
+    scanf("%d", &estoquePadaria[2]);
     system("cls");
     printf("Digite o estoque de Sonho (Unidade): ");
-    scanf("%d", &tSonho);
+    scanf("%d", &estoquePadaria[3]);
     system("cls");
     printf("Digite o estoque de Biscoito (KG): ");
-    scanf("%d", &tBiscoito);
+    scanf("%d", &estoquePadaria[4]);
     system("cls");
     printf("Digite o estoque de Pao Doce (Unidade): ");
-    scanf("%d", &tpaoDoce);
+    scanf("%d", &estoquePadaria[5]);
     system("cls");
     printf("Digite o estoque de Salgado (Unidade): ");
-    scanf("%d", &tSalgado);
+    scanf("%d", &estoquePadaria[6]);
     system("cls");
 }
 
