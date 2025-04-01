@@ -18,17 +18,19 @@ float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =  0; // Variaveis glo
 float fPagar = 0;
 float vCar = 0;
 float vAbertura = 0;
+
 /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
 float precosLimpeza[7] = {1.99, 8.99, 1.50, 15.00, 4.99, 7.99, 1.00};
 float precosPadaria[7] = {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
 float precosAlimentos[7] = {19.99, 5.90, 4.50, 8.00, 5.00, 2.00, 5.00};
+
 /* <<<<<<< ESTOQUE DOS PRODUTOS >>>>>>> */
 int estoqueLimpeza[7] = {50, 30, 0, 20, 100, 15, 60};
 int estoqueAlimentos[7] = {10, 15, 10, 5, 20, 6, 15};
 int estoquePadaria[7] = {};
 
-void delay(float delayemSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
-    float mili = 1000 * delayemSegundos;
+void delay(float delayEmSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
+    float mili = 1000 * delayEmSegundos;
     clock_t comecoT = clock();
     while (clock() < comecoT + mili);
 }
@@ -187,6 +189,10 @@ void printMenu(int escolhaMenu) {
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
     }
+
+    if (escolhaMenu == 4) { // 4 == Produto sem Estoque
+
+    }
 }
 
 void menuPrincipal(){ // Funcao do Menu Principal
@@ -196,25 +202,20 @@ void menuPrincipal(){ // Funcao do Menu Principal
     while (opcaoUm!=8)
     {
         printMenu(0); // 0 == Menu Principal
-
         scanf("%d", &opcaoUm);
 
         if (opcaoUm == 5) {
           menuAbertura();
         }
-
         else if(vAbertura <= 0)  {
             system("cls");
                 printf("O caixa esta fechado, realize a abertura");
                 delay(0.5);
-                delay(0.5);
                 for ( int j = 0; j <= 2; j++){
                     printf(".");
                     delay(0.5);
-                    delay(0.5);
                 }
             menuPrincipal();
-
         } else {
             switch(opcaoUm) { // Switch Case para as sessoes do mercadinho
                 case 1: // 47 até 51 === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
@@ -308,8 +309,6 @@ void menuLimpeza(){ // Funcao Menu Limpeza
             break;
 
         case 13:    /*<----- ESPONJA*/
-            estoqueLimpeza[2];
-            precosLimpeza[2];
             printf("\nEsponja \n");
             printf("Infelizmente o item nao registra estoque, digite um novo item\n");
             delay(3);
@@ -799,15 +798,14 @@ void menuPagamento() // Funcao Menu Pagamento
     int cPagamento, cCartao;
 
     /* <<< VARIAVEIS DE ARMAZENAMENTO TEMPORARIO */
-    float vTotal = 0, vTcdesconto = 0, qnt = 0, troco = 0, valorCobrado = 0, descontoReal =0;
+    float vTotal = 0, vTcdesconto = 0, troco = 0, valorCobrado = 0, descontoReal =0;
 
     /* <<< VARIAVEIS DE ARMAZENAMENTO FIXO */
-    float descontoCinco, descontoDez, descontoDezoito, descontoInformado, descontoBruto;
+    float descontoCinco, descontoDez, descontoInformado, descontoBruto;
 
         /* DESCONTOS */
     descontoCinco = 0.05;   /* <<<- 5% desconto */
     descontoDez = 0.10;  /* <<<- 10% desconto */
-    descontoDezoito = 0.18;  /* <<<- 18% desconto */
 
     vTotal = vLimpeza + vPadaria + vAlimento; // Calculo valor total sem desconto
     system("cls");
@@ -834,7 +832,7 @@ void menuPagamento() // Funcao Menu Pagamento
                 descontoReal = vTotal * descontoDez;
             }
 
-            else if (vTotal >200)
+            else if (vTotal > 200)
             {
                 printf("Informe a porcentagem de desconto:");
                     scanf("%f",&descontoBruto);
@@ -866,7 +864,6 @@ void menuPagamento() // Funcao Menu Pagamento
                 vLimpeza= 0;
                 vAlimento= 0;
                 vPadaria= 0;
-                descontoReal = 0;
                 fPagar= 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
                 vCar= 0;
                 break;
@@ -888,7 +885,6 @@ void menuPagamento() // Funcao Menu Pagamento
                 vLimpeza = 0;
                 vAlimento = 0;
                 vPadaria = 0;
-                descontoReal = 0;
                 fPagar = 0;
                 vCar = 0;/*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
                 break;
@@ -1199,26 +1195,30 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
     scanf("%d",&cFechamento);
 
     switch (cFechamento){
-    case 1:
-        printf("Informe valor em dinheiro: ");
-        scanf("%f",&vFechamentoD);
-        printf("\nInforme valor em cartao: ");
-        scanf("%f",&vFechamentoC);
-        vFechageral = vFechamentoD + vFechamentoC + vAbertura;
-        totalDia += vAbertura;
-        if (vFechageral >= totalDia ) {
-            printf("Caixa fechado  com sucesso\n");
-            printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
-            printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
-            printf("Valor de abertura de caixa: %.2f R$\n", vAbertura);
-            printf("Sistema finalizando em 5 segundos");
-            delay(5);
-            exit(0);
-        }
+        case 1:
+            printf("Informe valor em dinheiro: ");
+            scanf("%f",&vFechamentoD);
+            printf("\nInforme valor em cartao: ");
+            scanf("%f",&vFechamentoC);
+            vFechageral = vFechamentoD + vFechamentoC + vAbertura;
+            totalDia += vAbertura;
+            if (vFechageral >= totalDia ) {
+                printf("Caixa fechado  com sucesso\n");
+                printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
+                printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
+                printf("Valor de abertura de caixa: %.2f R$\n", vAbertura);
+                printf("Sistema finalizando em 5 segundos");
+                delay(5);
+                exit(0);
+            }
 
-    case 2:
-        menuPrincipal();
-        break;
+        case 2:
+            menuPrincipal();
+            break;
+
+        default:
+            printf("Erro!");
+            break;
     }
 }
 
@@ -1235,13 +1235,18 @@ void menuCancelar(){
     system("cls");
 
     switch (cCancelar) {
-    case 1:
-        vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar=0;
-        printf("Venda cancelada com sucesso...\n");
-        delay(3);
-        menuPrincipal();
-    case 2:
-        menuPrincipal();
+        case 1:
+            vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar=0;
+            printf("Venda cancelada com sucesso...\n");
+            delay(3);
+            menuPrincipal();
+            break;
+        case 2:
+            menuPrincipal();
+            break;
+        default:
+            printf("Erro!");
+            break;
     }
 }
 
