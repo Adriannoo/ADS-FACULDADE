@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
+#include <stdbool.h>
 
 /* Funcoes e variaveis globais *///
 void menuPrincipal(void);
@@ -13,6 +15,7 @@ void menuFechamento(void);
 void menuCancelar(void);
 void menufPagamento(void);
 void abrePadaria(void);
+bool caixaAberto;
 
 float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =  0; // Variaveis globais
 float fPagar = 0;
@@ -58,7 +61,7 @@ void printMenu(int escolhaMenu) {
             "|=======================================================|\n",
             "|\t ------------ Menu Principal ------------\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "| -> Cod: 1  - Menu de Materias de Limpeza \t\t|\n",
+            "| -> Cod: 1  - Menu de Materiais de Limpeza \t\t|\n",
             "| -> Cod: 2  - Menu de Alimentos \t\t\t|\n",
             "| -> Cod: 3  - Menu da Padaria \t\t\t\t|\n",
             "|.......................................................|\n",
@@ -209,10 +212,19 @@ void menuPrincipal(){ // Funcao do Menu Principal
         if (opcaoUm == 5) {
           menuAbertura();
         }
+        else if(caixaAberto == false)  { //  === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
+            system("cls");
+                printf("O caixa esta fechado, realize a abertura");
+                delay(0.5);
+                for ( int j = 0; j <= 2; j++){
+                    printf(".");
+                    delay(0.5);
+                }
+            menuPrincipal();
 
-        else {
+        }else {
             switch(opcaoUm) { // Switch Case para as sessoes do mercadinho
-                case 1: // 47 até 51 === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
+                case 1:
                     menuLimpeza();
                     break;
                 case 2:
@@ -1098,11 +1110,11 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
 void menuAbertura(){ // Funcao do Menu de abertura do caixa
     int cAbertura = 0;
 
-    if (vAbertura > 0)
+    if (caixaAberto == true)
     {
         system("cls");
         printf("Existe um caixa em aberto, finalize para realizar uma nova abertura\n");
-        for ( int i = 5; i != 0; i--) {
+        for ( int i = 3; i != 0; i--) {
             printf("Retornando em %d segundos \n",i);
             delay(1);
         }
@@ -1127,15 +1139,16 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
 
                system("cls");
                 printf("Validando abertura de caixa");
-                delay(1);
+                delay(0.5);
                 for ( int j = 0; j <= 2; j++){
                 printf(".");
-                delay(1);}
+                delay(0.5);}
                 system("cls");
                 printf("Caixa aberto com sucesso!!!\n");
                 delay(1);
                 printf("Valor de abertura de caixa %.2f R$", vAbertura);
                 delay(1);
+                caixaAberto = true;
                 system("cls");
                 abrePadaria();
                 menuPrincipal();
@@ -1187,29 +1200,52 @@ void abrePadaria(){ // Funcao da Abertura da Padaria
 
 void menuFechamento() { // Funcao do menu de Fechamento do caixa
     int cFechamento = 0;
-    float vFechamentoD = 0;
-    float vFechamentoC = 0;
-    float vFechageral = 0;
+    float vFechamentoD = 0, vFechamentoC = 0, vFechageral = 0, vAberturaF = 0;
 
+    system("cls");
     printf("1 - Inserir valor de fechamento\n");
     printf("2 - Cancelar\n");
     scanf("%d",&cFechamento);
 
+
     switch (cFechamento){
         case 1:
+            printf("Informe o valor de abertura: ");
+            scanf("%f", &vAberturaF);
+            if(vAberturaF > vAbertura || vAberturaF < vAbertura)
+            {
+                printf("O valor de abertura esta incorreto, tente novamente\n");
+                delay(2);
+                menuFechamento();
+            }else if(vAberturaF == vAbertura) {
             printf("Informe valor em dinheiro: ");
             scanf("%f",&vFechamentoD);
             printf("\nInforme valor em cartao: ");
             scanf("%f",&vFechamentoC);
-            vFechageral = vFechamentoD + vFechamentoC + vAbertura;
-            totalDia += vAbertura;
-            if (vFechageral >= totalDia ) {
+            vFechageral = vFechamentoD + vFechamentoC;
+            if (vFechageral == totalDia ) {
                 printf("Caixa fechado  com sucesso\n");
                 printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
                 printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
                 printf("Valor de abertura de caixa: %.2f R$\n", vAbertura);
                 vAbertura = 0;
-                esperarEnter();
+                caixaAberto = false;
+                delay(3);
+                //esperarEnter();
+                } else if ( vFechageral > totalDia)
+                {
+                    printf("Esta sobrando dinheiro, tente novamente...\n");
+                    vFechageral = 0;
+                    delay(2);
+                    menuFechamento();
+                }
+
+                else {
+                    printf("Valores insuficientes\n");
+                    printf("Tente novamente...");
+                    delay(2);
+                    menuFechamento();
+                }
             }
             break;
 
@@ -1254,6 +1290,8 @@ void menuCancelar(){
 }
 
 int main(){
+    //system("color 7D");
+    system("color 1F");
     menuPrincipal(); // Funcao Principal
     return 0;
 }
