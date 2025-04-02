@@ -429,12 +429,13 @@ void menuLimpeza(){ // Funcao Menu Limpeza
         case 18:    /*<----- VOLTAR*/
             printf("\n");
             printf("Voltar ao menu principal\n");
+            delay(2);
             break;
 
         default:
             printf("\n");
             printf("Opcao invalida... Tente Novamente\n");
-            delay(3);
+            delay(2);
             menuLimpeza();
             break;
         }
@@ -615,10 +616,12 @@ void menuAlimento(){ // Funcao Menu Alimentos
 
         case 28:    /*<----- VOLTAR*/
             printf("\nVoltar ao menu principal\n");
+            delay(2);
             break;
 
         default:
             printf("\nOpcao invalida... Tente Novamente\n");
+            delay(2);
             menuAlimento();
             break;
         }
@@ -797,10 +800,12 @@ void menuPadaria(){ // Funcao Menu Padaria
 
         case 38:    /*<----- VOLTAR*/
             printf("\nVoltar ao menu principal\n");
+            delay(2);
             break;
 
         default:
             printf("\nOpcao invalida... Tente Novamente\n");
+            delay(2);
             menuPadaria();
             break;
     }
@@ -873,7 +878,7 @@ void menuPagamento() // Funcao Menu Pagamento
                 system("cls");
                 printf("\nTroco: %.2f R$\n", troco);
                 printf("Pagamento realizado com sucesso!\n");
-                delay(3);
+                delay(2);
                 vLimpeza= 0;
                 vAlimento= 0;
                 vPadaria= 0;
@@ -894,7 +899,7 @@ void menuPagamento() // Funcao Menu Pagamento
                 }
                 system("cls");
                 printf("Pagamento realizado com sucesso!\n");
-                delay(3);
+                delay(2);
                 vLimpeza = 0;
                 vAlimento = 0;
                 vPadaria = 0;
@@ -910,12 +915,12 @@ void menuPagamento() // Funcao Menu Pagamento
                 }
                 system("cls");
                 printf("O valor integral sera cobrado!\n");
-                delay(4);
+                delay(2);
                 system("cls");
                 fPagar = vTotal - valorCobrado;
                 totalDia= totalDia + valorCobrado;
                 printf("Falta pagar %.2f R$", fPagar);
-                delay(3);
+                delay(2);
                 menufPagamento();
                 break;
             }
@@ -938,7 +943,7 @@ void menuPagamento() // Funcao Menu Pagamento
                 }
                 system("cls");
                 printf("Pagamento realizado com sucesso!\n");
-                delay(3);
+                delay(2);
                 totalDia = totalDia + vTotal; /* <----------- Soma do total di�rio */
             }
 
@@ -960,12 +965,14 @@ void menuPagamento() // Funcao Menu Pagamento
             else if (cCartao == 53)
             {
                 printf("\nVoltar ao menu anterior\n");
+                delay(2);
                 menuPagamento();
             }
 
             else
             {
                 printf("\nOpcao invalida... Tente novamente\n");
+                delay(2);
             }
 
             vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar = 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
@@ -978,6 +985,7 @@ void menuPagamento() // Funcao Menu Pagamento
 
         default:
             printf("\nOpcao invalida... Tente Novamente\n");
+            delay(2);
             menuPagamento();
             break;
     }
@@ -1102,6 +1110,7 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
 
         default:
             printf("Opcao invalida... Tente Novamente\n\n");
+            delay(2);
             menufPagamento();
             break;
     }
@@ -1255,6 +1264,7 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
 
         default:
             printf("Opcao Invalida!");
+            delay(2);
             break;
     }
 }
@@ -1285,6 +1295,7 @@ void menuCancelar(){
 
         default:
             printf("Opcao Invalida!");
+            delay(2);
             break;
     }
 }
