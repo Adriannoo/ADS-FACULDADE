@@ -15,7 +15,7 @@ void menuFechamento(void);
 void menuCancelar(void);
 void menufPagamento(void);
 void abrePadaria(void);
-bool caixaAberto;
+bool caixaAberto = false;
 
 float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =  0; // Variaveis globais
 float fPagar = 0;
@@ -212,7 +212,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
         if (opcaoUm == 5) {
           menuAbertura();
         }
-        else if(caixaAberto == false)  { //  === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
+        else if (caixaAberto == false && opcaoUm != 8)  { //  === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
             system("cls");
                 printf("O caixa esta fechado, realize a abertura");
                 delay(0.5);
@@ -222,7 +222,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
                 }
             menuPrincipal();
 
-        }else {
+        } else {
             switch(opcaoUm) { // Switch Case para as sessoes do mercadinho
                 case 1:
                     menuLimpeza();
@@ -246,14 +246,14 @@ void menuPrincipal(){ // Funcao do Menu Principal
                     menuCancelar();
                     break;
                 case 8:
-                    if (vAbertura != 0){
+                    if (caixaAberto == true) {
                         printf("Ha um caixa aberto, por favor, realize o fechamento antes de sair do sistema...");
                         delay(3);
                         menuPrincipal();
-                    } else if (vAbertura == 0){
-                    printf("Encerrando o sistema...");
-                    delay(3);
-                    exit (0);
+                    } else {
+                        printf("Encerrando o sistema...");
+                        delay(3);
+                        exit (0);
                     }
                 default:
                     printf("Opcao invalida... Tente novamente\n");
@@ -1143,25 +1143,26 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
                 scanf("%f",&vAbertura);
 
                while (vAbertura <=0){
-                printf ("\nErro.. digite um novo valor:\n");
-                scanf ("%f", &vAbertura);}
+                   printf ("\nErro.. digite um novo valor:\n");
+                   scanf ("%f", &vAbertura);}
 
-               system("cls");
-                printf("Validando abertura de caixa");
-                delay(0.5);
-                for ( int j = 0; j <= 2; j++){
-                printf(".");
-                delay(0.5);}
-                system("cls");
-                printf("Caixa aberto com sucesso!!!\n");
-                delay(1);
-                printf("Valor de abertura de caixa %.2f R$", vAbertura);
-                delay(1);
-                caixaAberto = true;
-                system("cls");
-                abrePadaria();
-                menuPrincipal();
-                break;
+                    system("cls");
+                    printf("Validando abertura de caixa");
+                    delay(0.5);
+                    for ( int j = 0; j <= 2; j++) {
+                        printf(".");
+                        delay(0.5);
+                    }
+                    system("cls");
+                    printf("Caixa aberto com sucesso!!!\n");
+                    delay(1);
+                    printf("Valor de abertura de caixa %.2f R$", vAbertura);
+                    delay(1);
+                    caixaAberto = true;
+                    system("cls");
+                    abrePadaria();
+                    menuPrincipal();
+                    break;
 
             case 2:
                 menuPrincipal();
@@ -1169,7 +1170,7 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
 
             default:
                 printf("Opcao invalida, tente novamente...");
-                delay(2);
+                delay(1);
                 menuAbertura();
                 break;
         }
@@ -1180,8 +1181,9 @@ void abrePadaria(){ // Funcao da Abertura da Padaria
     printf("Abertura padaria");
     delay(0.5);
     for ( int j = 0; j <= 2; j++){
-    printf(".");
-    delay(0.5);}
+        printf(".");
+        delay(0.5);
+    }
     system("cls");
 
     printf("Digite o estoque de Pao de Forma (pacote): ");
@@ -1216,22 +1218,21 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
     printf("2 - Cancelar\n");
     scanf("%d",&cFechamento);
 
-
     switch (cFechamento){
         case 1:
             printf("Informe o valor de abertura: ");
             scanf("%f", &vAberturaF);
-            if(vAberturaF > vAbertura || vAberturaF < vAbertura)
-            {
+            if(vAberturaF > vAbertura || vAberturaF < vAbertura) {
                 printf("O valor de abertura esta incorreto, tente novamente\n");
-                delay(2);
+                delay(1);
                 menuFechamento();
-            }else if(vAberturaF == vAbertura) {
-            printf("Informe valor em dinheiro: ");
-            scanf("%f",&vFechamentoD);
-            printf("\nInforme valor em cartao: ");
-            scanf("%f",&vFechamentoC);
-            vFechageral = vFechamentoD + vFechamentoC;
+            }
+            else if(vAberturaF == vAbertura) {
+                printf("Informe valor em dinheiro: ");
+                scanf("%f",&vFechamentoD);
+                printf("\nInforme valor em cartao: ");
+                scanf("%f",&vFechamentoC);
+                vFechageral = vFechamentoD + vFechamentoC;
             if (vFechageral == totalDia ) {
                 printf("Caixa fechado  com sucesso\n");
                 printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
