@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include <windows.h>
 #include <stdbool.h>
 
@@ -945,6 +946,7 @@ void menuPagamento() // Funcao Menu Pagamento
                 printf("Pagamento realizado com sucesso!\n");
                 delay(2);
                 totalDia = totalDia + vTotal; /* <----------- Soma do total di�rio */
+                vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar = 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
             }
 
             else if (cCartao == 52)
@@ -959,7 +961,7 @@ void menuPagamento() // Funcao Menu Pagamento
                 system("cls");
                 printf("\nPagamento nao realizado!\n");
                 delay(3);
-                menufPagamento();
+                menuPagamento();
             }
 
             else if (cCartao == 53)
@@ -975,7 +977,6 @@ void menuPagamento() // Funcao Menu Pagamento
                 delay(2);
             }
 
-            vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar = 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
             break;
 
         case 43:
@@ -1072,6 +1073,7 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
                 printf("\nPagamento realizado com sucesso!\n\n");
                 delay(3);
                 totalDia= totalDia + fPagar; /* <----------- Soma do total diario */
+                vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar = 0;  /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
                 menuPrincipal();
             }
 
@@ -1087,12 +1089,13 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
                 system("cls");
                 printf("\nPagamento nao realizado!\n");
                 delay(3);
+                menufPagamento();
             }
 
             else if (cCartao == 53)
             {
                 printf("Voltar ao menu anterior\n\n");
-                menuPagamento();
+                menufPagamento();
             }
 
             else
@@ -1100,7 +1103,6 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
                 printf("Opcao invalida... Tente novamente\n\n");
             }
 
-            vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar=0;   /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
             break;
 
         case 43:
