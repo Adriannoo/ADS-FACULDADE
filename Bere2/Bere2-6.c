@@ -1119,7 +1119,7 @@ void menufPagamento() //FUNCAO CRIADA PARA CASO A PESSOA NAO DE DINHEIRO SUFICIE
 void menuAbertura(){ // Funcao do Menu de abertura do caixa
     int cAbertura = 0;
 
-    if (caixaAberto == true)
+    if (caixaAberto == true) // VERIFICA SE HÁ CAIXA ABERTO
     {
         system("cls");
         printf("Existe um caixa em aberto, finalize para realizar uma nova abertura\n");
@@ -1133,7 +1133,7 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
 
         system("cls");
         printf("    <Abertura de caixa>\n");
-        printf("1 - Inserir valor de abertura\n");
+        printf("1 - Abrir caixa\n");
         printf("2 - Cancelar\n");
         scanf("%d",&cAbertura);
 
@@ -1186,7 +1186,7 @@ void abrePadaria(){ // Funcao da Abertura da Padaria
     }
     system("cls");
 
-    printf("Digite o estoque de Pao de Forma (pacote): ");
+    printf("Digite o estoque de Pao de Forma (pacote): "); // SOLICITA AO USUÁRIO QUE INFORME A QUANTIDADE DE ITENS EM ESTOQUE
     scanf("%d", &estoquePadaria[0]);
     system("cls");
     printf("Digite o estoque de Pao Integral (pacote): ");
@@ -1214,7 +1214,7 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
     float vFechamentoD = 0, vFechamentoC = 0, vFechageral = 0, vAberturaF = 0;
 
     system("cls");
-    printf("1 - Inserir valor de fechamento\n");
+    printf("1 - Fechar caixa\n");
     printf("2 - Cancelar\n");
     scanf("%d",&cFechamento);
 
@@ -1222,19 +1222,20 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
         case 1:
             printf("Informe o valor de abertura: ");
             scanf("%f", &vAberturaF);
-            if(vAberturaF > vAbertura || vAberturaF < vAbertura) {
+            if(vAberturaF != vAbertura) { //VERIFICA SE O VALOR INFORMADO É IGUAL AO INFORMADO AO ABRIR O CAIXA
                 printf("O valor de abertura esta incorreto, tente novamente\n");
                 delay(1);
                 menuFechamento();
             }
             else if(vAberturaF == vAbertura) {
+                printf("Total de vendas: %.2f\n", totalDia);
                 printf("Informe valor em dinheiro: ");
                 scanf("%f",&vFechamentoD);
                 printf("\nInforme valor em cartao: ");
                 scanf("%f",&vFechamentoC);
                 vFechageral = vFechamentoD + vFechamentoC;
-            if (vFechageral == totalDia ) {
-                printf("Caixa fechado  com sucesso\n");
+            if (fabs(vFechageral - totalDia) < 0.01) { //fabs retorna o valor da operação dentro do ( ) .
+                printf("Caixa fechado  com sucesso\n"); // se a diferença for menor que 0.01, consideramos os números iguais.
                 printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
                 printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
                 printf("Valor de abertura de caixa: %.2f R$\n", vAbertura);
@@ -1242,15 +1243,16 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
                 caixaAberto = false;
                 delay(3);
                 //esperarEnter();
-                } else if ( vFechageral > totalDia)
-                {
+                } else if ( vFechageral > totalDia) // SE OS VALORES INFORMADOS FOREM MAIORES
+                    {
                     printf("Esta sobrando dinheiro, tente novamente...\n");
                     vFechageral = 0;
                     delay(2);
                     menuFechamento();
                 }
 
-                else {
+                else if ( vFechageral < totalDia ) // SE OS VALORES INFORMADOS FOREM MENORES
+                    {
                     printf("Valores insuficientes\n");
                     printf("Tente novamente...");
                     delay(2);
@@ -1284,7 +1286,7 @@ void menuCancelar(){
 
     switch (cCancelar) {
         case 1:
-            vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar=0;
+            vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar=0; // CANCELA A VENDA E ZERA TODAS AS VARIÁVEIS DE ACUMULAÇÃO DE VALORES
             printf("Venda cancelada com sucesso...\n");
             delay(3);
             menuPrincipal();
