@@ -52,7 +52,7 @@ int pegaTamanho(char* array[]) {
     return tamanho;
 }
 
-void printMenu(int escolhaMenu) {
+void printMenu(int const escolhaMenu) {
     int i = 0;
     system("cls");
     if(escolhaMenu == 0) { // 0 == Menu principal.
@@ -1306,8 +1306,9 @@ void menuCancelar(){
 }
 
 int main(){
-    //system("color 7D");
-    system("color 1F");
+    system("color 0C"); // Vermelho
+    // system("color 7D"); // Roxo
+    // system("color 1F"); // Azul
     menuPrincipal(); // Funcao Principal
     return 0;
 }
