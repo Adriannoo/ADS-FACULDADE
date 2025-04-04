@@ -21,7 +21,7 @@ bool caixaAberto = false;
 float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =  0; // Variaveis globais
 float fPagar = 0;
 float vCar = 0;
-float vAbertura = 0;
+float trocoInicial = 0;
 /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
 float precosLimpeza[7] = {1.99, 8.99, 1.50, 15.00, 4.99, 7.99, 1.00};
 float precosPadaria[7] = {9.50, 12.50, 1.90, 8.50, 12.50, 2.50, 17.50};
@@ -1142,11 +1142,11 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
         switch (cAbertura){
             case 1:
                 printf("Informe o valor: ");
-                scanf("%f",&vAbertura);
+                scanf("%f",&trocoInicial);
 
-               while (vAbertura <=0){
+               while (trocoInicial <=0){
                    printf ("\nErro.. digite um novo valor:\n");
-                   scanf ("%f", &vAbertura);}
+                   scanf ("%f", &trocoInicial);}
 
                     system("cls");
                     printf("Validando abertura de caixa");
@@ -1158,7 +1158,7 @@ void menuAbertura(){ // Funcao do Menu de abertura do caixa
                     system("cls");
                     printf("Caixa aberto com sucesso!!!\n");
                     delay(1);
-                    printf("Valor de abertura de caixa %.2f R$", vAbertura);
+                    printf("Valor de abertura de caixa %.2f R$", trocoInicial);
                     delay(1);
                     caixaAberto = true;
                     system("cls");
@@ -1213,7 +1213,7 @@ void abrePadaria(){ // Funcao da Abertura da Padaria
 
 void menuFechamento() { // Funcao do menu de Fechamento do caixa
     int cFechamento = 0;
-    float vFechamentoD = 0, vFechamentoC = 0, vFechageral = 0, vAberturaF = 0;
+    float vFechamentoD = 0, vFechamentoC = 0, vFechageral = 0, trocoFechamento = 0;
 
     system("cls");
     printf("1 - Fechar caixa\n");
@@ -1222,14 +1222,14 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
 
     switch (cFechamento){
         case 1:
-            printf("Informe o valor de abertura: ");
-            scanf("%f", &vAberturaF);
-            if(vAberturaF != vAbertura) { //VERIFICA SE O VALOR INFORMADO É IGUAL AO INFORMADO AO ABRIR O CAIXA
-                printf("O valor de abertura esta incorreto, tente novamente\n");
+            printf("Informe o valor de troco: ");
+            scanf("%f", &trocoFechamento);
+            if(trocoFechamento != trocoInicial) { //VERIFICA SE O VALOR INFORMADO É IGUAL AO INFORMADO AO ABRIR O CAIXA
+                printf("O valor de troco esta incorreto, tente novamente\n");
                 delay(1);
                 menuFechamento();
             }
-            else if(vAberturaF == vAbertura) {
+            else if(trocoFechamento == trocoInicial) {
                 printf("Total de vendas: %.2f\n", totalDia);
                 printf("Informe valor em dinheiro: ");
                 scanf("%f",&vFechamentoD);
@@ -1240,8 +1240,8 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
                 printf("Caixa fechado  com sucesso\n"); // se a diferença for menor que 0.01, consideramos os números iguais.
                 printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
                 printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
-                printf("Valor de abertura de caixa: %.2f R$\n", vAbertura);
-                vAbertura = 0;
+                printf("Valor de troco inicial: %.2f R$\n", trocoInicial);
+                trocoInicial = 0;
                 caixaAberto = false;
                 delay(3);
                 //esperarEnter();
