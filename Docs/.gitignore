@@ -6,6 +6,6 @@
 .DS_Store
 # Ignorar arquivos de configuração do editor
 .vscode/
-.idea/
+../.idea/
 # Ignorar arquivos de dependências
 node_modules/

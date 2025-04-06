@@ -198,6 +198,46 @@ void printMenu(int const escolhaMenu) {
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
     }
+
+    if (escolhaMenu == 4) { // 4 == Menu Pagamento
+        const char* printMenuPagamento[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|\t ------------ Menu Pagamento ------------\t|\n",
+            "|\t ---* Escolha uma forma de pagamento *---\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            "| -> Cod: 41 - Dinheiro \t\t\t\t|\n",
+            "| -> Cod: 42 - Cartao   \t\t\t\t|\n",
+            "|.......................................................|\n",
+            "| -> Cod: 43 - Voltar ao Menu Principal \t\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            NULL
+        };
+        for (i = 0; i < pegaTamanho(printMenuPagamento); i++) {
+            printf("%s", printMenuPagamento[i]);
+        }
+        printf("|\t $ - Valor Total Carrinho:  R$ %.2f - $\t\t|\n", totalDia);
+        printf("|=======================================================|\n");
+        printf("Opcao..:  ");
+    }
+
+    if (escolhaMenu == 5) { // 5 == Abertura Caixa
+        const char* printMenuAbertura[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|\t ------------ Menu Caixa ------------\t|\n",
+            "|\t ---* Abertura *---\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            "| -> Cod: 41 - Dinheiro \t\t\t\t|\n",
+            "| -> Cod: 42 - Cartao   \t\t\t\t|\n",
+            "|.......................................................|\n",
+            "| -> Cod: 43 - Voltar ao Menu Principal \t\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+        };
+    }
+
 }
 
 void menuPrincipal(){ // Funcao do Menu Principal
@@ -206,7 +246,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
 
     while (opcaoUm!=8)
     {
-        printMenu(0); // 0 == Menu Principal
+        printMenu(4); // 0 == Menu Principal
 
         scanf("%d", &opcaoUm);
 
@@ -817,7 +857,7 @@ void menuPagamento() // Funcao Menu Pagamento
     int cPagamento, cCartao;
 
     /* <<< VARIAVEIS DE ARMAZENAMENTO TEMPORARIO */
-    float vTotal = 0, vTcdesconto = 0, troco = 0, valorCobrado = 0, descontoReal =0;
+    float vTotal = 0, vTcdesconto = 0, troco = 0, valorCobrado = 0, descontoReal = 0;
 
     /* <<< VARIAVEIS DE ARMAZENAMENTO FIXO */
     float descontoCinco, descontoDez, descontoInformado, descontoBruto;
@@ -827,11 +867,8 @@ void menuPagamento() // Funcao Menu Pagamento
     descontoDez = 0.10;  /* <<<- 10% desconto */
 
     vTotal = vLimpeza + vPadaria + vAlimento; // Calculo valor total sem desconto
-    system("cls");
-    printf("Forma de Pagamento:\n");
-    printf("41. Dinheiro\n");
-    printf("42. Cartao\n");
-    printf("43. Voltar ao menu principal\n");
+
+    printMenu(4); // 4 == Menu Pagamento
 
     scanf("%d", &cPagamento);   /* <--------------- PAGAMENTO EM DINHEIRO */
 
@@ -1248,7 +1285,6 @@ void menuFechamento() { // Funcao do menu de Fechamento do caixa
                 } else if ( vFechageral > totalDia) // SE OS VALORES INFORMADOS FOREM MAIORES
                     {
                     printf("Esta sobrando dinheiro, tente novamente...\n");
-                    vFechageral = 0;
                     delay(2);
                     menuFechamento();
                 }
