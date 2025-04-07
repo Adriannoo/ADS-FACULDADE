@@ -76,9 +76,9 @@ void printMenu(int const escolhaMenu) {
             "| -> Cod: 3  - Menu da Padaria \t\t\t\t|\n",
             "|.......................................................|\n",
             "| -> Cod: 4  - Menu de Pagamento \t\t\t|\n",
-            "| -> Cod: 5  - Abertura de Caixa \t\t\t|\n",
-            "| -> Cod: 6  - Fechamento de Caixa \t\t\t|\n",
-            "| -> Cod: 7  - Sair do Programa \t\t\t\t|\n",
+            "| -> Cod: 5  - Caixa \t\t\t\t\t|\n",
+            "| -> Cod: 6  - Cancelar venda \t\t\t\t|\n",
+            "| -> Cod: 7  - Sair do Programa \t\t\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL // Finaliza o Array de Strings
             };
@@ -1277,29 +1277,12 @@ void abrePadaria(){ // Funcao da Abertura da Padaria
         printf(".");
         delay(0.5);
     }
-    system("cls");
 
-    printf("Digite o estoque de Pao de Forma (pacote): "); // SOLICITA AO USUÁRIO QUE INFORME A QUANTIDADE DE ITENS EM ESTOQUE
-    scanf("%d", &padaria[0].estoqueProduto);
+    for(int i = 0; i < 7; i++){
     system("cls");
-    printf("Digite o estoque de Pao Integral (pacote): ");
-    scanf("%d", &padaria[1].estoqueProduto);
-    system("cls");
-    printf("Digite o estoque de pao Frances (Unidade): ");
-    scanf("%d", &padaria[2].estoqueProduto);
-    system("cls");
-    printf("Digite o estoque de Sonho (Unidade): ");
-    scanf("%d", &padaria[3].estoqueProduto);
-    system("cls");
-    printf("Digite o estoque de Biscoito (KG): ");
-    scanf("%d", &padaria[4].estoqueProduto);
-    system("cls");
-    printf("Digite o estoque de Pao Doce (Unidade): ");
-    scanf("%d", &padaria[5].estoqueProduto);
-    system("cls");
-    printf("Digite o estoque de Salgado (Unidade): ");
-    scanf("%d", &padaria[6].estoqueProduto);
-    system("cls");
+    printf("Digite o estoque de %s: ", padaria[i].nomeProduto); // SOLICITA AO USUÁRIO QUE INFORME A QUANTIDADE DE ITENS EM ESTOQUE
+    scanf("%d", &padaria[i].estoqueProduto);}
+
 }
 
 void menuCancelar(){
