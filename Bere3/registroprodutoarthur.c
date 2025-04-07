@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <string.h>
 
 
 int produtosCadastrados;
 bool registro = false;
+bool admnistrativo = false;
+char login[50], senha[50];
 
 struct produto{
 int codigoProduto;
@@ -126,12 +129,13 @@ void listarProdutos(){
     }
 }
 
-int menuProdutos(){
+int menuAdministrativo(){
     int codigoMenu;
     system("cls");
-    printf("Menu Principal\n");
+    printf("Menu Admnistrativo\n");
     printf("1 - Registrar Produtos\n");
     printf("2 - Listar Produtos\n");
+    printf("3 - Voltar\n");
     scanf("%d", &codigoMenu);
     switch(codigoMenu){
         case 1:
@@ -140,11 +144,41 @@ int menuProdutos(){
         case 2:
             listarProdutos();
         break;
+        case 3:
+            admnistrativo = false;
+            acessoAdministrativo();
+        break;
     }
 }
 
+void acessoAdministrativo(){
+    system("cls");
+    printf("<Login adminstrativo>\n");
+        printf("Login: ");
+            fgets(login, sizeof(login), stdin);
+            login[strcspn(login, "\n")] = '\0';
+        printf("Senha: ");
+            fgets(senha, sizeof(senha), stdin);
+            senha[strcspn(senha, "\n")] = '\0';
+            if (strcmp(login, "admin") == 0 && strcmp(senha, "admin") == 0){
+                printf("Login realizado com sucesso!\n");
+                printf("Liberado acesso adminstrativo");
+                admnistrativo = true;
+                sleep(2);
+                menuAdministrativo();
+                }else{
+                    printf("Login e/ou senha invalidos!\n");
+                    printf("Tente novamente...");
+                    sleep(2);
+                    acessoAdministrativo();
+                }
+
+}
+
 int main(){
-    menuProdutos();
+    acessoAdministrativo();
 
     return 0;
 }
+
+
