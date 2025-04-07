@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include <string.h>
 
 
-int cadastradosLimpeza, cadastradosAlimentos, cadastradosPadaria;
-bool registro = false;
+int cadastradosLimpeza = 1, cadastradosAlimentos = 1, cadastradosPadaria = 1;
 bool admnistrativo = false;
 char loginadm[50], senhaadm[50];
 
@@ -15,9 +13,6 @@ char nomeProduto[50];
 float valorProduto;
 int estoqueProduto;
 };
-cadastradosLimpeza = 1;
-cadastradosAlimentos = 1;
-cadastradosPadaria = 1;
 
 struct produto limpeza[100] = {{11,"Detergente",1.99,50}};
 struct produto alimentos[100] = {{21,"Cafe",19.99,10}};
@@ -46,8 +41,6 @@ void registrarProduto(){
                     scanf("%f", &limpeza[cadastradosLimpeza].valorProduto);
                 printf("Informe o estoque do produto: ");
                     scanf("%d", &limpeza[cadastradosLimpeza].estoqueProduto);
-                    registro = true;
-                        if (registro = true)
                             cadastradosLimpeza++;
                 printf("Produtos registrado com sucesso!!!");
                 sleep(2);
@@ -65,8 +58,6 @@ void registrarProduto(){
                     scanf("%f", &alimentos[cadastradosAlimentos].valorProduto);
                 printf("Informe o estoque do produto: ");
                     scanf("%d", &alimentos[cadastradosAlimentos].estoqueProduto);
-                    registro = true;
-                        if (registro = true)
                             cadastradosAlimentos++;
                 sleep(2);
                 registrarProduto();
@@ -83,8 +74,6 @@ void registrarProduto(){
                     scanf("%f", &padaria[cadastradosPadaria].valorProduto);
                 printf("Informe o estoque do produto: ");
                     scanf("%d", &padaria[cadastradosPadaria].estoqueProduto);
-                    registro = true;
-                        if (registro = true)
                             cadastradosPadaria++;
                 sleep(2);
                 registrarProduto();
@@ -110,7 +99,7 @@ void listarProdutos(){
                        limpeza[i].codigoProduto, limpeza[i].nomeProduto, limpeza[i].valorProduto, limpeza[i].estoqueProduto);
     }
         sleep(2);
-        main();
+        menuAdministrativo();
         break;
     case 2:
         printf("Alimentos\n");
@@ -118,7 +107,7 @@ void listarProdutos(){
                 printf("Codigo: %d Nome: %-23s Valor: %.2f Estoque: (%d)\n", alimentos[j].codigoProduto, alimentos[j].nomeProduto, alimentos[j].valorProduto, alimentos[j].estoqueProduto);
     }
         sleep(2);
-        main();
+        menuAdministrativo();
         break;
     case 3:
         printf("Padaria\n");
@@ -126,12 +115,12 @@ void listarProdutos(){
                 printf("Codigo: %d Nome: %s Valor: %.2f Estoque: (%d)\n", padaria[k].codigoProduto, padaria[k].nomeProduto, padaria[k].valorProduto, padaria[k].estoqueProduto);
         }
         sleep(2);
-        main();
+        menuAdministrativo();
         break;
     }
 }
 
-int menuAdministrativo(){
+void menuAdministrativo(){
     int codigoMenu;
     system("cls");
     printf("Menu Admnistrativo\n");
@@ -177,9 +166,12 @@ void acessoAdministrativo(){
 
 }
 
-int main(){
+void inicio(){
     acessoAdministrativo();
+}
 
+int main(){
+    inicio();
     return 0;
 }
 
