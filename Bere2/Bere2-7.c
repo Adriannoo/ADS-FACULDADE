@@ -30,18 +30,33 @@ struct produto {
     float valorProduto;
     int estoqueProduto;
 };
-struct produto limpeza[7] = {
-    {11,"Detergente",1.99,50},{12,"Sabao em Po 1KG",9.99,30},{13,"Esponja",1.50,0},{14,"Amaciante 1LT",15.00,20}, // limpeza.codigoProduto // limpeza.nomeProduto // limpeza.valorProduto // limpeza.estoqueProduto
-    {15,"Bucha de Pia (KIT C/3)",4.99,100},{16,"Desinfetante 1LT",7.99,15},{17,"Sabao em Barra (UND)",1.00,60}};
+
+struct produto limpeza[7] = { // .codigoProduto // .nomeProduto // .valorProduto // .estoqueProduto
+    {11,"Detergente",1.99,50},
+    {12,"Sabao em Po 1KG",9.99,30},
+    {13,"Esponja",1.50,0},
+    {14,"Amaciante 1LT",15.00,20},
+    {15,"Bucha de Pia (KIT C/3)",4.99,100},
+    {16,"Desinfetante 1LT",7.99,15},
+    {17,"Sabao em Barra (UND)",1.00,60}};
 
 struct produto alimentos[7] = {
-    {21,"Cafe",19.99,10},{22,"Leite Caixa",5.90,15},{23,"Arroz 1KG",4.50,10},{24,"Feijao Preto 1KG",8.00,5}, // limpeza.codigoProduto // limpeza.nomeProduto // limpeza.valorProduto // limpeza.estoqueProduto
-    {25,"Acucar 1KG",5.00,20},{26,"Sal 1KG",2.00,6},{27,"Farinha de Trigo 1KG",5.00,15}};
+    {21,"Cafe",19.99,10},
+    {22,"Leite Caixa",5.90,15},
+    {23,"Arroz 1KG",4.50,10},
+    {24,"Feijao Preto 1KG",8.00,5},
+    {25,"Acucar 1KG",5.00,20},
+    {26,"Sal 1KG",2.00,6},
+    {27,"Farinha de Trigo 1KG",5.00,15}};
 
 struct produto padaria[7] = {
-    {31,"Pao de Forma PCT",9.50},{32,"Pao Integral PCT",12.50},{33,"Pao Frances UND",1.90},{34,"Sonho UND",8.50},
-    {35,"Biscoito KG",12.50},{36,"Pao Doce UND",2.50},{37,"Salgado",17.50}};
-
+    {31,"Pao de Forma PCT",9.50},
+    {32,"Pao Integral PCT",12.50},
+    {33,"Pao Frances UND",1.90},
+    {34,"Sonho UND",8.50},
+    {35,"Biscoito KG",12.50},
+    {36,"Pao Doce UND",2.50},
+    {37,"Salgado",17.50}};
 
 
 void delay(float delayEmSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
