@@ -1186,12 +1186,14 @@ void menuCaixa() {
 
             } else {
                 printMenu(6); // 6 == Abertura do Caixa
+                fflush(stdout);
                 scanf("%d",&cAbertura);
+                printf("|=======================================================|\n");
 
                 switch (cAbertura){
                     case 1:
-                        printf("|\t@======Valor de Abertura do Caixa@\t|\n");
-                        printf("R$ ");
+                        printf("|\t@ ---- Valor de Abertura do Caixa ---- @\t|\n");
+                        printf("| -> R$ ");
                         scanf("%.2f", &trocoInicial);
 
                         while (trocoInicial <=0){
