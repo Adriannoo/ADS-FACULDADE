@@ -12,8 +12,6 @@ void menuAlimento(void); // Declaracoes das Funcoes
 void menuPadaria(void);
 void menuPagamento(void);
 void menuCaixa(void);
-void menuAbertura(void);
-void menuFechamento(void);
 void menuCancelar(void);
 void abrePadaria(void);
 bool caixaAberto = false;
@@ -302,7 +300,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
                     menuCaixa();
                     break;
                 case 6:
-                    menuFechamento();
+                    menuCaixa();
                     break;
                 case 7:
                     menuCancelar();
@@ -1225,7 +1223,7 @@ void menuCaixa() {
                     default:
                         printf("Opcao invalida, tente novamente...");
                     delay(1);
-                    menuAbertura();
+                    menuCaixa();
                     break;
                 }
             }
@@ -1245,7 +1243,7 @@ void menuCaixa() {
                     if(trocoFechamento != trocoInicial) { //VERIFICA SE O VALOR INFORMADO É IGUAL AO INFORMADO AO ABRIR O CAIXA
                         printf("O valor de troco esta incorreto, tente novamente\n");
                         delay(1);
-                        menuFechamento();
+                        menuCaixa();
                     }
                     else if(trocoFechamento == trocoInicial) {
                         printf("Total de vendas: %.2f\n", totalDia);
@@ -1268,7 +1266,7 @@ void menuCaixa() {
                             {
                             printf("Esta sobrando dinheiro, tente novamente...\n");
                             delay(2);
-                            menuFechamento();
+                            menuCaixa();
                         }
 
                         else if ( vFechageral < totalDia ) // SE OS VALORES INFORMADOS FOREM MENORES
@@ -1276,7 +1274,7 @@ void menuCaixa() {
                             printf("Valores insuficientes\n");
                             printf("Tente novamente...");
                             delay(2);
-                            menuFechamento();
+                            menuCaixa();
                         }
                     }
                     break;
