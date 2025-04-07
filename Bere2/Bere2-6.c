@@ -78,8 +78,7 @@ void printMenu(int const escolhaMenu) {
             "| -> Cod: 4  - Menu de Pagamento \t\t\t|\n",
             "| -> Cod: 5  - Abertura de Caixa \t\t\t|\n",
             "| -> Cod: 6  - Fechamento de Caixa \t\t\t|\n",
-            "| -> Cod: 7  - Cancelar Venda \t\t\t\t|\n",
-            "| -> Cod: 8  - Sair do Programa \t\t\t|\n",
+            "| -> Cod: 7  - Sair do Programa \t\t\t\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL // Finaliza o Array de Strings
             };
@@ -247,13 +246,13 @@ void printMenu(int const escolhaMenu) {
 void menuPrincipal(){ // Funcao do Menu Principal
     int opcaoUm = 0; // Variavel opcao do usuario
 
-    while (opcaoUm!=8)
+    while (opcaoUm!=7)
     {
         printMenu(0); // 0 == Menu Principal
 
         scanf("%d", &opcaoUm);
 
-        if (caixaAberto == false && opcaoUm != 8 && opcaoUm != 5)  { //  === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
+        if (caixaAberto == false && opcaoUm != 7 && opcaoUm != 5)  { //  === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
             system("cls");
             printf("O caixa esta fechado, realize a abertura");
             delay(0.5);
@@ -280,12 +279,9 @@ void menuPrincipal(){ // Funcao do Menu Principal
                     menuCaixa();
                     break;
                 case 6:
-                    menuCaixa();
-                    break;
-                case 7:
                     menuCancelar();
                     break;
-                case 8:
+                case 7:
                     if (caixaAberto == true) {
                         printf("Ha um caixa aberto, por favor, realize o fechamento antes de sair do sistema...");
                         delay(3);
