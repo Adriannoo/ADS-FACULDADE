@@ -4,7 +4,7 @@
 
 
 int cadastradosLimpeza = 1, cadastradosAlimentos = 1, cadastradosPadaria = 1;
-bool admnistrativo = false;
+bool administrativo = false;
 char loginadm[50], senhaadm[50];
 
 struct produto{
@@ -16,7 +16,7 @@ int estoqueProduto;
 
 struct produto limpeza[100] = {{11,"Detergente",1.99,50}};
 struct produto alimentos[100] = {{21,"Cafe",19.99,10}};
-struct produto padaria[100] = {{31,"Pao de forma PCT",9.50}};
+struct produto padaria[100] = {{31,"Pao de forma PCT",9.50,0}};
 
 void registrarProduto(){
     int codigoCategoria;
@@ -79,7 +79,7 @@ void registrarProduto(){
                 registrarProduto();
                 break;
         case 4:
-            main();
+            inicio();
     }
 }
 
@@ -123,7 +123,7 @@ void listarProdutos(){
 void menuAdministrativo(){
     int codigoMenu;
     system("cls");
-    printf("Menu Admnistrativo\n");
+    printf("Menu Administrativo\n");
     printf("1 - Registrar Produtos\n");
     printf("2 - Listar Produtos\n");
     printf("3 - Voltar\n");
@@ -136,7 +136,7 @@ void menuAdministrativo(){
             listarProdutos();
         break;
         case 3:
-            admnistrativo = false;
+            administrativo = false;
             acessoAdministrativo();
         break;
     }
@@ -154,7 +154,7 @@ void acessoAdministrativo(){
             if (strcmp(loginadm, "admin") == 0 && strcmp(senhaadm, "admin") == 0){
                 printf("Login realizado com sucesso!\n");
                 printf("Liberado acesso adminstrativo");
-                admnistrativo = true;
+                administrativo = true;
                 sleep(2);
                 menuAdministrativo();
                 }else{
