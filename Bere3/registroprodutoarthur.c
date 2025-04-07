@@ -7,7 +7,7 @@
 int produtosCadastrados;
 bool registro = false;
 bool admnistrativo = false;
-char login[50], senha[50];
+char loginadm[50], senhaadm[50];
 
 struct produto{
 int codigoProduto;
@@ -155,12 +155,12 @@ void acessoAdministrativo(){
     system("cls");
     printf("<Login adminstrativo>\n");
         printf("Login: ");
-            fgets(login, sizeof(login), stdin);
-            login[strcspn(login, "\n")] = '\0';
+            fgets(loginadm, sizeof(loginadm), stdin);
+            loginadm[strcspn(loginadm, "\n")] = '\0';
         printf("Senha: ");
-            fgets(senha, sizeof(senha), stdin);
-            senha[strcspn(senha, "\n")] = '\0';
-            if (strcmp(login, "admin") == 0 && strcmp(senha, "admin") == 0){
+            fgets(senhaadm, sizeof(senhaadm), stdin);
+            senhaadm[strcspn(senhaadm, "\n")] = '\0';
+            if (strcmp(loginadm, "admin") == 0 && strcmp(senhaadm, "admin") == 0){
                 printf("Login realizado com sucesso!\n");
                 printf("Liberado acesso adminstrativo");
                 admnistrativo = true;
