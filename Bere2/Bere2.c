@@ -12,8 +12,6 @@ void menuAlimento(void); // Declaracoes das Funcoes
 void menuPadaria(void);
 void menuPagamento(void);
 void menuCaixa(void);
-void menuAbertura(void);
-void menuFechamento(void);
 void menuCancelar(void);
 void abrePadaria(void);
 bool caixaAberto = false;
@@ -38,7 +36,8 @@ struct produto limpeza[7] = { // .codigoProduto // .nomeProduto // .valorProduto
     {14,"Amaciante 1LT",15.00,20},
     {15,"Bucha de Pia (KIT C/3)",4.99,100},
     {16,"Desinfetante 1LT",7.99,15},
-    {17,"Sabao em Barra (UND)",1.00,60}};
+    {17,"Sabao em Barra (UND)",1.00,60}
+};
 
 struct produto alimentos[7] = {
     {21,"Cafe",19.99,10},
@@ -47,7 +46,8 @@ struct produto alimentos[7] = {
     {24,"Feijao Preto 1KG",8.00,5},
     {25,"Acucar 1KG",5.00,20},
     {26,"Sal 1KG",2.00,6},
-    {27,"Farinha de Trigo 1KG",5.00,15}};
+    {27,"Farinha de Trigo 1KG",5.00,15}
+};
 
 struct produto padaria[7] = {
     {31,"Pao de Forma PCT",9.50},
@@ -56,7 +56,8 @@ struct produto padaria[7] = {
     {34,"Sonho UND",8.50},
     {35,"Biscoito KG",12.50},
     {36,"Pao Doce UND",2.50},
-    {37,"Salgado",17.50}};
+    {37,"Salgado",17.50}
+};
 
 
 void delay(float delayEmSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
@@ -95,10 +96,9 @@ void printMenu(int const escolhaMenu) {
             "| -> Cod: 3  - Menu da Padaria \t\t\t\t|\n",
             "|.......................................................|\n",
             "| -> Cod: 4  - Menu de Pagamento \t\t\t|\n",
-            "| -> Cod: 5  - Abertura de Caixa \t\t\t|\n",
-            "| -> Cod: 6  - Fechamento de Caixa \t\t\t|\n",
-            "| -> Cod: 7  - Cancelar Venda \t\t\t\t|\n",
-            "| -> Cod: 8  - Sair do Programa \t\t\t|\n",
+            "| -> Cod: 5  - Caixa \t\t\t\t\t|\n",
+            "| -> Cod: 6  - Cancelar venda \t\t\t\t|\n",
+            "| -> Cod: 7  - Sair do Programa \t\t\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL // Finaliza o Array de Strings
             };
@@ -226,7 +226,7 @@ void printMenu(int const escolhaMenu) {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
             "|=======================================================|\n",
-            "|\t ------------ Menu Caixa ------------\t\t|\n",
+            "|\t  ------------ Menu Caixa ------------\t\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             "| -> Cod: 1 - Abertura do Caixa  \t\t\t|\n",
             "| -> Cod: 2 - Fechamento do Caixa\t\t\t|\n",
@@ -241,6 +241,25 @@ void printMenu(int const escolhaMenu) {
         printf("|\t $ - Valor Total Carrinho:  R$ %.2f - $\t\t|\n", totalDia);
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
+    }
+
+    if (escolhaMenu == 6) { // 6 == Menu Abertura Caixa
+        const char* printMenuAberturaCaixa[] = { // 5 == Menu Caixa
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|\t  ------------ Menu Caixa ------------\t\t|\n",
+            "|\t  ---------* Abertura Caixa *---------\t\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            "| -> Cod: 1 - Informar o Valor de Abertura\t\t|\n",
+            "| -> Cod: 2 - Voltar ao Caixa\t\t\t\t|\n",
+            "|=======================================================|\n",
+            "Opcao..:  ",
+            NULL
+        };
+        for (i = 0; i < pegaTamanho(printMenuAberturaCaixa); i++) {
+            printf("%s", printMenuAberturaCaixa[i]);
+        }
     }
 }
 
@@ -280,7 +299,7 @@ void menuPrincipal(){ // Funcao do Menu Principal
                     menuCaixa();
                     break;
                 case 6:
-                    menuFechamento();
+                    menuCaixa();
                     break;
                 case 7:
                     menuCancelar();
@@ -1146,67 +1165,65 @@ void menuPagamento() // Funcao Menu Pagamento
 
 void menuCaixa() {
     int entradaUsuario = 0;
-
-    printMenu(5);
-
+    printMenu(5); // 5 == Menu Caixa
     scanf("%d", &entradaUsuario);
 
     switch (entradaUsuario) {
-        case 1: {
+        case 1: { // 1 == Abertura do Caixa
             int cAbertura = 0;
+
             if (caixaAberto == true) // VERIFICA SE HÁ CAIXA ABERTO
             {
                 system("cls");
-                printf("Existe um caixa em aberto, finalize para realizar uma nova abertura\n");
+                printf("! - Erro, existe um caixa em aberto - !\n");
                 for ( int i = 3; i != 0; i--) {
                     printf("Retornando em %d segundos \n",i);
-                    delay(1);
+                    delay(0.5);
                 }
-                menuPrincipal();
+                menuCaixa();
 
             } else {
-
-                system("cls");
-                printf("    <Abertura de caixa>\n");
-                printf("1 - Abrir caixa\n");
-                printf("2 - Cancelar\n");
+                printMenu(6); // 6 == Abertura do Caixa
+                fflush(stdout);
                 scanf("%d",&cAbertura);
+                printf("|=======================================================|\n");
 
                 switch (cAbertura){
                     case 1:
-                        printf("Informe o valor: ");
-                    scanf("%f",&trocoInicial);
+                        printf("|\t@ ---- Valor de Abertura do Caixa ---- @\t|\n");
+                        printf("| -> R$ ");
+                        scanf("%.2f", &trocoInicial);
 
-                    while (trocoInicial <=0){
-                        printf ("\nErro.. digite um novo valor:\n");
-                        scanf ("%f", &trocoInicial);}
+                        while (trocoInicial <=0){
+                            printf ("\nErro.. digite um novo valor:\n");
+                            scanf ("%f", &trocoInicial);}
 
-                    system("cls");
-                    printf("Validando abertura de caixa");
-                    delay(0.5);
-                    for ( int j = 0; j <= 2; j++) {
-                        printf(".");
+                        system("cls");
+                        printf("Validando abertura de caixa");
                         delay(0.5);
-                    }
-                    system("cls");
-                    printf("Caixa aberto com sucesso!!!\n");
-                    delay(1);
-                    printf("Valor de abertura de caixa %.2f R$", trocoInicial);
-                    delay(1);
-                    caixaAberto = true;
-                    system("cls");
-                    abrePadaria();
-                    menuPrincipal();
-                    break;
+                        for ( int j = 0; j <= 2; j++) {
+                            printf(".");
+                            delay(0.5);
+                        }
+                        system("cls");
+                        printf("Caixa aberto com sucesso!!!\n");
+                        delay(1);
+                        printf("Valor de abertura de caixa %.2f R$", trocoInicial);
+                        delay(1);
+                        caixaAberto = true;
+                        system("cls");
+                        abrePadaria();
+                        menuPrincipal();
+                        break;
 
                     case 2:
-                        menuPrincipal();
+                        menuCaixa();
                     break;
 
                     default:
                         printf("Opcao invalida, tente novamente...");
                     delay(1);
-                    menuAbertura();
+                    menuCaixa();
                     break;
                 }
             }
@@ -1226,7 +1243,7 @@ void menuCaixa() {
                     if(trocoFechamento != trocoInicial) { //VERIFICA SE O VALOR INFORMADO É IGUAL AO INFORMADO AO ABRIR O CAIXA
                         printf("O valor de troco esta incorreto, tente novamente\n");
                         delay(1);
-                        menuFechamento();
+                        menuCaixa();
                     }
                     else if(trocoFechamento == trocoInicial) {
                         printf("Total de vendas: %.2f\n", totalDia);
@@ -1249,7 +1266,7 @@ void menuCaixa() {
                             {
                             printf("Esta sobrando dinheiro, tente novamente...\n");
                             delay(2);
-                            menuFechamento();
+                            menuCaixa();
                         }
 
                         else if ( vFechageral < totalDia ) // SE OS VALORES INFORMADOS FOREM MENORES
@@ -1257,146 +1274,25 @@ void menuCaixa() {
                             printf("Valores insuficientes\n");
                             printf("Tente novamente...");
                             delay(2);
-                            menuFechamento();
+                            menuCaixa();
                         }
                     }
                     break;
-                    case 2:
-                        menuPrincipal();
-                        break;
 
-                    default:
-                        printf("Opcao Invalida!");
-                        delay(2);
-                        break;
-    }
-            break;
-        }
-    }
-}
-
-void menuAbertura(){ // Funcao do Menu de abertura do caixa
-    int cAbertura = 0;
-
-    if (caixaAberto == true) // VERIFICA SE HÁ CAIXA ABERTO
-    {
-        system("cls");
-        printf("Existe um caixa em aberto, finalize para realizar uma nova abertura\n");
-        for ( int i = 3; i != 0; i--) {
-            printf("Retornando em %d segundos \n",i);
-            delay(1);
-        }
-        menuPrincipal();
-
-    } else {
-
-        system("cls");
-        printf("    <Abertura de caixa>\n");
-        printf("1 - Abrir caixa\n");
-        printf("2 - Cancelar\n");
-        scanf("%d",&cAbertura);
-
-        switch (cAbertura){
-            case 1:
-                printf("Informe o valor: ");
-                scanf("%f",&trocoInicial);
-
-               while (trocoInicial <=0){
-                   printf ("\nErro.. digite um novo valor:\n");
-                   scanf ("%f", &trocoInicial);}
-
-                    system("cls");
-                    printf("Validando abertura de caixa");
-                    delay(0.5);
-                    for ( int j = 0; j <= 2; j++) {
-                        printf(".");
-                        delay(0.5);
-                    }
-                    system("cls");
-                    printf("Caixa aberto com sucesso!!!\n");
-                    delay(1);
-                    printf("Valor de abertura de caixa %.2f R$", trocoInicial);
-                    delay(1);
-                    caixaAberto = true;
-                    system("cls");
-                    abrePadaria();
+                case 2:
                     menuPrincipal();
                     break;
 
-            case 2:
-                menuPrincipal();
-                break;
-
-            default:
-                printf("Opcao invalida, tente novamente...");
-                delay(1);
-                menuAbertura();
-                break;
+                default:
+                    printf("Opcao Invalida!");
+                    delay(2);
+                    break;
+            }
+            break;
         }
     }
 }
 
-void menuFechamento() { // Funcao do menu de Fechamento do caixa
-    int cFechamento = 0;
-    float vFechamentoD = 0, vFechamentoC = 0, vFechageral = 0, trocoFechamento = 0;
-
-    system("cls");
-    printf("1 - Fechar caixa\n");
-    printf("2 - Cancelar\n");
-    scanf("%d",&cFechamento);
-
-    switch (cFechamento){
-        case 1:
-            printf("Informe o valor de troco: ");
-            scanf("%f", &trocoFechamento);
-            if(trocoFechamento != trocoInicial) { //VERIFICA SE O VALOR INFORMADO É IGUAL AO INFORMADO AO ABRIR O CAIXA
-                printf("O valor de troco esta incorreto, tente novamente\n");
-                delay(1);
-                menuFechamento();
-            }
-            else if(trocoFechamento == trocoInicial) {
-                printf("Total de vendas: %.2f\n", totalDia);
-                printf("Informe valor em dinheiro: ");
-                scanf("%f",&vFechamentoD);
-                printf("\nInforme valor em cartao: ");
-                scanf("%f",&vFechamentoC);
-                vFechageral = vFechamentoD + vFechamentoC;
-            if (fabs(vFechageral - totalDia) < 0.01) { //fabs retorna o valor da operação dentro do ( ) .
-                printf("Caixa fechado  com sucesso\n"); // se a diferença for menor que 0.01, consideramos os números iguais.
-                printf("Valor total em dinheiro: %.2f R$\n", vFechamentoD);
-                printf("Valor total em cartao: %.2f R$\n", vFechamentoC);
-                printf("Valor de troco inicial: %.2f R$\n", trocoInicial);
-                trocoInicial = 0;
-                caixaAberto = false;
-                delay(3);
-                //esperarEnter();
-                } else if ( vFechageral > totalDia) // SE OS VALORES INFORMADOS FOREM MAIORES
-                    {
-                    printf("Esta sobrando dinheiro, tente novamente...\n");
-                    delay(2);
-                    menuFechamento();
-                }
-
-                else if ( vFechageral < totalDia ) // SE OS VALORES INFORMADOS FOREM MENORES
-                    {
-                    printf("Valores insuficientes\n");
-                    printf("Tente novamente...");
-                    delay(2);
-                    menuFechamento();
-                }
-            }
-            break;
-
-        case 2:
-            menuPrincipal();
-            break;
-
-        default:
-            printf("Opcao Invalida!");
-            delay(2);
-            break;
-    }
-}
 
 void abrePadaria(){ // Funcao da Abertura da Padaria
     printf("Abertura padaria");
