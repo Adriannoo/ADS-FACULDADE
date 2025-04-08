@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 #include <windows.h>
 #include <stdbool.h>
 
@@ -21,7 +20,7 @@ float tLimpeza = 0, tPadaria = 0, tAlimento = 0;                 // Variaveis gl
 float fPagar = 0;
 float vCar = 0;
 float vAbre = 0;
-int opcao, opcao2, linha = 0; // Variavel para opcao do usuario
+int opcao = 0, opcao2 = 0, linha = 0; // Variavel para opcao do usuario
 
 /* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
 struct produto {
@@ -77,7 +76,7 @@ int pegaTamanho(char* array[]) {
 }
 
 void printMenu(int const escolhaMenu) { //Print de todos os menus
-    int i = 0, j = 0;
+    int i = 0;
     system("cls");
     if(escolhaMenu == 0) { // 0 == Menu principal.
         const char* printMenuPrincipal[] = {
@@ -157,7 +156,7 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             printf("%s", printMenuAlimentos[i]);
         }
 
-        for (int i = 0; i < 7; i++) { //apresentaçao dos itens de alimentos
+        for (i = 0; i < 7; i++) { //apresentaçao dos itens de alimentos
             printf("| %4d | %-27s | %6.2f | %7d |\n",
             alimentos[i][0].codigoProduto,
             alimentos[i][0].nomeProduto,
@@ -248,7 +247,7 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
         for (i = 0; i < pegaTamanho(printMenuCaixa); i++) {
             printf("%s", printMenuCaixa[i]);
         }
-        printf("|\t $ - Valor Total Carrinho:  R$ %.2f - $\t\t|\n", totalDia);
+        printf("|\t $ - Valor Total Carrinho:  R$ %.2f - $\t|\n", totalDia);
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
     }
@@ -272,7 +271,6 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
         }
     }
 }
-
 
 void menuPrincipal() { // Funcao do Menu Principal
 
@@ -375,12 +373,10 @@ void menuLimpeza() { // Funcao Menu Limpeza
     }
 }
 
-
 void menuAlimento() { // Funcao Menu Alimentos
     float qnt;
     printMenu(2); // 2 == Menu de Alimentos
 
-    printf("Selecione uma opcao\n");
     scanf("%d", &opcao);
 
     if (opcao >= 21 && opcao <= 27) {
@@ -421,12 +417,10 @@ void menuAlimento() { // Funcao Menu Alimentos
     }
 }
 
-
 void menuPadaria() { // Funcao Menu Padaria
     float qnt;
     printMenu(3); // 3 == Menu de Padaria
 
-    printf("Selecione uma opcao\n");
     scanf("%d", &opcao);
 
     if (opcao >= 31 && opcao <= 37) {
@@ -467,158 +461,153 @@ void menuPadaria() { // Funcao Menu Padaria
     }
 }
 
-
 void menuPagamento() // Funcao Menu Pagamento
 {
-
     /* <<< VARIAVEIS DE ARMAZENAMENTO TEMPORARIO */
-    float vTotal = 0, vTcdesconto = 0, troco = 0.00, valorCobrado = 0, descontoReal = 0;
+    float vTotal = 0, vTcdesconto = 0, troco = 0, valorCobrado = 0, descontoReal = 0;
 
-    /* <<< VARIAVEIS DE ARMAZENAMENTO FIXO */
-    float descontoCinco, descontoDez, descontoInformado, descontoBruto;
-
-        /* DESCONTOS */
-    descontoCinco = 0.05;   /* <<<- 5% desconto */
-    descontoDez = 0.10;  /* <<<- 10% desconto */
+    /* <<< VARIAVEIS DE DESCONTO */
+    float descontoCinco = 0.05, descontoDez = 0.10, descontoInformado = 0;
 
     vTotal = vLimpeza + vPadaria + vAlimento; // Calculo valor total sem desconto
 
     printMenu(4); // 4 == Menu Pagamento
+
     if(fPagar != 0){
-          scanf("%d", &opcao);   /* <--------------- PAGAMENTO EM DINHEIRO */
-    switch(opcao){
-        case 41:
-            printf("\n");
-            printf("Valor total: %.2f R$\n", fPagar);
-            printf("Inserir valor recebido em dinheiro\n");
-            scanf("%.2f", &valorCobrado);
+        scanf("%d", &opcao);   /* <--------------- PAGAMENTO EM DINHEIRO */
+        switch(opcao){
+            case 41:
+                printf("\n");
+                printf("Valor total: %.2f R$\n", fPagar);
+                printf("Inserir valor recebido em dinheiro\n");
+                scanf("%.2f", &valorCobrado);
 
-            if (valorCobrado > fPagar)
-            {
-                totalDia = totalDia + fPagar;  /* <----------- Soma do total diario */
-                troco = valorCobrado - fPagar;
-                system("cls");
-                printf("Processando pagamento");
-                delay(1);
-                for ( int j = 0; j <= 2; j++){
-                    printf(".");
+                if (valorCobrado > fPagar)
+                {
+                    totalDia = totalDia + fPagar;  /* <----------- Soma do total diario */
+                    troco = valorCobrado - fPagar;
+                    system("cls");
+                    printf("Processando pagamento");
                     delay(1);
+                    for ( int j = 0; j <= 2; j++){
+                        printf(".");
+                        delay(1);
+                    }
+                    system("cls");
+                    printf("\nTroco: %.2f R$\n", troco);
+                    printf("Pagamento realizado com sucesso!\n\n");
+                    delay(3);
+                    tLimpeza = tLimpeza + vLimpeza;
+                    tAlimento = tAlimento + vAlimento;
+                    tPadaria = tPadaria + vPadaria;
+                    vLimpeza= 0; vAlimento= 0; vPadaria= 0; fPagar= 0; vCar = 0;      /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
+                    menuPrincipal();
+                    break;
                 }
-                system("cls");
-                printf("\nTroco: %.2f R$\n", troco);
-                printf("Pagamento realizado com sucesso!\n\n");
-                delay(3);
-                tLimpeza = tLimpeza + vLimpeza;
-                tAlimento = tAlimento + vAlimento;
-                tPadaria = tPadaria + vPadaria;
-                vLimpeza= 0; vAlimento= 0; vPadaria= 0; fPagar= 0; vCar = 0;      /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
+                else if (valorCobrado == fPagar){
+                    totalDia = totalDia + fPagar;  /* <----------- Soma do total diario */
+                    system("cls");
+                    printf("Processando pagamento");
+                    delay(1);
+                    for ( int j = 0; j <= 2; j++){
+                        printf(".");
+                        delay(1);
+                    }
+                    system("cls");
+                    printf("Pagamento realizado com sucesso!\n\n");
+                    delay(3);
+                    tLimpeza = tLimpeza + vLimpeza;
+                    tAlimento = tAlimento + vAlimento;
+                    tPadaria = tPadaria + vPadaria;
+                    vLimpeza= 0; vAlimento= 0; vPadaria= 0; fPagar= 0; vCar = 0;      /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
+                    menuPrincipal();
+                    break;
+                }
+                else if (valorCobrado < fPagar)
+                {
+                    fPagar = fPagar - valorCobrado;
+                    totalDia=  totalDia + valorCobrado;
+                    system("cls");
+                    printf("Processando pagamento");
+                    delay(1);
+                    for ( int j = 0; j <= 2; j++){
+                        printf(".");
+                        delay(1);
+                    }
+                    system("cls");
+                    printf("\nFalta pagar %.2f R$ \n\n", fPagar);
+                    delay(3);
+                    menuPagamento();
+                    break;
+                }
+
+            case 42:       /* <--------- PAGAMENTO EM CARTAO */
+                printf("Valor total: %.2f R$\n",fPagar);
+                printf("51. Pagamento realizado\n");
+                printf("52. Pagamento nao realizado\n");
+                printf("53. Voltar ao  menu anterior\n");
+                scanf("%d", &opcao);
+
+                if (opcao == 51)
+                {
+                    system("cls");
+                    printf("Processando pagamento");
+                    delay(1);
+                    for ( int j = 0; j <= 2; j++){
+                        printf(".");
+                        delay(1);
+                    }
+                    system("cls");
+                    printf("\nPagamento realizado com sucesso!\n\n");
+                    delay(3);
+                    totalDia= totalDia + fPagar; /* <----------- Soma do total diario */
+                    tLimpeza = tLimpeza + vLimpeza;
+                    tAlimento = tAlimento + vAlimento;
+                    tPadaria = tPadaria + vPadaria;
+                    vLimpeza= 0; vAlimento= 0; vPadaria= 0; fPagar= 0; vCar = 0;      /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
+                    menuPrincipal();
+                }
+
+                else if (opcao == 52)
+                {
+                    system("cls");
+                    printf("Processando pagamento");
+                    delay(1);
+                    for ( int j = 0; j <= 2; j++){
+                        printf(".");
+                        delay(1);
+                    }
+                    system("cls");
+                    printf("\nPagamento nao realizado!\n");
+                    delay(3);
+                    menuPagamento();
+                }
+
+                else if (opcao == 53)
+                {
+                    printf("Voltar ao menu anterior\n\n");
+                    menuPagamento();
+                }
+
+                else
+                {
+                    printf("Opcao invalida... Tente novamente\n\n");
+                }
+                break;
+
+            case 43:
+                printf("Voltar ao menu principal\n\n");
                 menuPrincipal();
                 break;
-            }
-            else if (valorCobrado == fPagar){
-                totalDia = totalDia + fPagar;  /* <----------- Soma do total diario */
-                system("cls");
-                printf("Processando pagamento");
-                delay(1);
-                for ( int j = 0; j <= 2; j++){
-                    printf(".");
-                    delay(1);
-                }
-                system("cls");
-                printf("Pagamento realizado com sucesso!\n\n");
-                delay(3);
-                tLimpeza = tLimpeza + vLimpeza;
-                tAlimento = tAlimento + vAlimento;
-                tPadaria = tPadaria + vPadaria;
-                vLimpeza= 0; vAlimento= 0; vPadaria= 0; fPagar= 0; vCar = 0;      /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
-                menuPrincipal();
-                break;
-            }
-            else if (valorCobrado < fPagar)
-            {
-                fPagar = fPagar - valorCobrado;
-                totalDia=  totalDia + valorCobrado;
-                system("cls");
-                printf("Processando pagamento");
-                delay(1);
-                for ( int j = 0; j <= 2; j++){
-                    printf(".");
-                    delay(1);
-                }
-                system("cls");
-                printf("\nFalta pagar %.2f R$ \n\n", fPagar);
-                delay(3);
+
+            default:
+                printf("Opcao invalida... Tente Novamente\n\n");
+                delay(2);
                 menuPagamento();
                 break;
-            }
-
-        case 42:       /* <--------- PAGAMENTO EM CARTAO */
-            printf("Valor total: %.2f R$\n",fPagar);
-            printf("51. Pagamento realizado\n");
-            printf("52. Pagamento nao realizado\n");
-            printf("53. Voltar ao  menu anterior\n");
-            scanf("%d", &opcao);
-
-            if (opcao == 51)
-            {
-                system("cls");
-                printf("Processando pagamento");
-                delay(1);
-                for ( int j = 0; j <= 2; j++){
-                    printf(".");
-                    delay(1);
-                }
-                system("cls");
-                printf("\nPagamento realizado com sucesso!\n\n");
-                delay(3);
-                totalDia= totalDia + fPagar; /* <----------- Soma do total diario */
-                tLimpeza = tLimpeza + vLimpeza;
-                tAlimento = tAlimento + vAlimento;
-                tPadaria = tPadaria + vPadaria;
-                vLimpeza= 0; vAlimento= 0; vPadaria= 0; fPagar= 0; vCar = 0;      /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
-                menuPrincipal();
-            }
-
-            else if (opcao == 52)
-            {
-                system("cls");
-                printf("Processando pagamento");
-                delay(1);
-                for ( int j = 0; j <= 2; j++){
-                    printf(".");
-                    delay(1);
-                }
-                system("cls");
-                printf("\nPagamento nao realizado!\n");
-                delay(3);
-                menuPagamento();
-            }
-
-            else if (opcao == 53)
-            {
-                printf("Voltar ao menu anterior\n\n");
-                menuPagamento();
-            }
-
-            else
-            {
-                printf("Opcao invalida... Tente novamente\n\n");
-            }
-
-            break;
-
-        case 43:
-            printf("Voltar ao menu principal\n\n");
-            menuPrincipal();
-            break;
-
-        default:
-            printf("Opcao invalida... Tente Novamente\n\n");
-            delay(2);
-            menuPagamento();
-            break;
+        }
     }
-    } else {
+    else {
     scanf("%d", &opcao);   /* <--------------- PAGAMENTO EM DINHEIRO */
 
     switch(opcao){ // Switch case para verificar valor com desconto
@@ -641,7 +630,7 @@ void menuPagamento() // Funcao Menu Pagamento
             {
                 printf("Informe a porcentagem de desconto:");
                     scanf("%f",&opcao);
-                        printf("O desconto de %.0f porcento sera aplicado\n", opcao);
+                        printf("O desconto de %d porcento sera aplicado\n", opcao);
                     descontoInformado = opcao / 100;
                     descontoReal = vTotal * descontoInformado;
             }
@@ -848,7 +837,6 @@ void menuCaixa() {
         }
         case 2: {
 
-            float vFechamentoD = 0, vFechamentoC = 0, vFechageral = 0, trocoFechamento = 0;
             system("cls");
             printf("1 - Fechar caixa\n");
             printf("2 - Cancelar\n");
