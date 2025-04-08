@@ -929,3 +929,9 @@ void menuCancelar(){
 }
 
 int main(){
+    system("color 0C"); // Vermelho
+    // system("color 7D"); // Roxo
+    // system("color 1F"); // Azul
+    menuPrincipal(); // Funcao Principal
+    return 0;
+}
