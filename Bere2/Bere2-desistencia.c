@@ -5,7 +5,7 @@
 #include <windows.h>
 #include <stdbool.h>
 
-// ===== FUNÇÕES/PROTOTIPAGENS =====//
+// ===== FUNÇÕES/PROTOTIPAGENS ===== //
 void menuPrincipal(void);
 void menuLimpeza(void);
 void menuAlimento(void);
@@ -93,7 +93,7 @@ int pegaTamanho(char* array[]) {
 //==== FUNÇÃO PRINTMENU ====//
 //== Exibe os menus de acordo com a escolha do usuário ==//
 void printMenu(int const escolhaMenu) {
-    int i = 0, j = 0;
+    int i = 0;
     system("cls");
 
     //==== MENU PRINCIPAL ====//
@@ -175,7 +175,7 @@ void printMenu(int const escolhaMenu) {
             printf("%s", printMenuAlimentos[i]);
         }
 
-        for (int i = 0; i < 7; i++) {
+        for (i = 0; i < 7; i++) {
             printf("| %4d | %-27s | %6.2f | %7d |\n",
                 alimentos[i][0].codigoProduto,
                 alimentos[i][0].nomeProduto,
@@ -529,7 +529,7 @@ void menuPadaria() {
 void menuPagamento() {
 
     //==== VARIÁVEIS DE CONTROLE DO PAGAMENTO ====//
-    float valorCobrado = 0, descontoReal = 0, recebido = 0;
+    float descontoReal = 0, recebido = 0;
     float descontoCinco = 0.05;
     float descontoDez = 0.10;
     float descontoInformado = 0;
@@ -787,8 +787,6 @@ void menuCaixa() {
 
         //==== FECHAMENTO DO CAIXA ====//
         case 2: {
-            float vFechamentoD = 0, vFechamentoC = 0, vFechageral = 0, trocoFechamento = 0;
-
             system("cls");
             printf("1 - Fechar caixa\n");
             printf("2 - Cancelar\n");

@@ -665,26 +665,22 @@ void menuPagamento() // Funcao Menu Pagamento
                 break;
             }
 
-
-
-            else {
-                printf("Processando pagamento");
+            printf("Processando pagamento");
+            delay(1);
+            for ( int j = 0; j <= 2; j++){
+                printf(".");
                 delay(1);
-                for ( int j = 0; j <= 2; j++){
-                    printf(".");
-                    delay(1);
-                }
-                system("cls");
-                printf("O valor integral sera cobrado!\n");
-                delay(2);
-                system("cls");
-                fPagar = vTotal - opcao;
-                totalDia= totalDia + opcao;
-                printf("Falta pagar %.2f R$", fPagar);
-                delay(2);
-                menuPagamento();
-                break;
             }
+            system("cls");
+            printf("O valor integral sera cobrado!\n");
+            delay(2);
+            system("cls");
+            fPagar = vTotal - opcao;
+            totalDia= totalDia + opcao;
+            printf("Falta pagar %.2f R$", fPagar);
+            delay(2);
+            menuPagamento();
+            break;
 
         case 42:       /* <--------- PAGAMENTO EM CART�O */
             printf("Valor total: %.2f R$\n\n",vTotal);
