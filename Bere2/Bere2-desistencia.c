@@ -5,27 +5,32 @@
 #include <windows.h>
 #include <stdbool.h>
 
-/* Funcoes e variaveis globais */
+// ===== FUNÇÕES/PROTOTIPAGENS =====//
 void menuPrincipal(void);
 void menuLimpeza(void);
-void menuAlimento(void); // Declaracoes das Funcoes
+void menuAlimento(void);
 void menuPadaria(void);
 void menuPagamento(void);
 void menuCaixa(void);
 void menuCancelar(void);
 void abrePadaria(void);
+
+//===== VARIÁVEIS BOOL =====//
 bool caixaAberto = false;
 bool deve = false;
 
+//==== VARIÁVEIS FLOAT =====//
 float vTotal = 0, vTcdesconto = 0, troco = 0;
 float vLimpeza = 0, vPadaria = 0, vAlimento = 0, totalDia =  0;
-float tLimpeza = 0, tPadaria = 0, tAlimento = 0;                 // Variaveis globais
+float tLimpeza = 0, tPadaria = 0, tAlimento = 0;
 float fPagar = 0;
 float vCar = 0;
 float vAbre = 0;
-int opcao, opcao2, linha = 0; // Variavel para opcao do usuario
 
-/* <<<<<<< VALORES DOS PRODUTOS >>>>>>> */
+//==== VARIÁVEIS INTEIROS ====//
+int opcao, opcao2, linha = 0;
+
+//=== STRUCTS ===//
 struct produto {
     int codigoProduto;
     char nomeProduto[50];
@@ -33,7 +38,8 @@ struct produto {
     int estoqueProduto;
 };
 
-struct produto limpeza[7][1] = { // struct matriz para cada item da limpeza.
+//==== MATRIZ DE STRUCT LIMPEZA ====//
+struct produto limpeza[7][1] = { // matriz de struct para cada item da limpeza.
     {{11, "Detergente", 1.99, 50}},
     {{12, "Sabao em Po 1KG", 9.99, 30}},
     {{13, "Esponja", 1.50, 0}},
@@ -43,7 +49,8 @@ struct produto limpeza[7][1] = { // struct matriz para cada item da limpeza.
     {{17, "Sabao em Barra (UND)", 1.00, 60}}
 };
 
-struct produto alimentos[7][1] = { // struct matriz para cada item de alimentos.
+//==== MATRIZ DE STRUCT ALIMENTOS ====//
+struct produto alimentos[7][1] = { // matriz de struct para cada item de alimentos.
     {{21, "Cafe", 19.99, 10}},
     {{22, "Leite Caixa", 5.90, 15}},
     {{23, "Arroz 1KG", 4.50, 10}},
@@ -53,23 +60,28 @@ struct produto alimentos[7][1] = { // struct matriz para cada item de alimentos.
     {{27, "Farinha de Trigo 1KG", 5.00, 15}}
 };
 
-struct produto padaria[7][1] = { // struct matriz para cada item da padaria.
-    {{31, "Pao de Forma PCT", 9.50}},
-    {{32, "Pao Integral PCT", 12.50}},
-    {{33, "Pao Frances UND", 1.90}},
-    {{34, "Sonho UND", 8.50}},
-    {{35, "Biscoito KG", 12.50}},
-    {{36, "Pao Doce UND", 2.50}},
-    {{37, "Salgado", 17.50}}
+//==== MATRIZ DE STRUCT PADARIA ====//
+struct produto padaria[7][1] = { // matriz de struct para cada item da padaria.
+    {{31, "Pao de Forma PCT", 9.50,0}},
+    {{32, "Pao Integral PCT", 12.50,0}},
+    {{33, "Pao Frances UND", 1.90,0}},
+    {{34, "Sonho UND", 8.50,0}},
+    {{35, "Biscoito KG", 12.50,0}},
+    {{36, "Pao Doce UND", 2.50,0}},
+    {{37, "Salgado", 17.50,0}}
 };
 
 
-void delay(float delayEmSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
+//==== FUNÇÃO DELAY ====//
+//== Função utilizando a biblioteca "<time.h>" para delay. ==//
+void delay(float delayEmSegundos) {
     float mili = 1000 * delayEmSegundos;
     clock_t comecoT = clock();
     while (clock() < comecoT + mili);
 }
 
+//==== FUNÇÃO PEGA TAMANHO ====//
+//== Retorna o tamanho de um array de strings ==//
 int pegaTamanho(char* array[]) {
     int tamanho = 0;
     while (array[tamanho] != NULL) {
@@ -78,10 +90,14 @@ int pegaTamanho(char* array[]) {
     return tamanho;
 }
 
-void printMenu(int const escolhaMenu) { //Print de todos os menus
+//==== FUNÇÃO PRINTMENU ====//
+//== Exibe os menus de acordo com a escolha do usuário ==//
+void printMenu(int const escolhaMenu) {
     int i = 0, j = 0;
     system("cls");
-    if(escolhaMenu == 0) { // 0 == Menu principal.
+
+    //==== MENU PRINCIPAL ====//
+    if(escolhaMenu == 0) {
         const char* printMenuPrincipal[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
@@ -97,20 +113,20 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             "| -> Cod: 6  - Cancelar venda \t\t\t\t|\n",
             "| -> Cod: 7  - Sair do Programa \t\t\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            NULL // Finaliza o Array de Strings
-            };
+            NULL
+        };
 
         for(i = 0 ; i < pegaTamanho(printMenuPrincipal) ; i++) {
             printf("%s", printMenuPrincipal[i]);
         }
 
-        printf("|      $ - Valor total de vendas hoje: R$ %.2f - $\t|\n", totalDia); // Atualizacao do valor total das vendas
+        printf("|      $ - Valor total de vendas hoje: R$ %.2f - $\t|\n", totalDia);
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 1) { // 1 == Menu Limpeza.
-
+    //==== MENU LIMPEZA ====//
+    if (escolhaMenu == 1) {
         const char* printMenuLimpeza[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
@@ -119,20 +135,20 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             "|Cod   | Nome do produto             | Valor  | Estoque |\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            NULL // Finaliza o Array de Strings
+            NULL
         };
 
         for (i = 0; i < pegaTamanho(printMenuLimpeza); i++) {
             printf("%s", printMenuLimpeza[i]);
         }
 
-        for (i = 0; i < 7; i++) { //apresentaçao dos itens de limpeza
-           printf("| %4d | %-27s | %6.2f | %7d |\n",
-           limpeza[i][0].codigoProduto,
-           limpeza[i][0].nomeProduto,
-           limpeza[i][0].valorProduto,
-           limpeza[i][0].estoqueProduto);
-}
+        for (i = 0; i < 7; i++) {
+            printf("| %4d | %-27s | %6.2f | %7d |\n",
+                limpeza[i][0].codigoProduto,
+                limpeza[i][0].nomeProduto,
+                limpeza[i][0].valorProduto,
+                limpeza[i][0].estoqueProduto);
+        }
 
         printf("|.......................................................|\n");
         printf("| -> Cod: 18 - Voltar ao Menu Principal \t\t|\n");
@@ -142,8 +158,8 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 2) { // 2 == Menu Alimentos.
-
+    //==== MENU ALIMENTOS ====//
+    if (escolhaMenu == 2) {
         const char* printMenuAlimentos[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
@@ -152,19 +168,19 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             "|Cod   | Nome do produto             | Valor  | Estoque |\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            NULL // Finaliza o Array de Strings
+            NULL
         };
 
         for(i = 0; i < pegaTamanho(printMenuAlimentos); i++) {
             printf("%s", printMenuAlimentos[i]);
         }
 
-        for (int i = 0; i < 7; i++) { //apresentaçao dos itens de alimentos
+        for (int i = 0; i < 7; i++) {
             printf("| %4d | %-27s | %6.2f | %7d |\n",
-            alimentos[i][0].codigoProduto,
-            alimentos[i][0].nomeProduto,
-            alimentos[i][0].valorProduto,
-            alimentos[i][0].estoqueProduto);
+                alimentos[i][0].codigoProduto,
+                alimentos[i][0].nomeProduto,
+                alimentos[i][0].valorProduto,
+                alimentos[i][0].estoqueProduto);
         }
 
         printf("|.......................................................|\n");
@@ -173,12 +189,10 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
         printf("|\t $ - Carrinho de Alimentos:  R$ %.2f - $\t|\n", vAlimento);
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
-
     }
 
-    if (escolhaMenu == 3) { // 3 == Menu Padaria.
-
-
+    //==== MENU PADARIA ====//
+    if (escolhaMenu == 3) {
         const char* printMenuPadaria[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
@@ -187,19 +201,19 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             "|Cod   | Nome do produto             | Valor  | Estoque |\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            NULL    // Finaliza o Array de Strings
+            NULL
         };
 
         for(i = 0; i < pegaTamanho(printMenuPadaria); i++) {
             printf("%s", printMenuPadaria[i]);
         }
 
-        for (i = 0; i < 7; i++) { //apresentaçao dos itens de padaria
+        for (i = 0; i < 7; i++) {
             printf("| %4d | %-27s | %6.2f | %7d |\n",
-            padaria[i][0].codigoProduto,
-            padaria[i][0].nomeProduto,
-            padaria[i][0].valorProduto,
-            padaria[i][0].estoqueProduto);
+                padaria[i][0].codigoProduto,
+                padaria[i][0].nomeProduto,
+                padaria[i][0].valorProduto,
+                padaria[i][0].estoqueProduto);
         }
 
         printf("|.......................................................|\n");
@@ -210,7 +224,8 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 4) { // 4 == Menu Pagamento
+    //==== MENU PAGAMENTO ====//
+    if (escolhaMenu == 4) {
         const char* printMenuPagamento[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
@@ -225,16 +240,19 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL
         };
+
         for (i = 0; i < pegaTamanho(printMenuPagamento); i++) {
             printf("%s", printMenuPagamento[i]);
         }
+
         printf("|\t $ - Valor Total Carrinho:  R$ %.2f - $\t\t|\n", vCar);
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 5) { // 5 == Menu Caixa
-        const char* printMenuCaixa[] = { // 5 == Menu Caixa
+    //==== MENU CAIXA ====//
+    if (escolhaMenu == 5) {
+        const char* printMenuCaixa[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
             "|=======================================================|\n",
@@ -247,16 +265,19 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL
         };
+
         for (i = 0; i < pegaTamanho(printMenuCaixa); i++) {
             printf("%s", printMenuCaixa[i]);
         }
-        printf("|\t $ - Valor Total Carrinho:  R$ %.2f - $\t\t|\n", totalDia);
+
+        printf("|\t $ - Valor Total de Vendas:  R$ %.2f - $\t\t|\n", totalDia);
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
     }
 
-    if (escolhaMenu == 6) { // 6 == Menu Abertura Caixa
-        const char* printMenuAberturaCaixa[] = { // 5 == Menu Caixa
+    //==== MENU ABERTURA DE CAIXA ====//
+    if (escolhaMenu == 6) {
+        const char* printMenuAberturaCaixa[] = {
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
             "|=======================================================|\n",
@@ -269,6 +290,7 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             "Opcao..:  ",
             NULL
         };
+
         for (i = 0; i < pegaTamanho(printMenuAberturaCaixa); i++) {
             printf("%s", printMenuAberturaCaixa[i]);
         }
@@ -276,44 +298,51 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
 }
 
 
-void menuPrincipal() { // Funcao do Menu Principal
+//==== FUNÇÃO MENU PRINCIPAL ====//
+//== Controla a navegação principal entre os menus do sistema ==//
+void menuPrincipal() {
 
-    while (opcao!=7)
-    {
+    while (opcao != 7) {
+
         printMenu(0); // 0 == Menu Principal
-
         scanf("%d", &opcao);
 
-        if (caixaAberto == false && opcao != 1 && opcao != 4)  { //  === VERIFICAÇÃO CAIXA ABERTO CASO ESTIVER FECHADO SOLICITA ABERTURA
+        //=== VERIFICAÇÃO: SE O CAIXA ESTÁ FECHADO ===//
+        // Caso o caixa esteja fechado, impede o acesso a menus que dependem da abertura
+        if (caixaAberto == false && opcao != 1 && opcao != 4) {
             system("cls");
             printf("O caixa esta fechado, realize a abertura");
             delay(0.5);
-            for ( int j = 0; j <= 2; j++) {
+            for (int j = 0; j <= 2; j++) {
                 printf(".");
                 delay(0.5);
             }
             menuPrincipal();
-        } else {
-            switch(opcao) { // Switch Case para as sessoes do mercadinho
+        }
+
+        else {
+            //=== OPÇÕES DE ACESSO AOS MENUS DO SISTEMA ===//
+            switch (opcao) {
                 case 1:
-                    menuLimpeza();
+                    menuLimpeza();   // Acesso ao menu de Limpeza
                     break;
                 case 2:
-                    menuAlimento();
+                    menuAlimento();  // Acesso ao menu de Alimentos
                     break;
                 case 3:
-                    menuPadaria();
+                    menuPadaria();   // Acesso ao menu da Padaria
                     break;
                 case 4:
-                    menuPagamento();
+                    menuPagamento(); // Acesso ao menu de Pagamento
                     break;
                 case 5:
-                    menuCaixa();
+                    menuCaixa();     // Acesso ao menu do Caixa
                     break;
                 case 6:
-                    menuCancelar();
+                    menuCancelar();  // Cancelar venda atual
                     break;
                 case 7:
+                    //=== VERIFICA SE EXISTE CAIXA ABERTO ANTES DE SAIR ===//
                     if (caixaAberto == true) {
                         printf("Ha um caixa aberto, por favor, realize o fechamento antes de sair do sistema...");
                         delay(3);
@@ -321,8 +350,9 @@ void menuPrincipal() { // Funcao do Menu Principal
                     } else {
                         printf("Encerrando o sistema...");
                         delay(3);
-                        exit (0);
+                        exit(0);
                     }
+                    break;
                 default:
                     printf("Opcao invalida... Tente novamente\n");
                     menuPrincipal();
@@ -331,18 +361,21 @@ void menuPrincipal() { // Funcao do Menu Principal
     }
 }
 
-
-void menuLimpeza() { // Funcao Menu Limpeza
+//==== FUNÇÃO MENU LIMPEZA ====//
+//== Responsável por mostrar os produtos de limpeza e adicionar ao carrinho ==//
+void menuLimpeza() {
     float qnt;
 
-    printMenu(1); // 1 == Menu de Limpeza
+    //==== PRINTA O MENU LIMPEZA (1) ====//
+    printMenu(1);
     scanf("%d", &opcao);
 
     if (opcao >= 11 && opcao <= 17) {
-        linha = opcao - 11;             //-11 por conta da matriz iniciando em 0 para identificar o cod de item
+        linha = opcao - 11; // Identifica a linha correta da struct
 
-        printf("\n%s\n", limpeza[linha][0].nomeProduto);            //acessa a linha digitada em opcao e a coluna [0].
+        printf("\n%s\n", limpeza[linha][0].nomeProduto);
 
+        //==== VERIFICA SE HÁ ESTOQUE ====//
         if (limpeza[linha][0].estoqueProduto == 0) {
             printf("Infelizmente o item nao registra estoque, digite um novo item\n");
             delay(3);
@@ -353,7 +386,8 @@ void menuLimpeza() { // Funcao Menu Limpeza
         printf("Inserir quantidade: ");
         scanf("%f", &qnt);
 
-        while (qnt > limpeza[linha][0].estoqueProduto) {            //caso o solicitado seja maior do que o estoque
+        //==== VERIFICA SE HÁ ESTOQUE SUFICIENTE ====//
+        while (qnt > limpeza[linha][0].estoqueProduto) {
             printf("Quantidade insuficiente, digite um novo valor: \n");
             delay(3);
             scanf("%f", &qnt);
@@ -362,34 +396,41 @@ void menuLimpeza() { // Funcao Menu Limpeza
         printf("%.2f x %s adicionado ao carrinho.\n", qnt, limpeza[linha][0].nomeProduto);
         delay(3);
 
-        limpeza[linha][0].estoqueProduto -= qnt;                //subtrai no estoque
-        vLimpeza += limpeza[linha][0].valorProduto * qnt;       //vLimpeza apresenta o total na Limpeza
-        vCar += limpeza[linha][0].valorProduto * qnt;           // vCar e a variavel para apresentar o total no carrinho
+        //==== ATUALIZA ESTOQUE E VALORES ====//
+        limpeza[linha][0].estoqueProduto -= qnt;
+        vLimpeza += limpeza[linha][0].valorProduto * qnt;
+        vCar += limpeza[linha][0].valorProduto * qnt;
 
         menuLimpeza();
-    } else if (opcao == 18) {
+    }
+    else if (opcao == 18) {
         printf("\nVoltar ao menu principal\n");
         delay(2);
-    } else {
+    }
+    else {
         printf("\nOpcao invalida... Tente Novamente\n");
         delay(2);
         menuLimpeza();
     }
 }
 
-
-void menuAlimento() { // Funcao Menu Alimentos
+//==== FUNÇÃO MENU ALIMENTO ====//
+//== Responsável por mostrar os produtos de alimentos e adicionar ao carrinho ==//
+void menuAlimento() {
     float qnt;
-    printMenu(2); // 2 == Menu de Alimentos
+
+    //==== PRINTA O MENU ALIMENTOS (2) ====//
+    printMenu(2);
 
     printf("Selecione uma opcao\n");
     scanf("%d", &opcao);
 
     if (opcao >= 21 && opcao <= 27) {
-        linha = opcao - 21;             //-21 por conta da matriz iniciando em 0 para identificar o cod de item
-        printf("\n%s:\n", alimentos[linha][0].nomeProduto);             //acessa a linha digitada em opcao e a coluna [0].
+        linha = opcao - 21;
+        printf("\n%s:\n", alimentos[linha][0].nomeProduto);
 
-        if (alimentos[linha][0].estoqueProduto == 0) {              //caso o solicitado seja maior do que o estoque
+        //==== VERIFICA SE HÁ ESTOQUE ====//
+        if (alimentos[linha][0].estoqueProduto == 0) {
             printf("Infelizmente o item nao registra estoque, digite um novo item\n");
             delay(3);
             menuAlimento();
@@ -399,6 +440,7 @@ void menuAlimento() { // Funcao Menu Alimentos
         printf("Inserir quantidade: ");
         scanf("%f", &qnt);
 
+        //==== VERIFICA SE HÁ ESTOQUE SUFICIENTE ====//
         while (qnt > alimentos[linha][0].estoqueProduto) {
             printf("Quantidade insuficiente, digite um novo valor: \n");
             delay(3);
@@ -407,9 +449,12 @@ void menuAlimento() { // Funcao Menu Alimentos
 
         printf("%.2f x %s adicionado ao carrinho.\n", qnt, alimentos[linha][0].nomeProduto);
         delay(3);
-        alimentos[linha][0].estoqueProduto -= qnt;                  //subtrai no estoque
-        vAlimento += alimentos[linha][0].valorProduto * qnt;        //vAlimento apresenta o total no Alimento
-        vCar += alimentos[linha][0].valorProduto * qnt;             // vCar e a variavel para apresentar o total no carrinho
+
+        //==== ATUALIZA ESTOQUE E VALORES ====//
+        alimentos[linha][0].estoqueProduto -= qnt;
+        vAlimento += alimentos[linha][0].valorProduto * qnt;
+        vCar += alimentos[linha][0].valorProduto * qnt;
+
         menuAlimento();
     }
     else if (opcao == 28) {
@@ -424,18 +469,23 @@ void menuAlimento() { // Funcao Menu Alimentos
 }
 
 
-void menuPadaria() { // Funcao Menu Padaria
+//==== FUNÇÃO MENU PADARIA ====//
+//== Responsável por mostrar os produtos da padaria e adicionar ao carrinho ==//
+void menuPadaria() {
     float qnt;
-    printMenu(3); // 3 == Menu de Padaria
+
+    //==== PRINTA O MENU PADARIA (3) ====//
+    printMenu(3);
 
     printf("Selecione uma opcao\n");
     scanf("%d", &opcao);
 
     if (opcao >= 31 && opcao <= 37) {
-        linha = opcao - 31;                 //-31 por conta da matriz iniciando em 0 para identificar o cod de item
-        printf("\n%s:\n", padaria[linha][0].nomeProduto);       //acessa a linha digitada em opcao e a coluna [0].
+        linha = opcao - 31; // Identifica a linha correta da struct
+        printf("\n%s:\n", padaria[linha][0].nomeProduto);
 
-        if (padaria[linha][0].estoqueProduto == 0) {            //caso o solicitado seja maior do que o estoque
+        //==== VERIFICA SE HÁ ESTOQUE ====//
+        if (padaria[linha][0].estoqueProduto == 0) {
             printf("Infelizmente o item nao registra estoque, digite um novo item\n");
             delay(3);
             menuPadaria();
@@ -445,6 +495,7 @@ void menuPadaria() { // Funcao Menu Padaria
         printf("Inserir quantidade: ");
         scanf("%f", &qnt);
 
+        //==== VERIFICA SE HÁ ESTOQUE SUFICIENTE ====//
         while (qnt > padaria[linha][0].estoqueProduto) {
             printf("Quantidade insuficiente, digite um novo valor: \n");
             delay(3);
@@ -453,9 +504,12 @@ void menuPadaria() { // Funcao Menu Padaria
 
         printf("%.2f x %s adicionado ao carrinho.\n", qnt, padaria[linha][0].nomeProduto);
         delay(3);
-        padaria[linha][0].estoqueProduto -= qnt;                    //subtrai no estoque
-        vPadaria += padaria[linha][0].valorProduto * qnt;           //vPadaria apresenta o total na Padaria
-        vCar += padaria[linha][0].valorProduto * qnt;               // vCar e a variavel para apresentar o total no carrinho
+
+        //==== ATUALIZA ESTOQUE E VALORES ====//
+        padaria[linha][0].estoqueProduto -= qnt;
+        vPadaria += padaria[linha][0].valorProduto * qnt;
+        vCar += padaria[linha][0].valorProduto * qnt;
+
         menuPadaria();
     }
     else if (opcao == 38) {
@@ -470,14 +524,17 @@ void menuPadaria() { // Funcao Menu Padaria
 }
 
 
+//==== FUNÇÃO MENU PAGAMENTO ====//
+//== Responsável por processar pagamentos em dinheiro ou cartão ==//
 void menuPagamento() {
-    // Variáveis de controle de pagamento
+
+    //==== VARIÁVEIS DE CONTROLE DO PAGAMENTO ====//
     float valorCobrado = 0, descontoReal = 0, recebido = 0;
     float descontoCinco = 0.05;
     float descontoDez = 0.10;
     float descontoInformado = 0;
 
-    // Só recalcula vTotal se não estiver devendo
+    //==== CALCULA VALOR TOTAL SE NÃO HOUVER DÍVIDA ====//
     if (!deve) {
         vTotal = vLimpeza + vPadaria + vAlimento;
     } else {
@@ -485,11 +542,13 @@ void menuPagamento() {
         printf("Faltam: %.2f R$\n", vTotal);
     }
 
-    printMenu(4);
+    printMenu(4); // 4 == Menu de Pagamento
     scanf("%d", &opcao);
 
     switch (opcao) {
-        case 41: // Pagamento em dinheiro
+
+        //==== PAGAMENTO EM DINHEIRO ====//
+        case 41:
             if (!deve) {
                 printf("\nValor total: %.2f R$\n", vTotal);
 
@@ -512,6 +571,7 @@ void menuPagamento() {
                 printf("Valor recebido: ");
                 scanf("%f", &recebido);
 
+                //==== PAGAMENTO TOTAL COM SUCESSO ====//
                 if (fabs(vTcdesconto - recebido) < 0.01 || recebido > vTcdesconto) {
                     troco = recebido - vTcdesconto;
                     totalDia += vTcdesconto;
@@ -538,17 +598,18 @@ void menuPagamento() {
                     break;
                 }
             }
-            if (recebido < vTcdesconto){
+
+            //==== PAGAMENTO PARCIAL OU VALOR INSUFICIENTE ====//
+            if (recebido < vTcdesconto) {
                 printf("O valor integral sera cobrado!\n");
             }
-            // Se o cliente já deve OU pagamento foi parcial
+
             printf("\nValor total a pagar: %.2f R$\n", vTotal);
             printf("Valor recebido: ");
             scanf("%f", &recebido);
             delay(2);
 
             if (fabs(vTotal - recebido) < 0.01 || recebido > vTotal) {
-                // Pagamento finalizado
                 troco = recebido - vTotal;
                 totalDia += vTotal;
 
@@ -572,7 +633,7 @@ void menuPagamento() {
                 menuPrincipal();
                 break;
             } else {
-                // Pagamento parcial
+                //==== PAGAMENTO PARCIAL REGISTRADO ====//
                 system("cls");
                 fPagar = vTotal - recebido;
                 vTotal = fPagar;
@@ -586,40 +647,38 @@ void menuPagamento() {
                 break;
             }
 
-
-
-        case 42:       /* <--------- PAGAMENTO EM CART�O */
-            printf("Valor total: %.2f R$\n\n",vTotal);
+        //==== PAGAMENTO EM CARTÃO ====//
+        case 42:
+            printf("Valor total: %.2f R$\n\n", vTotal);
             printf("51. Pagamento realizado\n");
             printf("52. Pagamento nao realizado\n");
-            printf("53. Voltar ao  menu anterior\n");
+            printf("53. Voltar ao menu anterior\n");
             scanf("%d", &opcao2);
 
-            if (opcao2 == 51)
-            {
+            if (opcao2 == 51) {
                 system("cls");
                 printf("Processando pagamento");
                 delay(1);
-                for ( int j = 0; j <= 2; j++){
+                for (int j = 0; j <= 2; j++) {
                     printf(".");
                     delay(1);
                 }
                 system("cls");
                 printf("Pagamento realizado com sucesso!\n");
                 delay(2);
-                totalDia = totalDia + vTotal; /* <----------- Soma do total di�rio */
-                tLimpeza = tLimpeza + vLimpeza;
-                tAlimento = tAlimento + vAlimento;
-                tPadaria = tPadaria + vPadaria;
-                vLimpeza= 0; vAlimento= 0; vPadaria= 0; fPagar= 0; vCar = 0;      /*<----------- ZERAR VALORES PARA EFETUAR NOVA VENDA */
+
+                totalDia += vTotal;
+                tLimpeza += vLimpeza;
+                tAlimento += vAlimento;
+                tPadaria += vPadaria;
+                vLimpeza = vAlimento = vPadaria = fPagar = vCar = 0;
             }
 
-            else if (opcao2 == 52)
-            {
+            else if (opcao2 == 52) {
                 system("cls");
                 printf("Processando pagamento");
                 delay(1);
-                for ( int j = 0; j <= 2; j++){
+                for (int j = 0; j <= 2; j++) {
                     printf(".");
                     delay(1);
                 }
@@ -629,122 +688,131 @@ void menuPagamento() {
                 menuPagamento();
             }
 
-            else if (opcao2 == 53)
-            {
+            else if (opcao2 == 53) {
                 printf("\nVoltar ao menu anterior\n");
                 delay(2);
                 menuPagamento();
             }
 
-            else
-            {
+            else {
                 printf("\nOpcao invalida... Tente novamente\n");
                 delay(2);
             }
-
             break;
 
+        //==== VOLTAR AO MENU PRINCIPAL ====//
         case 43:
             printf("\nVoltar ao menu principal\n");
             menuPrincipal();
             break;
 
+        //==== OPÇÃO INVÁLIDA ====//
         default:
             printf("\nOpcao invalida... Tente Novamente\n");
             delay(2);
             menuPagamento();
             break;
-        }
     }
+}
 
-
-
+//==== FUNÇÃO MENU CAIXA ====//
+//== Gerencia a abertura e fechamento do caixa ==//
 void menuCaixa() {
 
     printMenu(5); // 5 == Menu Caixa
     scanf("%d", &opcao);
 
     switch (opcao) {
-        case 1: { // 1 == Abertura do Caixa
 
-            if (caixaAberto == true) // VERIFICA SE HÁ CAIXA ABERTO
-            {
+        //==== ABERTURA DO CAIXA ====//
+        case 1: {
+            if (caixaAberto == true) {
                 system("cls");
                 printf("! - Erro, existe um caixa em aberto - !\n");
-                for ( int i = 3; i != 0; i--) {
-                    printf("Retornando em %d segundos \n",i);
+                for (int i = 3; i != 0; i--) {
+                    printf("Retornando em %d segundos \n", i);
                     delay(0.5);
                 }
                 menuCaixa();
-
             } else {
                 printMenu(6); // 6 == Abertura do Caixa
                 fflush(stdout);
-                scanf("%d",&opcao2);
+                scanf("%d", &opcao2);
                 printf("|=======================================================|\n");
 
-                switch (opcao2){
+                switch (opcao2) {
+
                     case 1:
                         printf("|\t@ ---- Valor de Abertura do Caixa ---- @\t|\n");
                         printf("| -> R$ ");
-                        scanf("%.2f", &vAbre);
+                        scanf("%f", &vAbre);
 
-                        while (vAbre <=0){
-                            printf ("\nErro.. digite um novo valor:\n");
-                            scanf ("%f", &vAbre);}
+                        while (vAbre <= 0) {
+                            printf("\nErro.. digite um novo valor:\n");
+                            scanf("%f", &vAbre);
+                        }
 
                         system("cls");
                         printf("Validando abertura de caixa");
                         delay(0.5);
-                        for ( int j = 0; j <= 2; j++) {
+                        for (int j = 0; j <= 2; j++) {
                             printf(".");
                             delay(0.5);
                         }
+
                         system("cls");
                         printf("Caixa aberto com sucesso!!!\n");
                         delay(1);
-                        printf("Valor de abertura de caixa %.2f R$", vAbre);
+                        printf("Valor de abertura de caixa: R$ %.2f\n", vAbre);
                         delay(1);
                         caixaAberto = true;
                         system("cls");
-                        abrePadaria();
+                        abrePadaria(); // Abre o estoque da padaria
                         menuPrincipal();
                         break;
 
                     case 2:
                         menuCaixa();
-                    break;
+                        break;
 
                     default:
                         printf("Opcao invalida, tente novamente...");
-                    delay(1);
-                    menuCaixa();
-                    break;
+                        delay(1);
+                        menuCaixa();
+                        break;
                 }
             }
+            break;
         }
-        case 2: {
 
+        //==== FECHAMENTO DO CAIXA ====//
+        case 2: {
             float vFechamentoD = 0, vFechamentoC = 0, vFechageral = 0, trocoFechamento = 0;
+
             system("cls");
             printf("1 - Fechar caixa\n");
             printf("2 - Cancelar\n");
-            scanf("%d",&opcao2);
+            scanf("%d", &opcao2);
 
-            switch (opcao2){
+            switch (opcao2) {
+
                 case 1:
                     printf("Valor de abertura: R$ %.2f\n\n", vAbre);
-                    totalDia = totalDia - vAbre;
-                    if (totalDia <= 0){
+                    totalDia -= vAbre;
+
+                    if (totalDia <= 0) {
                         totalDia = 0;
                     }
+
                     printf("Faturamento total: %.2f\n", totalDia);
                     printf("\nTotal Limpeza: %.2f\n", tLimpeza);
                     printf("Total Alimento: %.2f\n", tAlimento);
                     printf("Total Padaria: %.2f\n", tPadaria);
+
                     caixaAberto = false;
                     delay(5);
                     break;
+
                 case 2:
                     menuPrincipal();
                     break;
@@ -759,8 +827,9 @@ void menuCaixa() {
     }
 }
 
-
-void abrePadaria() { // Funcao da Abertura da Padaria
+//==== FUNÇÃO ABERTURA PADARIA ====//
+//== Solicita a quantidade inicial de estoque da padaria ==//
+void abrePadaria() {
     printf("Abertura padaria");
     delay(0.5);
     for (int j = 0; j <= 2; j++) {
@@ -776,19 +845,23 @@ void abrePadaria() { // Funcao da Abertura da Padaria
     }
 }
 
-void menuCancelar(){
-
+//==== FUNÇÃO CANCELAR VENDA ====//
+//== Cancela a venda atual e zera os totais acumulados ==//
+void menuCancelar() {
     system("cls");
     printf("Deseja cancelar a venda?\n");
-    printf("1 - SIM?\n");
+    printf("1 - SIM\n");
     printf("2 - NAO\n");
 
-    scanf("%d",&opcao);
+    scanf("%d", &opcao);
     system("cls");
 
     switch (opcao) {
         case 1:
-            vPadaria = 0; vAlimento= 0; vLimpeza =0; vCar=0; // CANCELA A VENDA E ZERA TODAS AS VARIÁVEIS DE ACUMULAÇÃO DE VALORES
+            vPadaria = 0;
+            vAlimento = 0;
+            vLimpeza = 0;
+            vCar = 0;
             printf("Venda cancelada com sucesso...\n");
             delay(3);
             menuPrincipal();
@@ -805,10 +878,11 @@ void menuCancelar(){
     }
 }
 
-int main(){
-    system("color 0C"); // Vermelho
-    // system("color 7D"); // Roxo
-    // system("color 1F"); // Azul
-    menuPrincipal(); // Funcao Principal
+//==== FUNÇÃO MAIN ====//
+//== Ponto de entrada do programa ==//
+int main() {
+    system("color 0C"); // Estilo: Vermelho
+    menuPrincipal();    // Chamada da função principal
     return 0;
 }
+
