@@ -138,7 +138,7 @@ void printMenu(int const escolhaMenu) {
             "|=======================================================|\n",
             "|\t------------ Menu de Limpeza ------------\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "|Cod   | Nome do produto             | Valor  | Estoque |\n",
+            "| Cod  | Nome do produto             | Valor  | Estoque |\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL
         };
@@ -250,7 +250,7 @@ void printMenu(int const escolhaMenu) {
             printf("%s", printMenuPagamento[i]);
         }
 
-        printf("|\t $ - Valor Total Carrinho:  R$ %.2f - $\t\t|\n", vCar);
+        printf("|\t$ - Valor Total Carrinho: R$ %.2f - $\t\t|\n", vCar);
         printf("|=======================================================|\n");
         printf("Opcao..:  ");
     }
@@ -788,6 +788,10 @@ void menuCaixa() {
                         break;
                 }
             }
+            default:
+                printf("\nOpcao invalida... Tente novamente\n");
+                delay(2);
+                menuCaixa();
             break;
         }
 
