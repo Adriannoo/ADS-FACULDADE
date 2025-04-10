@@ -3,6 +3,7 @@
 #include <time.h>
 #include <windows.h>
 #include <stdbool.h>
+#include <math.h>
 
 /* Funcoes e variaveis globais */
 void menuPrincipal(void);
@@ -30,7 +31,7 @@ struct produto {
     int estoqueProduto;
 };
 
-struct produto limpeza[7][1] = { // struct matriz para cada item da limpeza.
+struct produto limpeza[][1] = { // struct matriz para cada item da limpeza.
     {{11, "Detergente", 1.99, 50}},
     {{12, "Sabao em Po 1KG", 9.99, 30}},
     {{13, "Esponja", 1.50, 0}},
@@ -40,7 +41,7 @@ struct produto limpeza[7][1] = { // struct matriz para cada item da limpeza.
     {{17, "Sabao em Barra (UND)", 1.00, 60}}
 };
 
-struct produto alimentos[7][1] = { // struct matriz para cada item de alimentos.
+struct produto alimentos[][1] = { // struct matriz para cada item de alimentos.
     {{21, "Cafe", 19.99, 10}},
     {{22, "Leite Caixa", 5.90, 15}},
     {{23, "Arroz 1KG", 4.50, 10}},
@@ -50,7 +51,7 @@ struct produto alimentos[7][1] = { // struct matriz para cada item de alimentos.
     {{27, "Farinha de Trigo 1KG", 5.00, 15}}
 };
 
-struct produto padaria[7][1] = { // struct matriz para cada item da padaria.
+struct produto padaria[][1] = { // struct matriz para cada item da padaria.
     {{31, "Pao de Forma PCT", 9.50}},
     {{32, "Pao Integral PCT", 12.50}},
     {{33, "Pao Frances UND", 1.90}},
@@ -60,6 +61,10 @@ struct produto padaria[7][1] = { // struct matriz para cada item da padaria.
     {{37, "Salgado", 17.50}}
 };
 
+float truncar(float valor, int casasDecimais) {
+    float potencia = pow(10.0f, casasDecimais);
+    return truncf(valor * potencia) / potencia;
+}
 
 void delay(float delayEmSegundos){    // Funcao utilizando a biblioteca "<time.h>" para delay.
     float mili = 1000 * delayEmSegundos;
@@ -75,9 +80,10 @@ int pegaTamanho(char* array[]) {
     return tamanho;
 }
 
-void printMenu(int const escolhaMenu) { //Print de todos os menus
+void printMenu(int const escolhaMenu) { // Print dos Menus referente a escolha.
     int i = 0;
     system("cls");
+
     if(escolhaMenu == 0) { // 0 == Menu principal.
         const char* printMenuPrincipal[] = {
             "|=======================================================|\n",
@@ -114,7 +120,7 @@ void printMenu(int const escolhaMenu) { //Print de todos os menus
             "|=======================================================|\n",
             "|\t------------ Menu de Limpeza ------------\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "|Cod   | Nome do produto             | Valor  | Estoque |\n",
+            "| Cod  | Nome do produto             | Valor  | Estoque |\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL // Finaliza o Array de Strings
         };
@@ -640,7 +646,8 @@ void menuPagamento() // Funcao Menu Pagamento
             }
 
             vTcdesconto = vTotal - descontoReal; // Calculo valor total com desconto
-            printf("\nValor com desconto: %.2f R$\n", vTcdesconto);
+            vTcdesconto = truncar(vTcdesconto, 2);
+            printf("\nValor com desconto: %f R$\n", vTcdesconto);
             printf("Inserir valor recebido em dinheiro\n");
             scanf("%f", &recebido);
 

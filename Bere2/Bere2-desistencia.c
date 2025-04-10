@@ -90,8 +90,13 @@ int pegaTamanho(char* array[]) {
     return tamanho;
 }
 
+float truncar(float valor, int casasDecimais) {
+    float potencia = pow(10.0f, casasDecimais);
+    return truncf(valor * potencia) / potencia;
+}
+
 //==== FUNÇÃO PRINTMENU ====//
-//== Exibe os menus de acordo com a escolha do usuário ==//
+//== Exibe os menus conforme a escolha ==//
 void printMenu(int const escolhaMenu) {
     int i = 0;
     system("cls");
@@ -567,36 +572,37 @@ void menuPagamento() {
                 }
 
                 vTcdesconto = vTotal - descontoReal;
+                vTcdesconto = truncar(vTcdesconto, 2);
                 printf("\nTotal com desconto: %.2f R$\n", vTcdesconto);
                 printf("Valor recebido: ");
                 scanf("%f", &recebido);
 
                 //==== PAGAMENTO TOTAL COM SUCESSO ====//
-                if (fabs(vTcdesconto - recebido) < 0.01 || recebido > vTcdesconto) {
-                    troco = recebido - vTcdesconto;
-                    totalDia += vTcdesconto;
 
-                    system("cls");
-                    printf("Processando pagamento");
+                troco = recebido - vTcdesconto;
+                totalDia += vTcdesconto;
+
+                system("cls");
+                printf("Processando pagamento");
+                delay(1);
+                for (int j = 0; j < 3; j++) {
+                    printf(".");
                     delay(1);
-                    for (int j = 0; j < 3; j++) {
-                        printf(".");
-                        delay(1);
-                    }
-
-                    system("cls");
-                    printf("Troco: %.2f R$\n", troco);
-                    printf("Pagamento realizado com sucesso!\n");
-                    delay(2);
-
-                    tLimpeza += vLimpeza;
-                    tAlimento += vAlimento;
-                    tPadaria += vPadaria;
-                    vLimpeza = vAlimento = vPadaria = fPagar = vCar = 0;
-                    deve = false;
-                    menuPrincipal();
-                    break;
                 }
+
+                system("cls");
+                printf("Troco: %.2f R$\n", troco);
+                printf("Pagamento realizado com sucesso!\n");
+                delay(2);
+
+                tLimpeza += vLimpeza;
+                tAlimento += vAlimento;
+                tPadaria += vPadaria;
+                vLimpeza = vAlimento = vPadaria = fPagar = vCar = 0;
+                deve = false;
+                menuPrincipal();
+                break;
+
             }
 
             //==== PAGAMENTO PARCIAL OU VALOR INSUFICIENTE ====//
@@ -604,7 +610,7 @@ void menuPagamento() {
                 printf("O valor integral sera cobrado!\n");
             }
 
-            printf("\nValor total a pagar: %.2f R$\n", vTotal);
+            printf("\nValor total a pagar: %f R$\n", vTotal);
             printf("Valor recebido: ");
             scanf("%f", &recebido);
             delay(2);
