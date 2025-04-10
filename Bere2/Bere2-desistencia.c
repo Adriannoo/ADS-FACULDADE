@@ -90,6 +90,8 @@ int pegaTamanho(char* array[]) {
     return tamanho;
 }
 
+//==== FUNÇÃO TRUNCAR ====//
+//== Limita o tamanho de um float, faz a potencia, trunca e volta a virgula ==//
 float truncar(float valor, int casasDecimais) {
     float potencia = pow(10.0f, casasDecimais);
     return truncf(valor * potencia) / potencia;
@@ -301,7 +303,6 @@ void printMenu(int const escolhaMenu) {
         }
     }
 }
-
 
 //==== FUNÇÃO MENU PRINCIPAL ====//
 //== Controla a navegação principal entre os menus do sistema ==//
