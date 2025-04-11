@@ -315,7 +315,7 @@ void menuPrincipal() {
 
         //=== VERIFICAÇÃO: SE O CAIXA ESTÁ FECHADO ===//
         // Caso o caixa esteja fechado, impede o acesso a menus que dependem da abertura
-        if (caixaAberto == false && opcao != 1 && opcao != 4) {
+        if (caixaAberto == false && opcao != 5 && opcao != 7) {
             system("cls");
             printf("O caixa esta fechado, realize a abertura");
             delay(0.5);
@@ -473,7 +473,6 @@ void menuAlimento() {
         menuAlimento();
     }
 }
-
 
 //==== FUNÇÃO MENU PADARIA ====//
 //== Responsável por mostrar os produtos da padaria e adicionar ao carrinho ==//
