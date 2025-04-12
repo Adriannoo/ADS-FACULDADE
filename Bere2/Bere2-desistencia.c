@@ -173,7 +173,7 @@ void printMenu(int const escolhaMenu) {
             "|=======================================================|\n",
             "|      ------------ Menu de Alimentos ------------\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "|Cod   | Nome do produto             | Valor  | Estoque |\n",
+            "| Cod  | Nome do produto             | Valor  | Estoque |\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL
         };
@@ -206,7 +206,7 @@ void printMenu(int const escolhaMenu) {
             "|=======================================================|\n",
             "|      ------------ Menu da Padaria ------------\t|\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
-            "|Cod   | Nome do produto             | Valor  | Estoque |\n",
+            "| Cod  | Nome do produto             | Valor  | Estoque |\n",
             "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
             NULL
         };
@@ -302,6 +302,31 @@ void printMenu(int const escolhaMenu) {
             printf("%s", printMenuAberturaCaixa[i]);
         }
     }
+
+    //==== MENU FECHAMENTO DE CAIXA ====//
+    if (escolhaMenu == 7) {
+        const char* printMenuFechamentoCaixa[] = {
+            "|=======================================================|\n",
+            "|\t\t    Mercado Dona Bere\t\t\t|\n",
+            "|=======================================================|\n",
+            "|\t  ------------ Menu Caixa ------------\t\t|\n",
+            "|\t  --------* Fechamento Caixa *--------\t\t|\n",
+            "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|\n",
+            NULL
+        };
+
+        for (i = 0; i < pegaTamanho(printMenuFechamentoCaixa); i++) {
+            printf("%s", printMenuFechamentoCaixa[i]);
+        }
+
+        printf("|\t @ --- Valor de abertura: R$ %.2f --- @\t\t|\n", vAbre);
+        printf("|\t\t\t\t\t\t\t|\n");
+        printf("|\t -> Faturamento total: %.2f\t\t\t|\n", totalDia);
+        printf("|\t -> Total Limpeza: %.2f\t\t\t\t|\n", tLimpeza);
+        printf("|\t -> Total Alimento: %.2f\t\t\t|\n", tAlimento);
+        printf("|\t -> Total Padaria: %.2f\t\t\t\t|\n", tPadaria);
+        printf("|=======================================================|\n");
+    }
 }
 
 //==== FUNÇÃO MENU PRINCIPAL ====//
@@ -310,7 +335,7 @@ void menuPrincipal() {
 
     while (opcao != 7) {
 
-        printMenu(0); // 0 == Menu Principal
+        printMenu(7); // 0 == Menu Principal
         scanf("%d", &opcao);
 
         //=== VERIFICAÇÃO: SE O CAIXA ESTÁ FECHADO ===//
@@ -815,7 +840,6 @@ void menuCaixa() {
             switch (opcao2) {
 
                 case 1:
-                    printf("Valor de abertura: R$ %.2f\n\n", vAbre);
                     totalDia -= vAbre;
 
                     if (totalDia <= 0) {
