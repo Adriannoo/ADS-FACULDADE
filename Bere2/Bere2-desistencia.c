@@ -358,7 +358,6 @@ void menuPrincipal() {
                         delay(3);
                         exit(0);
                     }
-                    break;
                 default:
                     printf("Opcao invalida... Tente novamente\n");
                     menuPrincipal();
@@ -538,6 +537,7 @@ void menuPagamento() {
     float descontoCinco = 0.05;
     float descontoDez = 0.10;
     float descontoInformado = 0;
+    float descontoLimpeza = 0, descontoAlimento = 0, descontoPadaria = 0;
 
     //==== CALCULA VALOR TOTAL SE NÃO HOUVER DÍVIDA ====//
     if (!deve) {
@@ -560,15 +560,24 @@ void menuPagamento() {
                 if (vTotal <= 50) {
                     printf("Desconto de 5%% aplicado.\n");
                     descontoReal = vTotal * descontoCinco;
+                    descontoLimpeza = vLimpeza * descontoCinco;
+                    descontoAlimento = vAlimento * descontoCinco;
+                    descontoPadaria = vPadaria * descontoCinco;
                 } else if (vTotal < 200) {
                     printf("Desconto de 10%% aplicado.\n");
                     descontoReal = vTotal * descontoDez;
+                    descontoLimpeza = vLimpeza * descontoDez;
+                    descontoAlimento = vAlimento * descontoDez;
+                    descontoPadaria = vPadaria * descontoDez;
                 } else {
                     printf("Informe a porcentagem de desconto: ");
                     scanf("%f", &descontoInformado);
                     printf("Desconto de %.0f%% aplicado.\n", descontoInformado);
                     descontoInformado /= 100;
                     descontoReal = vTotal * descontoInformado;
+                    descontoLimpeza = vLimpeza * descontoInformado;
+                    descontoAlimento = vAlimento * descontoInformado;
+                    descontoPadaria = vPadaria * descontoInformado;
                 }
 
                 vTcdesconto = vTotal - descontoReal;
@@ -595,10 +604,11 @@ void menuPagamento() {
                 printf("Pagamento realizado com sucesso!\n");
                 delay(2);
 
-                tLimpeza += vLimpeza;
-                tAlimento += vAlimento;
-                tPadaria += vPadaria;
+                tLimpeza += vLimpeza - descontoLimpeza;
+                tAlimento += vAlimento - descontoAlimento;
+                tPadaria += vPadaria - descontoPadaria;
                 vLimpeza = vAlimento = vPadaria = fPagar = vCar = 0;
+                descontoLimpeza = descontoAlimento = descontoPadaria = 0;
                 deve = false;
                 menuPrincipal();
                 break;
@@ -893,4 +903,3 @@ int main() {
     menuPrincipal();    // Chamada da função principal
     return 0;
 }
-
