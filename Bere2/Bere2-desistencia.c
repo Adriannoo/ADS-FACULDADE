@@ -705,8 +705,8 @@ void menuPagamento() {
                 scanf("%f", &recebido);
 
                 //==== PAGAMENTO TOTAL COM SUCESSO ====//
-
-                troco = recebido - vTcdesconto;
+                if (recebido >= vTcdesconto){
+                troco = vTcdesconto - recebido;
                 totalDia += vTcdesconto;
 
                 system("cls");
@@ -731,19 +731,20 @@ void menuPagamento() {
                 break;
 
             }
-
+}
             //==== PAGAMENTO PARCIAL OU VALOR INSUFICIENTE ====//
-            if (recebido < vTcdesconto) {
+            if (recebido < vTcdesconto && deve == false) {
                 printf("O valor integral sera cobrado!\n");
+                delay(3);
             }
 
-            printf("\nValor total a pagar: %f R$\n", vTotal);
+            printf("\nValor total a pagar: %.2f R$\n", vTotal);
             printf("Valor recebido: ");
             scanf("%f", &recebido);
             delay(2);
 
-            if (fabs(vTotal - recebido) < 0.01 || recebido > vTotal) {
-                troco = recebido - vTotal;
+            if (recebido > vTotal || fabs(vTotal - recebido) < 0.01  ) {
+                troco = vTotal - recebido;
                 totalDia += vTotal;
 
                 system("cls");
