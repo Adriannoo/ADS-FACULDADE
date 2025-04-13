@@ -690,12 +690,19 @@ void menuPagamento() {
                 } else {
                     printf("Informe a porcentagem de desconto: ");
                     scanf("%f", &descontoInformado);
+                    if(descontoInformado <= 50){
                     printf("Desconto de %.0f%% aplicado.\n", descontoInformado);
                     descontoInformado /= 100;
                     descontoReal = vTotal * descontoInformado;
                     descontoLimpeza = vLimpeza * descontoInformado;
                     descontoAlimento = vAlimento * descontoInformado;
                     descontoPadaria = vPadaria * descontoInformado;
+                    }else{
+                        printf("Desconto maior que 50%%, tente novamente... \n");
+                        descontoInformado = 0;
+                        delay(2);
+                        menuPagamento();
+                    }
                 }
 
                 vTcdesconto = vTotal - descontoReal;
