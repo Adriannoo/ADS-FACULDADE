@@ -727,7 +727,10 @@ case 41:
 }
         //==== PAGAMENTO EM CARTÃO ====//
         case 42:
+            if(deve == false){
             printf("Valor total: %.2f R$\n\n", vTotal);
+            }else{
+            printf("Falta pagar: %.2f R$\n\n", fPagar);}
             printf("51. Pagamento realizado\n");
             printf("52. Pagamento nao realizado\n");
             printf("53. Voltar ao menu anterior\n");
@@ -744,8 +747,10 @@ case 41:
                 system("cls");
                 printf("Pagamento realizado com sucesso!\n");
                 delay(2);
-
+                if(deve == false){
                 totalDia += vTotal;
+                }else{
+                totalDia += fPagar;}
                 tLimpeza += vLimpeza;
                 tAlimento += vAlimento;
                 tPadaria += vPadaria;
