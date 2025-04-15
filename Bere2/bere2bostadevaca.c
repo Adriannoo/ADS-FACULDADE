@@ -794,7 +794,7 @@ case 41:
 
     while (fPagar > 0) {
         system("cls");
-        printf("Pagamento parcial registrado.\n");
+        printf("Pagamento parcial registrado.\nSera cobrado o valor integral: %.2f R$\n", fPagar + recebido);
         printf("Falta pagar: %.2f R$\n\n", fPagar);
         delay(1);
 
@@ -1010,8 +1010,6 @@ void menuCaixa() {
             switch (opcao2) {
 
                 case 1:
-                    totalDia -= vAbre;
-
                     if (totalDia <= 0) {
                         totalDia = 0;
                     }
@@ -1048,6 +1046,7 @@ void menuCaixa() {
                     menuPrincipal();
                     break;
     }
+}
 }
 
 //==== FUNÇÃO ABERTURA PADARIA ====//
@@ -1103,6 +1102,7 @@ void menuCancelar() {
             break;
     }
 }
+
 
 //==== FUNÇÃO MAIN ====//
 //== Ponto de entrada do programa ==//
