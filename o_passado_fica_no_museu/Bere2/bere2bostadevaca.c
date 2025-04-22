@@ -39,6 +39,7 @@ struct produto {
 };
 
 //==== MATRIZ DE STRUCT LIMPEZA ====//
+//=== Array Bidimensional, cada elemento um produto ===//
 struct produto limpeza[7][1] = { // matriz de struct para cada item da limpeza.
     {{11, "Detergente", 1.99, 50}},
     {{12, "Sabao em Po 1KG", 9.99, 30}},
@@ -136,7 +137,7 @@ void printMenu(int const escolhaMenu) {
 
     //==== MENU PRINCIPAL ====//
     if(escolhaMenu == 0) {
-        const char* printMenuPrincipal[] = {
+        const char* printMenuPrincipal[] = { // Array de ponteiro, guarda endereço de cada string.
             "|=======================================================|\n",
             "|\t\t    Mercado Dona Bere\t\t\t|\n",
             "|=======================================================|\n",
@@ -155,7 +156,7 @@ void printMenu(int const escolhaMenu) {
         };
 
         for(i = 0 ; i < pegaTamanho(printMenuPrincipal) ; i++) {
-            printf("%s", printMenuPrincipal[i]);
+            printf("%s", printMenuPrincipal[i]); // "i" Aponta para a string do Array.
         }
 
         printf("|      $ - Valor total de vendas hoje: R$ %.2f - $\t|\n", totalDia);
@@ -472,8 +473,8 @@ void menuPrincipal() {
                         for (int j = 0; j <= 2; j++) {
                             printf(".");
                             delay(0.5);
-                            exit(0);
                         }
+                        exit(0);
                     }
                 default:
                     printMenu(404);
@@ -794,7 +795,7 @@ case 41:
 
     while (fPagar > 0) {
         system("cls");
-        printf("Pagamento parcial registrado.\nSera cobrado o valor integral: %.2f R$\n", fPagar + recebido);
+        printf("Pagamento parcial registrado.\nSera cobrado o valor integral: %.2f R$\n", vTotal);
         printf("Falta pagar: %.2f R$\n\n", fPagar);
         delay(1);
 
