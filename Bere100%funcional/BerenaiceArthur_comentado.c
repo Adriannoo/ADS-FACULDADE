@@ -17,6 +17,11 @@ struct produtos {
     float estoqueProduto;
 };
 
+struct usuarios {
+    char login[20]
+    char senha[20];
+};
+
 
 // Lista de produtos da categoria Limpeza
 struct produtos limpeza[7] = {
