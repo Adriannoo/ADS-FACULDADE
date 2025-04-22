@@ -220,7 +220,7 @@ float aplicarDesconto(float x) {
         scanf("%f", &descontoInformado);
         descontoInformado = descontoInformado / 100;
         guardaDesconto = x * descontoInformado;
-        return totalDesconto = total - guardaDesconto;
+        return totalDesconto = x - guardaDesconto;
     }
 }
 
