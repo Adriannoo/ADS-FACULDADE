@@ -124,7 +124,7 @@ int pegaTamanho(char* array[]) {
 //==== FUNÇÃO TRUNCAR ====//
 //== Limita o tamanho de um float, faz a potencia, trunca e volta a virgula ==//
 float truncar(float valor, int casasDecimais) {
-    float potencia = pow(10.0f, casasDecimais);
+    float potencia = pow(10.0f, casasDecimais); // Dividir pela potencia faz a virgula retornar
     return truncf(valor * potencia) / potencia;
 }
 
