@@ -17,10 +17,10 @@ struct produtos {
     float estoqueProduto;
 };
 
-struct usuarios {
+/*struct usuarios {
     char login[20]
     char senha[20];
-};
+};*/
 
 
 // Lista de produtos da categoria Limpeza
