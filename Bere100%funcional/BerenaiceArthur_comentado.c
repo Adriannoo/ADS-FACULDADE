@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <windows.h>
 #include <stdbool.h>
 
 // Estrutura 'produtos' representa um item à venda
@@ -15,7 +18,7 @@ struct produtos {
 };
 
 struct usuarios {
-    char login[20];
+    char login[20]
     char senha[20];
 };
 
