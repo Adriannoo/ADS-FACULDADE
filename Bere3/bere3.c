@@ -684,7 +684,7 @@ void menuRelatorios() {
 
 //==== FUNÇÃO PRINCIPAL ====//
 int main() {
-    system("color 0C"); // Cor vermelha no terminal;
+    system("color 0a"); // Cor vermelha no terminal;
     adicionarCategoria("LIMPEZA");
 
     // Inicializar com categorias padrão
