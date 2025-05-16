@@ -196,7 +196,7 @@ void menuPrincipal() {
             case 6:
                 if (caixaAberto) {
                     printf("Caixa ainda aberto. Realize o fechamento primeiro.\n");
-                    Sleep(2000);
+                    system("pause");
                 } else {
                     // Liberar memória antes de sair
                     for (int i = 0; i < quantidadeProdutos; i++) {
@@ -205,13 +205,13 @@ void menuPrincipal() {
                     free(produtos);
                     liberarCategorias();
                     printf("Saindo do sistema...\n");
-                    Sleep(1000);
+                    system("pause");
                     exit(0);
                 }
                 break;
             default:
                 printf("Opcao invalida! Tente novamente.\n");
-                Sleep(1000);*/
+                system("pause");*/
         }
     }
 }
@@ -247,7 +247,7 @@ void menuCadastro() {
                 return;
             default:
                 printf("Opcao invalida!\n");
-                Sleep(1000);
+                system("pause");
         }
     }
 }
@@ -295,7 +295,7 @@ void cadastrarCliente(Cliente **clientes, int *quantidadeClientes) {
 
     (*quantidadeClientes)++;
     printf("\nCliente cadastrado com sucesso! Codigo: %d\n", novoCliente->codigo);
-    Sleep(2000);
+    system("pause");
 }
 
 void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
@@ -331,7 +331,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
         if (opcaoCategoria == 1) {
             if (categoriasGlobais.quantidade == 0) {
                 printf("Nenhuma categoria disponivel. Criando nova...\n");
-                Sleep(1000);
+                system("pause");
                 opcaoCategoria = 2;
                 continue;
             }
@@ -345,7 +345,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                 break;
             } else {
                 printf("Opcao invalida!\n");
-                Sleep(1000);
+                system("pause");
             }
         } else if (opcaoCategoria == 2) {
             printf("\nNome da nova categoria: ");
@@ -358,11 +358,11 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                 break;
             } else {
                 printf("Categoria ja existe!\n");
-                Sleep(1000);
+                system("pause");
             }
         } else {
             printf("Opcao invalida!\n");
-            Sleep(1000);
+            system("pause");
         }
     } while (1);
 
@@ -403,7 +403,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
 
     sistemaProdutos.quantidade++;
     printf("\nProduto cadastrado com sucesso! Codigo: %d\n", novo->codigo);
-    Sleep(2000);
+    system("pause");
 }
 
 void menuVendas(Produto *produtos, int *quantidadeProdutos) {
@@ -453,7 +453,7 @@ void menuVendas(Produto *produtos, int *quantidadeProdutos) {
             case 1:
             if (sistemaProdutos.quantidade == 0) {
                 printf("Nao ha produtos para vender!\n");
-                Sleep(1500);
+                system("pause");
                 break;
             }
 
@@ -551,7 +551,7 @@ void menuVendas(Produto *produtos, int *quantidadeProdutos) {
         if (!produtoEncontrado) {
             printf("Produto nao encontrado!\n");
         }
-        Sleep(1500);
+        system("pause");
     }
 
     if (numItens > 0) {
@@ -589,11 +589,11 @@ void menuVendas(Produto *produtos, int *quantidadeProdutos) {
                     system("cls");
                     if (opcaoCartao == 0){
                         printf("\n\nPAGAMENTO NAO APROVADO, INFORME NOVA FORMA DE PAGAMENTO: ");
-                        Sleep(2000);
+                        system("pause");
                         return 0;
                     }
                     printf("PAGAMENTO REALIZADO COM SUCESSO!! ");
-                    Sleep(2000);
+                    system("pause");
                     char formaPagamento;
                     printf("\n|Forma de pagamento (A - Aberto / P - Pago): ");
                     printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
@@ -612,20 +612,20 @@ void menuVendas(Produto *produtos, int *quantidadeProdutos) {
         else {
         printf("Nenhum produto foi vendido.\n");
         }
-        Sleep(3000);
+        system("pause");
         break;
 }
             /*case 2:
 
-                Sleep(1500);
+                system("pause");
                 break;
             case 3:
 
-                Sleep(1500);
+                system("pause");
                 break;
             default:
                 printf("Opção invalida!\n");
-                Sleep(1000);*/
+                system("pause");*/
         }
     }
 
@@ -639,7 +639,7 @@ void menuVenda(float *totalVendas){
         caixaAberto = 1;
         printf("Caixa aberto com sucesso!\n");
     }
-    Sleep(1000);
+    system("pause");
 }
 
 void menuFechamentoCaixa() {
@@ -650,7 +650,7 @@ void menuFechamentoCaixa() {
         printf("Caixa fechado com sucesso!\n");
         printf("Total de vendas do dia: R$ %.2f\n", totalVendas);
     }
-    Sleep(2000);
+    system("pause");
 }
 
 void menuRelatorios() {
@@ -678,7 +678,7 @@ void menuRelatorios() {
             return;
         default:
             printf("Opcao invalida!\n");
-            Sleep(1000);
+            system("pause");
     }
 }*/
 
