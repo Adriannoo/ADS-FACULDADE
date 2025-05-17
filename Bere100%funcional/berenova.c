@@ -161,7 +161,7 @@ void inicializar_sistema() {
             limpeza[i] = malloc(sizeof(produtos));
             limpeza[i]->codigo_produto = i+1;
             sprintf(limpeza[i]->nome_produto, "Limpeza %d", i+1);
-            limpeza[i]->valor_produto = 5.0 + i;
+            limpeza[i]->valor_custo = 5.0 + i;
             limpeza[i]->estoque_produto = 10;
         }
         limpeza_cont = 7;
@@ -173,7 +173,7 @@ void inicializar_sistema() {
             alimentos[i] = malloc(sizeof(produtos));
             alimentos[i]->codigo_produto = i+1;
             sprintf(alimentos[i]->nome_produto, "Alimento %d", i+1);
-            alimentos[i]->valor_produto = 3.0 + i;
+            alimentos[i]->valor_custo = 3.0 + i;
             alimentos[i]->estoque_produto = 10;
         }
         alimentos_cont = 7;
@@ -185,7 +185,7 @@ void inicializar_sistema() {
             padaria[i] = malloc(sizeof(produtos));
             padaria[i]->codigo_produto = i+1;
             sprintf(padaria[i]->nome_produto, "Padaria %d", i+1);
-            padaria[i]->valor_produto = 2.0 + i;
+            padaria[i]->valor_custo = 2.0 + i;
             padaria[i]->estoque_produto = 0;
         }
         padaria_cont = 7;
@@ -419,7 +419,7 @@ void registrar_produtos() {
                 do {
                     printf("Informe o valor de custo do produto:\n");
                     scanf("%f", &novo_produto->valor_custo);
-                } while (limpeza[limpeza_cont]->valor_produto < 0);
+                } while (limpeza[limpeza_cont]->valor_custo < 0);
 
                 do {
                     printf("Informe o valor de venda do produto:\n");
@@ -461,8 +461,8 @@ void registrar_produtos() {
 
                 do {
                     printf("Informe o valor do produto:\n");
-                    scanf("%f", &padaria[padaria_cont]->valor_produto);
-                } while (padaria[padaria_cont]->valor_produto < 0);
+                    scanf("%f", &padaria[padaria_cont]->valor_custo);
+                } while (padaria[padaria_cont]->valor_custo < 0);
 
                 do {
                     printf("Informe o estoque do produto:\n");
@@ -493,8 +493,8 @@ void registrar_produtos() {
 
                 do {
                     printf("Informe o valor do produto:\n");
-                    scanf("%f", &alimentos[alimentos_cont]->valor_produto);
-                } while (alimentos[alimentos_cont]->valor_produto < 0);
+                    scanf("%f", &alimentos[alimentos_cont]->valor_custo);
+                } while (alimentos[alimentos_cont]->valor_custo < 0);
 
                 do {
                     printf("Informe o estoque do produto:\n");
@@ -603,7 +603,7 @@ void listar_produtos() {
                     printf("%d - \t%s \t%.2f \t    (%.0f)\n",
                            limpeza[i]->codigo_produto,
                            limpeza[i]->nome_produto,
-                           limpeza[i]->valor_produto,
+                           limpeza[i]->valor_custo,
                            limpeza[i]->estoque_produto);
                 }
                 system("pause");
@@ -615,7 +615,7 @@ void listar_produtos() {
                     printf("%d - \t%s \t%.2f \t    (%.0f)\n",
                            alimentos[i]->codigo_produto,
                            alimentos[i]->nome_produto,
-                           alimentos[i]->valor_produto,
+                           alimentos[i]->valor_custo,
                            alimentos[i]->estoque_produto);
                 }
                 system("pause");
@@ -627,7 +627,7 @@ void listar_produtos() {
                     printf("%d - \t%s \t%.2f \t    (%.0f)\n",
                            padaria[i]->codigo_produto,
                            padaria[i]->nome_produto,
-                           padaria[i]->valor_produto,
+                           padaria[i]->valor_custo,
                            padaria[i]->estoque_produto);
                 }
                 system("pause");
@@ -983,7 +983,7 @@ void menu_padaria() {
             printf("%d - \t%s \t%.2f \t    (%.0f)\n",
                    padaria[i]->codigo_produto,
                    padaria[i]->nome_produto,
-                   padaria[i]->valor_produto,
+                   padaria[i]->valor_custo,
                    padaria[i]->estoque_produto);
         }
         printf("%d - Voltar\n", padaria_cont + 1);
@@ -1011,7 +1011,7 @@ void menu_padaria() {
 
             padaria[index]->estoque_produto -= quantidade;
             estoque_temp[14 + index] += quantidade;
-            carrinho_padaria += padaria[index]->valor_produto * quantidade;
+            carrinho_padaria += padaria[index]->valor_custo * quantidade;
             printf("Adicionado %d x %s ao carrinho\n", quantidade, padaria[index]->nome_produto);
             system("pause");
         } else if (opcao == padaria_cont + 1) {
@@ -1033,7 +1033,7 @@ void menu_alimento() {
             printf("%d - \t%s \t%.2f \t    (%.0f)\n",
                    alimentos[i]->codigo_produto,
                    alimentos[i]->nome_produto,
-                   alimentos[i]->valor_produto,
+                   alimentos[i]->valor_custo,
                    alimentos[i]->estoque_produto);
         }
         printf("%d - Voltar\n", alimentos_cont + 1);
@@ -1061,7 +1061,7 @@ void menu_alimento() {
 
             alimentos[index]->estoque_produto -= quantidade;
             estoque_temp[7 + index] += quantidade;
-            carrinho_alimentos += alimentos[index]->valor_produto * quantidade;
+            carrinho_alimentos += alimentos[index]->valor_custo * quantidade;
             printf("Adicionado %d x %s ao carrinho\n", quantidade, alimentos[index]->nome_produto);
             system("pause");
         } else if (opcao == alimentos_cont + 1) {
@@ -1083,7 +1083,7 @@ void menu_limpeza() {
             printf("%d - \t%s \t%.2f \t    (%.0f)\n",
                    limpeza[i]->codigo_produto,
                    limpeza[i]->nome_produto,
-                   limpeza[i]->valor_produto,
+                   limpeza[i]->valor_custo,
                    limpeza[i]->estoque_produto);
         }
         printf("%d - Voltar\n", limpeza_cont + 1);
@@ -1111,7 +1111,7 @@ void menu_limpeza() {
 
             limpeza[index]->estoque_produto -= quantidade;
             estoque_temp[index] += quantidade;
-            carrinho_limpeza += limpeza[index]->valor_produto * quantidade;
+            carrinho_limpeza += limpeza[index]->valor_custo * quantidade;
             printf("Adicionado %d x %s ao carrinho\n", quantidade, limpeza[index]->nome_produto);
             system("pause");
         } else if (opcao == limpeza_cont + 1) {
