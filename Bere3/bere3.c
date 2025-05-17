@@ -1117,7 +1117,7 @@ void menuAberturaCaixa(void){
             if (caixaAberto == 1){
                 printf("JA HA UM CAIXA EM ABERTO, REALIZE O FECHAMENTO");
                 system("pause");
-                menu_Principal;
+                menu_principal();
                 break;
             }
             printf("REALIZANDO ABERTURA DE CAIXA...");
@@ -1136,17 +1136,17 @@ void menuAberturaCaixa(void){
                 aberturaCaixa();
                 break;
             }
-            printrf("ABERTURA REALIZADA COM SUCESSO!\n");
+            printf("ABERTURA REALIZADA COM SUCESSO!\n");
             printf("VALOR DE ABERTURA: R$ %.2f", vAbre);
             totalCaixa = vAbre;
             system("pause");
             system("cls");
             caixaAberto = 1;
-            menu_Principal;
+            menu_principal();
             break;
         case 2:
             system("cls");
-            menu_Principal;
+            menu_principal();
             break;
         default:
             system("cls");
