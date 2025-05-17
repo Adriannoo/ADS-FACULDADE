@@ -5,7 +5,17 @@
 #include <windows.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 
+
+// Estrutura para armazenar a venda atual
+typedef struct {
+    int codigoProduto;
+    char descricao[100];
+    float precoUnitario;
+    int quantidade;
+    float subtotal;
+} ItemVenda;
 
 //=== ESTRUTURAS DE DADOS ===//
 typedef struct {
@@ -39,14 +49,6 @@ typedef struct {
     int quantidade;
 } SistemaProdutos;
 
-typedef struct {
-    int codigoProduto;
-    char descricao[50];
-    int quantidade;
-    float precoUnitario;
-    float subtotal;
-} Car;
-
 SistemaProdutos sistemaProdutos = {NULL, 0};
 
 // ===== VARIÁVEIS GLOBAIS ===== //
@@ -56,17 +58,18 @@ float totalVenda = 0;
 int numeroVenda = 0;
 float totalVendas = 0;
 int numItens = 0;
+int quantidadeProdutos = 0;
 int opcaoMenu;
 int caixaAberto = 0;
 int proximoNumeroVenda = 1;
 
 // ===== PROTÓTIPOS DE FUNÇÕES ===== //
-void menuPrincipal(void);
+void menu_principal(void);
 void exibirMenu(void);
 void menuCadastro(void);
 void cadastrarCliente(Cliente **clientes, int *quantidadeClientes);
 void cadastrarProduto(Produto **produtos, int *quantidadeProdutos);
-void menuVendas(Produto *produtos, int *quantidadeProdutos);
+void menuVendas(Produto *produtos, int quantidadeProdutos);
 float retiradaCaixa(float *totalCaixa);
 void menuAberturaCaixa(void);
 void menuFechamentoCaixa(void);
@@ -84,6 +87,8 @@ void salvarCategorias();
 void salvarProdutos();
 void carregarProdutos();
 void carregarCategorias();
+
+FILE *arquivo_cliente, *arquivo_produto, *arquivo_vendas;
 
 // ===== FUNÇÕES AUXILIARES ===== //
 
@@ -117,7 +122,7 @@ bool validarCPF(const char *cpf) { // Remove caracteres não numéricos
     return true;
 }
 
-double truncarValor(double valor, int casasDecimais) {
+double truncarValor(double const valor, int const casasDecimais) {
     // Verifica se o número de casas decimais é válido
     if (casasDecimais < 0) {
         return valor; // Retorna o valor original se casas decimais for negativo
@@ -152,9 +157,9 @@ void exibirMenu() {
     printf("Opcao: ");
 }
 
-void menuPrincipal() {
-    static Produto *produtos = NULL;
-    static int quantidadeProdutos = 0;
+void menu_principal() {
+    Produto *produtos;
+    int quantidadeProdutos = 0;
 
     do {
         exibirMenu();
@@ -252,6 +257,8 @@ void cadastrarCliente(Cliente **clientes, int *quantidadeClientes) {
     printf("Nome Completo: ");
     fgets(novoCliente->nomeCompleto, sizeof(novoCliente->nomeCompleto), stdin);
     novoCliente->nomeCompleto[strcspn(novoCliente->nomeCompleto, "\n")] = '\0';
+    arquivo_cliente = fopen("clientes.dat", "wb");
+    fwrite();
 
     printf("Nome Social (opcional): ");
     fgets(novoCliente->nomeSocial, sizeof(novoCliente->nomeSocial), stdin);
@@ -658,8 +665,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
 }
 
 float retiradaCaixa(float *totalCaixa);
-
-void menuVendas(Produto *produtos, int *quantidadeProdutos) {
+void menuVendas(Produto *produtos, int quantidadeProdutos) {
     while (1) {
         system("cls");
         printf("|====================================================================|\n");
@@ -708,18 +714,7 @@ void menuVendas(Produto *produtos, int *quantidadeProdutos) {
                 menu_novaVenda();
                 break;
             case 2:
-                system("cls");
-                retiradaCaixa(&totalCaixa);
                 break;
-            case 3:
-                system("cls");
-                menu_pagamento();
-                break;
-            default:
-                system("cls");
-                printf("OPCAO INVALIDA, DIGITE NOVAMENTE: ");
-                system("pause");
-                return;
         }
     }
 }
@@ -731,14 +726,6 @@ void menu_novaVenda(){
                 return;
             }
 
-    // Estrutura para armazenar a venda atual
-    typedef struct {
-        int codigoProduto;
-        char descricao[100];
-        float precoUnitario;
-        int quantidade;
-        float subtotal;
-    } ItemVenda;
 
     ItemVenda carrinho[100];
     int numItens = 0;
@@ -875,8 +862,8 @@ void menu_novaVenda(){
 }
 
 void menu_pagamento(){
-            Car *carrinho = NULL;
-                carrinho = realloc(carrinho, 100 * sizeof(Car));
+            ItemVenda *carrinho = NULL;
+                carrinho = realloc(carrinho, 100 * sizeof(ItemVenda));
             int opcaoPagamento, opcaoCartao, opcaoDinheiro;
             float totalDinheiro = 0, totalCartao = 0, totalCaixa = 0;
             printf("|====================================================================|\n");
@@ -920,7 +907,7 @@ void menu_pagamento(){
                             numeroVenda++;
                             totalVendas += totalVenda;
                             free(carrinho);
-                            menuPrincipal();
+                            menu_principal();
                             break;
                         case 2:
                             system("cls");
@@ -953,7 +940,7 @@ void menu_pagamento(){
                         printf("|COD   | DESCRICAO              | QTD | PRECO UN. | SUBTOTAL         |\n");
                         printf("|======|========================|=====|===========|==================|\n");
                         for (int i = 0; i < numItens; i++) {
-                            printf("|%-5.2f | %-22s | %-3d | R$ %-7.2f | R$ %-12.2f |\n",
+                            printf("|%-5.2d | %-22s | %-3d | R$ %-7.2f | R$ %-12.2f |\n",
                                carrinho[i].codigoProduto,
                                carrinho[i].descricao,
                                carrinho[i].quantidade,
@@ -1000,7 +987,7 @@ void menu_pagamento(){
                                         numeroVenda++;
                                         totalVendas += totalVenda;
                                         free(carrinho);
-                                        menuPrincipal();
+                                        menu_principal();
                                         break;
                                     case 2:
                                         system("cls");
@@ -1042,7 +1029,7 @@ void menu_pagamento(){
                             // Atualiza o contador de vendas
                             numeroVenda++;
                             totalVendas += totalVenda;
-                            menuPrincipal();
+                            menu_principal();
                         }
                         else if (pagamento == totalVenda){
                             totalDinheiro = totalVenda;
@@ -1061,7 +1048,7 @@ void menu_pagamento(){
                             // Atualiza o contador de vendas
                             numeroVenda++;
                             totalVendas += totalVenda;
-                            menuPrincipal();
+                            menu_principal();
                         }
                         else{
                             system("cls");
@@ -1081,6 +1068,7 @@ float retiradaCaixa(float *totalCaixa){
     printf("|===========================================================|\n");
     printf("| SALDO ATUAL EM CAIXA: R$ %.2f\n", *totalCaixa);
     printf("| DIGITE O VALOR A SER RETIRADO: R$ ");
+
 
     float valorRetirada;
     scanf("%f", &valorRetirada);
@@ -1114,7 +1102,7 @@ int main() {
 
     // Inicializar com categorias padrão
 
-    menuPrincipal();
+    menu_principal();
     // Libera memória ao sair
     for (int i = 0; i < sistemaProdutos.quantidade; i++) {
         free(sistemaProdutos.produtos[i].categoriaProduto);
