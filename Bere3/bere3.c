@@ -63,6 +63,7 @@ int opcaoMenu;
 int caixaAberto = 0;
 int proximoNumeroVenda = 1;
 float vAbre = 0;
+float totalDinheiroF = 0, totalCartaoF = 0; totalDinheiroCartaoF = 0;
 
 // ===== PROTÓTIPOS DE FUNÇÕES ===== //
 void menu_principal(void);
@@ -175,13 +176,13 @@ void menu_principal() {
             case 2:
                 menuVendas(produtos, quantidadeProdutos);
                 break;
-            /*case 3:
+            case 3:
                 menuAberturaCaixa();
                 break;
             case 4:
                 menuFechamentoCaixa();
                 break;
-            case 5:
+            /*case 5:
                 menuRelatorios();
                 break;*/
             case 6:
@@ -866,7 +867,7 @@ void menu_pagamento(){
             ItemVenda *carrinho = NULL;
                 carrinho = realloc(carrinho, 100 * sizeof(ItemVenda));
             int opcaoPagamento, opcaoCartao, opcaoDinheiro;
-            float totalDinheiro = 0, totalCartao = 0;
+            static float totalDinheiro = 0, totalCartao = 0, totalDinheiroCartao = 0;
             const float totalVendaOriginal = totalVenda;
             printf("|====================================================================|\n");
             printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
@@ -902,13 +903,17 @@ void menu_pagamento(){
                             printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
                             printf("  |Numero da venda: %d\n", numeroVenda);
                             printf("  |Total: R$ %.2f\n", totalVendaOriginal);
-                            printf("  |CARTAO: R$ %.2f\n", totalCartao);
                             printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
+                            printf("  |CARTAO: R$ %.2f\n", totalCartao);
                             system("pause");
 
                             // Atualiza o contador de vendas
                             numeroVenda++;
                             totalVendas += totalVendaOriginal;
+                            totalCartaoF += totalCartao;
+                            totalDinheiroF += totalDinheiro;
+                            totalCartao = 0;
+                            totalDinheiro = 0;
                             free(carrinho);
                             menu_principal();
                             break;
@@ -930,7 +935,7 @@ void menu_pagamento(){
                     }
                 }
                     else if (opcaoPagamento == 2){
-                        float pagamento = 0;
+                        static float pagamento = 0;
                         int opcaoFalta;
                         system("cls");
                         printf("|====================================================================|\n");
@@ -962,6 +967,7 @@ void menu_pagamento(){
                             printf("\nDESEJA EFETUAR O RESTANTE DO PAGAMENTO EM CARTAO? DIGITE 0 PARA CONFIRMAR");
                             scanf("%d", &opcaoFalta);
                             if (opcaoFalta == 0){
+                                totalDinheiroCartao += pagamento;
                                 printf("|====================================================================|\n");
                                 printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
                                 printf("|====================================================================|\n");
@@ -988,7 +994,11 @@ void menu_pagamento(){
 
                                         // Atualiza o contador de vendas
                                         numeroVenda++;
+
+                                        totalDinheiroCartaoF = totalDinheiro + totalCartao;
                                         totalVendas += totalVendaOriginal;
+                                        totalCartao = 0;
+                                        totalDinheiro = 0;
                                         free(carrinho);
                                         menu_principal();
                                         break;
@@ -1029,13 +1039,15 @@ void menu_pagamento(){
                             printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
                             printf("  |Numero da venda: %d\n", numeroVenda);
                             printf("  |Total: R$ %.2f\n", totalVendaOriginal);
-                            printf("  |CARTAO: R$ %.2f\n", totalCartao);
                             printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
                             system("pause");
 
                             // Atualiza o contador de vendas
                             numeroVenda++;
+                            totalDinheiroF += totalDinheiro;
                             totalVendas += totalVendaOriginal;
+                            totalDinheiro = 0;
+                            free(carrinho);
                             menu_principal();
                         }
                         else if (pagamento == totalVenda){
@@ -1047,13 +1059,15 @@ void menu_pagamento(){
                             printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
                             printf("  |Numero da venda: %d\n", numeroVenda);
                             printf("  |Total: R$ %.2f\n", totalVendaOriginal);
-                            printf("  |CARTAO: R$ %.2f\n", totalCartao);
                             printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
                             system("pause");
 
                             // Atualiza o contador de vendas
                             numeroVenda++;
+                            totalDinheiroF += totalDinheiro;
                             totalVendas += totalVendaOriginal;
+                            totalDinheiro = 0;
+                            free(carrinho);
                             menu_principal();
                         }
                         else{
@@ -1142,6 +1156,63 @@ void menuAberturaCaixa(void){
             system("pause");
             system("cls");
             caixaAberto = 1;
+            menu_principal();
+            break;
+        case 2:
+            system("cls");
+            menu_principal();
+            break;
+        default:
+            system("cls");
+            printf("OPCAO INVALIDA, RETORNANDO...");
+            system("pause");
+            return;
+    }
+}
+
+void menuFechamentoCaixa(void){
+    int opcaoFechamento;
+    vFechamento = 0;
+    printf("|====================================================================|\n");
+    printf("|\t\t    MENU FECHAMENTO\t\t\t\t     |\n");
+    printf("|====================================================================|\n");
+    printf("|-> 1. FECHAR CAIXA\n");
+    printf("|-> 2. RETORNAR AO MENU PRINCIPAL\n");
+    printf("|--------------------------------------------------------------------|\n");
+    printf("| OPCAO: ");
+    scanf("%d", &opcaoFechamento);
+    getchar();
+    switch(opcaoFechamento){
+        case 1:
+            system("cls");
+            if (caixaAberto == 0){
+                printf("NAO HA CAIXA ABERTO, RETORNANDO...");
+                system("pause");
+                menu_principal();
+                break;
+            }
+            printf("REALIZANDO FECHAMENTO DE CAIXA...");
+            Sleep(2000);
+            system("cls");
+            printf("QUANTIDADE DE VENDAS REALIZADAS: %d\n", &numeroVenda);
+            printf("TOTAL DO FATURAMENTO NO DIA (FATURAMENTO): R$ %.2f\n", &totalVendas);
+            printf("VALOR DE ABERTURA DE CAIXA: R$ %.2f\n", &vAbre);
+            printf("VALOR PAGO EM DINHEIRO: R$ %.2f\n", &totalDinheiroF);
+            printf("VALOR PAGO EM CARTAO: R$ %.2f\n", &totalCartaoF);
+            printf("VALOR PAGO EM DINHEIRO/CARTAO: R$ %.2f\n", &totalDinheiroCartaoF);
+            vFechamento = &totalVendas - &vAbre - &totalDinheiroF - &totalCartaoF - &totalDinheiroCartaoF;
+            printf("VALOR DE FECHAMENTO: R$ %.2f\n", vFechamento);
+            if (vFechamento > 0){
+                printf("ATENCAO, O CAIXA NAO PODERA SER FECHADO PORQUE HA DIVERGENCIA DE VALORES!\n");
+                printf("RETORNANDO AO MENU PRINCIPAL...");
+                system("pause");
+                caixaAberto = 1;
+                system("cls");
+                menu_principal();
+                break;
+            }
+            system("pause");
+            caixaAberto = 0;
             menu_principal();
             break;
         case 2:
