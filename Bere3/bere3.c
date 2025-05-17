@@ -62,6 +62,7 @@ int quantidadeProdutos = 0;
 int opcaoMenu;
 int caixaAberto = 0;
 int proximoNumeroVenda = 1;
+float vAbre = 0;
 
 // ===== PROTÓTIPOS DE FUNÇÕES ===== //
 void menu_principal(void);
@@ -847,7 +848,7 @@ void menu_novaVenda(){
             }
             printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
             printf("|====================================================================|\n");
-            printf("|HA DESCONTO (INFORME 0(PARA NAO) OU %% CONCEDIDO: ===_ %.2f_ ===    |\n", totalDesconto);
+            printf("|HA DESCONTO (INFORME 0(PARA NAO) OU %% CONCEDIDO): ===_ %.2f_ ===    |\n", totalDesconto);
             printf("|--------------------------------------------------------------------|\n");
             opcaoDesconto = getchar();
                 if (opcaoDesconto == '%'){
@@ -865,7 +866,8 @@ void menu_pagamento(){
             ItemVenda *carrinho = NULL;
                 carrinho = realloc(carrinho, 100 * sizeof(ItemVenda));
             int opcaoPagamento, opcaoCartao, opcaoDinheiro;
-            float totalDinheiro = 0, totalCartao = 0, totalCaixa = 0;
+            float totalDinheiro = 0, totalCartao = 0;
+            const float totalVendaOriginal = totalVenda;
             printf("|====================================================================|\n");
             printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
             printf("|====================================================================|\n");
@@ -895,17 +897,18 @@ void menu_pagamento(){
                         case 1:
                             system("cls");
                             printf("PAGAMENTO REALIZADO COM SUCESSO!\n");
+                            totalCartao += totalVenda;
                             system("pause");
                             printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
                             printf("  |Numero da venda: %d\n", numeroVenda);
-                            printf("  |Total: R$ %.2f\n", totalVenda);
+                            printf("  |Total: R$ %.2f\n", totalVendaOriginal);
                             printf("  |CARTAO: R$ %.2f\n", totalCartao);
                             printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
                             system("pause");
 
                             // Atualiza o contador de vendas
                             numeroVenda++;
-                            totalVendas += totalVenda;
+                            totalVendas += totalVendaOriginal;
                             free(carrinho);
                             menu_principal();
                             break;
@@ -978,14 +981,14 @@ void menu_pagamento(){
                                         system("pause");
                                         printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
                                         printf("  |Numero da venda: %d\n", numeroVenda);
-                                        printf("  |Total: R$ %.2f\n", totalVenda);
+                                        printf("  |Total: R$ %.2f\n", totalVendaOriginal + pagamento);
                                         printf("  |CARTAO: R$ %.2f\n", totalCartao);
                                         printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
                                         system("pause");
 
                                         // Atualiza o contador de vendas
                                         numeroVenda++;
-                                        totalVendas += totalVenda;
+                                        totalVendas += totalVendaOriginal;
                                         free(carrinho);
                                         menu_principal();
                                         break;
@@ -1009,10 +1012,15 @@ void menu_pagamento(){
                         }
 
                         else if (pagamento > totalVenda){
-                            float troco = 0;
-                            pagamento -= totalVenda;
-                            troco = pagamento;
+                            if (pagamento - totalVenda > totalCaixa){
+                                system("cls");
+                                printf("NAO HA VALOR NO CAIXA SUFICIENTE PARA O TROCO, INFORME NOVO VALOR DE PAGAMENTO: ");
+                                system("pause");
+                                menu_pagamento();
+                            }
+                            float troco = pagamento - totalVenda;
                             totalDinheiro = totalVenda;
+                            totalCaixa -= troco;
                             printf("TROCO: %.2f", troco);
                             system("pause");
                             system("cls");
@@ -1020,34 +1028,32 @@ void menu_pagamento(){
                             system("pause");
                             printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
                             printf("  |Numero da venda: %d\n", numeroVenda);
-                            printf("  |Total: R$ %.2f\n", totalVenda);
+                            printf("  |Total: R$ %.2f\n", totalVendaOriginal);
                             printf("  |CARTAO: R$ %.2f\n", totalCartao);
                             printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
-                            totalCaixa += totalVenda;
                             system("pause");
 
                             // Atualiza o contador de vendas
                             numeroVenda++;
-                            totalVendas += totalVenda;
+                            totalVendas += totalVendaOriginal;
                             menu_principal();
                         }
                         else if (pagamento == totalVenda){
-                            totalDinheiro = totalVenda;
+                            totalDinheiro += totalVenda;
                             system("pause");
                             system("cls");
                             printf("PAGAMENTO REALIZADO COM SUCESSO!\n");
                             system("pause");
                             printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
                             printf("  |Numero da venda: %d\n", numeroVenda);
-                            printf("  |Total: R$ %.2f\n", totalVenda);
+                            printf("  |Total: R$ %.2f\n", totalVendaOriginal);
                             printf("  |CARTAO: R$ %.2f\n", totalCartao);
                             printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
-                            totalCaixa += totalVenda;
                             system("pause");
 
                             // Atualiza o contador de vendas
                             numeroVenda++;
-                            totalVendas += totalVenda;
+                            totalVendas += totalVendaOriginal;
                             menu_principal();
                         }
                         else{
@@ -1058,39 +1064,97 @@ void menu_pagamento(){
                         }
 
                     }
-                }while (opcaoPagamento != 3);
+                }while (opcaoPagamento != 3 && totalVenda > 0);
             }
 
 float retiradaCaixa(float *totalCaixa){
     system("cls");
-    printf("|===========================================================|\n");
-    printf("|\t\t   RETIRADA DE CAIXA (SANGRIA)\t\t\t   |\n");
-    printf("|===========================================================|\n");
-    printf("| SALDO ATUAL EM CAIXA: R$ %.2f\n", *totalCaixa);
-    printf("| DIGITE O VALOR A SER RETIRADO: R$ ");
-
-
-    float valorRetirada;
-    scanf("%f", &valorRetirada);
-    getchar();
-    if (valorRetirada <= 0){
-        printf("| VALOR INVALIDO\n");
-        system("pause");
-        return *totalCaixa;
-    }
-    else if (valorRetirada > *totalCaixa){
-        printf("| SALDO INSUFICIENTE. SALDO ATUAL: R$ %.2f\n", *totalCaixa);
-        system("pause");
-        return *totalCaixa;
-    }
-    *totalCaixa -= valorRetirada;
-    printf("| RETIRADA REALIZADA COM SUCESSO!\n");
-    printf("| NOVO SALDO EM CAIXA: R$ %.2f\n", *totalCaixa);
-    system("pause");
-    return *totalCaixa;
+        printf("|===========================================================|\n");
+        printf("|\t\t   RETIRADA DE CAIXA (SANGRIA)\t\t\t   |\n");
+        printf("|===========================================================|\n");
+        printf("| SALDO ATUAL EM CAIXA: R$ %.2f\n", *totalCaixa);
+        printf("| DIGITE O VALOR A SER RETIRADO: R$ ");
+            
+        float valorRetirada;
+        scanf("%f", &valorRetirada);
+        getchar();
+            if (valorRetirada <= 0){
+                printf("| VALOR INVALIDO\n");
+                system("pause");
+                return *totalCaixa;
+            }
+            else if (valorRetirada > *totalCaixa){
+                printf("| SALDO INSUFICIENTE. SALDO ATUAL: R$ %.2f\n", *totalCaixa);
+                system("pause");
+                return *totalCaixa;
+            }
+            else if (*totalCaixa - valorRetirada > 50){
+                printf("NECESSARIO DEIXAR VALOR MINIMO DE 50 REAIS EM CAIXA, SALDO ATUAL: R$ %.2f\n", *totalCaixa);
+                system("pause");
+                return *totalCaixa;
+            }
+            *totalCaixa -= valorRetirada;
+            printf("| RETIRADA REALIZADA COM SUCESSO!\n");
+            printf("| NOVO SALDO EM CAIXA: R$ %.2f\n", *totalCaixa);
+            system("pause");
+            return *totalCaixa;
 }
 
-
+void menuAberturaCaixa(void){
+    int opcaoAbre;
+    printf("|====================================================================|\n");
+    printf("|\t\t    MENU ABERTURA\t\t\t\t     |\n");
+    printf("|====================================================================|\n");
+    printf("|-> 1. ABRIR CAIXA\n");
+    printf("|-> 2. RETORNAR AO MENU PRINCIPAL\n");
+    printf("|--------------------------------------------------------------------|\n");
+    printf("| OPCAO: ");
+    scanf("|%d", &opcaoAbre);
+    getchar();
+    switch(opcaoAbre){
+        case 1:
+            system("cls");
+            if (caixaAberto == 1){
+                printf("JA HA UM CAIXA EM ABERTO, REALIZE O FECHAMENTO");
+                system("pause");
+                menu_Principal;
+                break;
+            }
+            printf("REALIZANDO ABERTURA DE CAIXA...");
+            Sleep(2000);
+            system("cls");
+            printf("DIGITE O VALOR DE ABERTURA: \n");
+            printf("VALOR R$ ");
+            scanf("%f", &vAbre);
+            getchar();
+            system("cls");
+            if (vAbre < 0){
+                system("cls");
+                printf("VALOR DE ABERTURA INCORRETO, RETORNANDO...");
+                system("pause");
+                system("cls");
+                aberturaCaixa();
+                break;
+            }
+            printrf("ABERTURA REALIZADA COM SUCESSO!\n");
+            printf("VALOR DE ABERTURA: R$ %.2f", vAbre);
+            totalCaixa = vAbre;
+            system("pause");
+            system("cls");
+            caixaAberto = 1;
+            menu_Principal;
+            break;
+        case 2:
+            system("cls");
+            menu_Principal;
+            break;
+        default:
+            system("cls");
+            printf("OPCAO INVALIDA, RETORNANDO...");
+            system("pause");
+            return;
+    }
+}
 
 //==== FUNÇÃO PRINCIPAL ====//
 int main() {
