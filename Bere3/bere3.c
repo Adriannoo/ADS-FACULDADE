@@ -717,7 +717,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
         printf("\nPreço de Compra: R$ ");
         if (scanf("%f", &novo->precoCompra) != 1 || novo->precoCompra <= 0) {
             printf("Valor incorreto! Digite um valor positivo.\n");
-            while (getchar() != '\n'); // Limpa o buffer
+            while (getchar() != '\n') // Limpa o buffer
             continue;
         }
         break;
@@ -894,7 +894,7 @@ void menu_novaVenda() {
         printf("\nInforme o codigo do produto a ser comprado (0 para finalizar): ");
         if (scanf("%d", &codigoProduto) != 1) {
             printf("Codigo invalido!\n");
-            while (getchar() != '\n');
+            while (getchar() != '\n')
             system("pause");
             continue;
         }
