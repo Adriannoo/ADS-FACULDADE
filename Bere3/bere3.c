@@ -596,7 +596,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
     // Realoca memória para o novo produto
     Produto *temp = realloc(sistemaProdutos.produtos, (sistemaProdutos.quantidade + 1) * sizeof(Produto));
     if (temp == NULL) {
-        printf("Erro ao alocar memória para novo produto!\n");
+        printf("Erro ao alocar memoria para novo produto!\n");
         return;
     }
     sistemaProdutos.produtos = temp;
@@ -642,19 +642,19 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                 }
 
                 int categoriaSelecionada;
-                printf("\nDigite o número da categoria: ");
+                printf("\nDigite o numero da categoria: ");
                 scanf("%d", &categoriaSelecionada);
                 getchar();
 
                 if (categoriaSelecionada > 0 && categoriaSelecionada <= categoriasGlobais.quantidade) {
                     novo->categoriaProduto = strdup(categoriasGlobais.categorias[categoriaSelecionada - 1]);
                     if (novo->categoriaProduto == NULL) {
-                        printf("Erro ao alocar memória para categoria!\n");
+                        printf("Erro ao alocar memoria para categoria!\n");
                         break;
                     }
                     categoriaDefinida = true;
                 } else {
-                    printf("Opção inválida!\n");
+                    printf("Opção invalida!\n");
                     system("pause");
                 }
                 break;
@@ -674,7 +674,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                 }
 
                 if (!nomeValido) {
-                    printf("Nome de categoria inválido! Use apenas letras, números e espaços.\n");
+                    printf("Nome de categoria invalido! Use apenas letras, numeros e espaços.\n");
                     system("pause");
                     break;
                 }
@@ -683,7 +683,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                     if (adicionarCategoria(nomeCategoria)) {
                         novo->categoriaProduto = strdup(nomeCategoria);
                         if (novo->categoriaProduto == NULL) {
-                            printf("Erro ao alocar memória para categoria!\n");
+                            printf("Erro ao alocar memoria para categoria!\n");
                             break;
                         }
                         salvarCategorias();
@@ -693,7 +693,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                         system("pause");
                     }
                 } else {
-                    printf("Categoria já existe!\n");
+                    printf("Categoria ja existe!\n");
                     system("pause");
                 }
                 break;
@@ -703,7 +703,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                 free(temp);
                 return;
             default:
-                printf("Opção inválida!\n");
+                printf("Opcao invalida!\n");
                 system("pause");
         }
     }
@@ -770,7 +770,6 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
     printf("\nProduto cadastrado com sucesso! Código: %d\n", novo->codigo);
     system("pause");
 }
-
 
 void menuVendas() {
     while (1) {
