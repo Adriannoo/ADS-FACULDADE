@@ -82,13 +82,14 @@ void menuRelatorios(void);
 void processarPagamentoCartao(float *totalCartao, float totalOriginal);
 void processarPagamentoDinheiro(float *totalDinheiro, float *totalVenda, float totalOriginal);
 void finalizarVenda(float totalOriginal, float dinheiro, float cartao);
-void menu_pagamento(void);
+void menu_pagamento(float totalVenda);
 void menu_novaVenda(void);
 void exibirRelatorioVendas(void);
 void exibirProdutosCadastrados(void);
 void exibirClientesCadastrados(Cliente *clientes, int quantidadeClientes);
 void registrarLog(const char *mensagem);
 void exibirLogs();
+void verificarEstoqueMinimo();
 
 // Protótipos de funções
 bool adicionarCategoria(const char *categoria);
@@ -842,18 +843,17 @@ void menuVendas() {
     }
 }
 
-void menu_novaVenda(){
+void menu_novaVenda() {
     if (sistemaProdutos.quantidade == 0) {
-                printf("NAO HA PRODUTOS PARA VENDER!\n");
-                system("pause");
-                return;
-            }
-
+        printf("NAO HA PRODUTOS PARA VENDER!\n");
+        system("pause");
+        return;
+    }
 
     ItemVenda carrinho[100];
     int numItens = 0;
     float totalVenda = 0;
-    static int numeroVenda = 1; // Contador estático para número da venda
+    static int numeroVenda = 1;
 
     while (1) {
         system("cls");
@@ -892,7 +892,12 @@ void menu_novaVenda(){
 
         int codigoProduto, quantidade;
         printf("\nInforme o codigo do produto a ser comprado (0 para finalizar): ");
-        scanf("%d", &codigoProduto);
+        if (scanf("%d", &codigoProduto) != 1) {
+            printf("Codigo invalido!\n");
+            while (getchar() != '\n');
+            system("pause");
+            continue;
+        }
         getchar();
 
         if (codigoProduto == 0) {
@@ -900,127 +905,186 @@ void menu_novaVenda(){
         }
 
         printf("Informe a Quantidade: ");
-        scanf("%d", &quantidade);
-        if (sistemaProdutos.quantidade == 0 && quantidade >= 0) {
-            printf("Nao ha produtos para vender!\n");
+        if (scanf("%d", &quantidade) != 1 || quantidade <= 0) {
+            printf("Quantidade invalida!\n");
+            while (getchar() != '\n');
             system("pause");
-            break;
+            continue;
         }
         getchar();
 
         bool produtoEncontrado = false;
         for (int i = 0; i < sistemaProdutos.quantidade; i++) {
             if (sistemaProdutos.produtos[i].codigo == codigoProduto) {
-                if (sistemaProdutos.produtos[i].estoque >= quantidade) {
-                    // Adiciona ao carrinho
-                    carrinho[numItens].codigoProduto = codigoProduto;
-                    strcpy(carrinho[numItens].descricao, sistemaProdutos.produtos[i].nomeProduto);
-                    carrinho[numItens].precoUnitario = sistemaProdutos.produtos[i].precoVenda;
-                    carrinho[numItens].quantidade = quantidade;
-                    carrinho[numItens].subtotal = sistemaProdutos.produtos[i].precoVenda * quantidade;
-
-                    // Atualiza totais
-                    totalVenda += carrinho[numItens].subtotal;
-                    numItens++;
-                    if (sistemaProdutos.produtos[i].estoque > 0){
-                        // Atualiza estoque
-                            sistemaProdutos.produtos[i].estoque -= quantidade;
-
-                    printf("Adicionado: %d x %s (R$ %.2f cada)\n", quantidade,
-                           sistemaProdutos.produtos[i].nomeProduto,
-                           sistemaProdutos.produtos[i].precoVenda);
-                } else {
-                    printf("Estoque insuficiente! Disponivel: %d\n", sistemaProdutos.produtos[i].estoque);
-                }
                 produtoEncontrado = true;
+
+                if (sistemaProdutos.produtos[i].estoque < quantidade) {
+                    printf("Estoque insuficiente! Disponivel: %d\n", sistemaProdutos.produtos[i].estoque);
+                    system("pause");
+                    break;
+                }
+
+                // Adiciona ao carrinho
+                carrinho[numItens].codigoProduto = codigoProduto;
+                strcpy(carrinho[numItens].descricao, sistemaProdutos.produtos[i].nomeProduto);
+                carrinho[numItens].precoUnitario = sistemaProdutos.produtos[i].precoVenda;
+                carrinho[numItens].quantidade = quantidade;
+                carrinho[numItens].subtotal = sistemaProdutos.produtos[i].precoVenda * quantidade;
+
+                // Atualiza totais
+                totalVenda += carrinho[numItens].subtotal;
+                sistemaProdutos.produtos[i].estoque -= quantidade;
+                numItens++;
+
+                printf("Adicionado: %d x %s (R$ %.2f cada)\n", quantidade,
+                       sistemaProdutos.produtos[i].nomeProduto,
+                       sistemaProdutos.produtos[i].precoVenda);
+                system("pause");
                 break;
             }
         }
 
         if (!produtoEncontrado) {
             printf("Produto nao encontrado!\n");
+            system("pause");
         }
-        system("pause");
     }
 
     if (numItens > 0) {
-        char opcao;
-        printf("\nDESEJA ADICIONAR MAIS ITENS AO CARRINHO? (s/n): ");
-        scanf(" %c", &opcao);
+        // Aplica desconto se solicitado
+        char opcaoDesconto;
+        float totalDesconto = totalVenda;
+
+        system("cls");
+        printf("\n| CARRINHO DE COMPRAS - VENDA #%d |\n", numeroVenda);
+        printf("|====================================================================|\n");
+        printf("|COD   | DESCRICAO              | QTD | PRECO UN. | SUBTOTAL         |\n");
+        printf("|======|========================|=====|===========|==================|\n");
+        for (int i = 0; i < numItens; i++) {
+            printf("|%-5d | %-22s | %-3d | R$ %-7.2f | R$ %-12.2f |\n",
+                   carrinho[i].codigoProduto,
+                   carrinho[i].descricao,
+                   carrinho[i].quantidade,
+                   carrinho[i].precoUnitario,
+                   carrinho[i].subtotal);
+            printf("|------|------------------------|-----|-----------|-----------------|\n");
+        }
+        printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
+        printf("|====================================================================|\n");
+
+        printf("Deseja aplicar desconto de 5%%? (s/n): ");
+        scanf(" %c", &opcaoDesconto);
         getchar();
 
-        if (tolower(opcao) == 'n') {
-            float desconto, totalDesconto;
-            char opcaoDesconto;
-            desconto = totalVenda * 0.05;
-            totalDesconto = totalVenda - desconto;
-            system("cls");
-            printf("\n| CARRINHO DE COMPRAS - VENDA #%d |\n", numeroVenda);
-            printf("|====================================================================|\n");
-            printf("|COD   | DESCRICAO              | QTD | PRECO UN. | SUBTOTAL         |\n");
-            printf("|======|========================|=====|===========|==================|\n");
-            for (int i = 0; i < numItens; i++) {
-                printf("|%-5d | %-22s | %-3d | R$ %-7.2f | R$ %-12.2f |\n",
-                       carrinho[i].codigoProduto,
-                       carrinho[i].descricao,
-                       carrinho[i].quantidade,
-                       carrinho[i].precoUnitario,
-                       carrinho[i].subtotal);
-                printf("|------|------------------------|-----|-----------|-----------------|\n");
-            }
-            printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
-            printf("|====================================================================|\n");
-            printf("|HA DESCONTO (INFORME 0(PARA NAO) OU %% CONCEDIDO): ===_ %.2f_ ===    |\n", totalDesconto);
-            printf("|--------------------------------------------------------------------|\n");
-            opcaoDesconto = getchar();
-                if (opcaoDesconto == '%'){
-                totalVenda = totalDesconto;
-                menu_pagamento();
-            }
-            menu_pagamento();
-
+        if (tolower(opcaoDesconto) == 's') {
+            totalDesconto = totalVenda * 0.95f;
+            printf("Desconto aplicado. Novo total: R$ %.2f\n", totalDesconto);
+            system("pause");
         }
-    }
+
+        // Chama menu de pagamento com o valor correto
+        menu_pagamento(totalDesconto);
+
+        // Atualiza o número da venda após conclusão
+        numeroVenda++;
     }
 }
 
-void menu_pagamento() {
-    static ItemVenda carrinho[100];  // Array estático para o carrinho
+void menu_pagamento(float totalVenda) {
     static float totalDinheiro = 0, totalCartao = 0;
-    const float totalVendaOriginal = totalVenda;
+    const float totalOriginal = totalVenda;
     int opcaoPagamento;
 
     do {
         system("cls");
         printf("|====================================================================|\n");
-        printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
+        printf("| TOTAL A PAGAR: R$ %-40.2f |\n", totalVenda);
         printf("|====================================================================|\n");
-        printf("|MENU FORMA DE PAGAMENTO:                                            |\n");
-        printf("|1. PAGAMENTO EM CARTAO                                              |\n");
-        printf("|2. PAGAMENTO EM DINHEIRO                                            |\n");
-        printf("|3. RETORNAR AO MENU ANTERIOR                                        |\n");
+        printf("| FORMAS DE PAGAMENTO:\t\t\t\t\t     |\n");
+        printf("|--------------------------------------------------------------------|\n");
+        printf("| 1. CARTAO\t\t\t\t\t\t     |\n");
+        printf("| 2. DINHEIRO\t\t\t\t\t\t     |\n");
+        printf("| 3. VOLTAR\t\t\t\t\t\t     |\n");
         printf("|--------------------------------------------------------------------|\n");
         printf("OPCAO: ");
-        scanf("%d", &opcaoPagamento);
+
+        if (scanf("%d", &opcaoPagamento) != 1) {
+            printf("Opcao invalida!\n");
+            while (getchar() != '\n');
+            system("pause");
+            continue;
+        }
         getchar();
 
         switch(opcaoPagamento) {
-            case 1: // PAGAMENTO EM CARTÃO
-                processarPagamentoCartao(&totalCartao, totalVendaOriginal);
+            case 1: // Cartão
+                totalCartao += totalVenda;
+                printf("Pagamento com cartao no valor de R$ %.2f confirmado.\n", totalVenda);
+                totalVenda = 0;
+                system("pause");
                 break;
 
-            case 2: // PAGAMENTO EM DINHEIRO
-                processarPagamentoDinheiro(&totalDinheiro, &totalVenda, totalVendaOriginal);
+            case 2: // Dinheiro
+                float valorRecebido;
+                printf("Informe o valor recebido em dinheiro: R$ ");
+                if (scanf("%f", &valorRecebido) != 1 || valorRecebido <= 0) {
+                    printf("Valor invalido!\n");
+                    while (getchar() != '\n');
+                    system("pause");
+                    continue;
+                }
+                getchar();
+
+                if (valorRecebido >= totalVenda) {
+                    float troco = valorRecebido - totalVenda;
+                    if (troco > totalCaixa) {
+                        printf("Caixa nao tem troco suficiente!\n");
+                        system("pause");
+                        continue;
+                    }
+                    totalDinheiro += totalVenda;
+                    totalCaixa -= troco;
+                    printf("Troco: R$ %.2f\n", troco);
+                    totalVenda = 0;
+                } else {
+                    totalDinheiro += valorRecebido;
+                    totalVenda -= valorRecebido;
+                    printf("Falta pagar: R$ %.2f\n", totalVenda);
+                }
+                system("pause");
                 break;
 
-            case 3: // VOLTAR
+            case 3: // Voltar
                 return;
 
             default:
                 printf("Opcao invalida!\n");
                 system("pause");
         }
-    } while (opcaoPagamento != 3 && totalVenda > 0);
+
+        // Se o valor foi totalmente pago
+        if (totalVenda <= 0.01f) {
+            system("cls");
+            printf("|====================================================================|\n");
+            printf("| VENDA FINALIZADA COM SUCESSO!\t\t\t\t     |\n");
+            printf("|====================================================================|\n");
+            printf("| NUMERO DA VENDA: %-45d |\n", numeroVenda);
+            printf("| TOTAL: R$ %-52.2f |\n", totalOriginal);
+            printf("| FORMA DE PAGAMENTO:\t\t\t\t\t     |\n");
+            printf("| - DINHEIRO: R$ %-45.2f |\n", totalDinheiro);
+            printf("| - CARTAO: R$ %-46.2f |\n", totalCartao);
+            printf("|====================================================================|\n");
+
+            // Atualiza totais globais
+            totalVendas += totalOriginal;
+            totalDinheiroF += totalDinheiro;
+            totalCartaoF += totalCartao;
+            totalCaixa += totalDinheiro;
+
+            system("pause");
+            return;
+        }
+    } while (opcaoPagamento);
 }
 
 // Função auxiliar para processar pagamento com cartão
@@ -1634,30 +1698,89 @@ void exibirClientesCadastrados(Cliente *clientes, int quantidadeClientes) {
     system("pause");
 }
 
-//==== FUNÇÃO PRINCIPAL ====//
+void verificarEstoqueMinimo() {
+    // Verifica se o sistema de produtos foi inicializado corretamente
+    if (sistemaProdutos.produtos == NULL || sistemaProdutos.quantidade <= 0) {
+        return;
+    }
+
+    int produtosAbaixoDoMinimo = 0;
+
+    // Primeira passada: contar produtos abaixo do mínimo com dados válidos
+    for (int i = 0; i < sistemaProdutos.quantidade; i++) {
+        // Verifica se os valores de estoque são válidos (não negativos)
+        if (sistemaProdutos.produtos[i].estoque >= 0 &&
+            sistemaProdutos.produtos[i].estoqueMinimo >= 0) {
+            if (sistemaProdutos.produtos[i].estoque <= sistemaProdutos.produtos[i].estoqueMinimo) {
+                produtosAbaixoDoMinimo++;
+            }
+        }
+    }
+
+    // Se encontrou produtos abaixo do mínimo, exibe o alerta
+    if (produtosAbaixoDoMinimo > 0) {
+        system("cls");
+        printf("\n==============================================================\n");
+        printf("                ALERTA DE ESTOQUE BAIXO                    \n");
+        printf("==============================================================\n");
+        printf(" Existem %d produto(s) com estoque no nivel minimo ou abaixo\n", produtosAbaixoDoMinimo);
+        printf("--------------------------------------------------------------\n");
+        printf(" COD  NOME DO PRODUTO           ESTOQUE  ESTOQUE MIN  FALTAM \n");
+        printf("--------------------------------------------------------------\n");
+
+        for (int i = 0; i < sistemaProdutos.quantidade; i++) {
+            // Verifica novamente para garantir consistência
+            if (sistemaProdutos.produtos[i].estoque >= 0 &&
+                sistemaProdutos.produtos[i].estoqueMinimo >= 0 &&
+                sistemaProdutos.produtos[i].estoque <= sistemaProdutos.produtos[i].estoqueMinimo) {
+
+                // Calcula a quantidade que falta com segurança
+                int faltam = sistemaProdutos.produtos[i].estoqueMinimo - sistemaProdutos.produtos[i].estoque;
+                faltam = (faltam < 0) ? 0 : faltam;  // Garante que não seja negativo
+
+                // Formatação segura do nome do produto
+                char nomeSeguro[25];
+                if (sistemaProdutos.produtos[i].nomeProduto[0] != '\0') {
+                    strncpy(nomeSeguro, sistemaProdutos.produtos[i].nomeProduto, sizeof(nomeSeguro)-1);
+                    nomeSeguro[sizeof(nomeSeguro)-1] = '\0';
+                } else {
+                    strcpy(nomeSeguro, "N/A");
+                }
+
+                // Exibe os valores formatados e validados
+                printf(" %-4d %-24s %-8d %-12d %-9d \n",
+                       sistemaProdutos.produtos[i].codigo,
+                       nomeSeguro,
+                       sistemaProdutos.produtos[i].estoque,
+                       sistemaProdutos.produtos[i].estoqueMinimo,
+                       faltam);
+            }
+        }
+
+        printf("==============================================================\n");
+        printf("\nPressione ENTER para continuar...\n");
+
+        // Limpa o buffer de entrada completamente
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+    }
+}
+
+// Modificação na função main() para chamar corretamente:
 int main() {
-    system("color 0a"); // Cor verde no terminal
+    system("color 0A"); // Cor verde no terminal (sem caracteres especiais)
 
     // Inicialização de variáveis
     Cliente *clientes = NULL;
     int quantidadeClientes = 0;
-
-    // Inicializar categorias padrão
-    adicionarCategoria("LIMPEZA");
-    adicionarCategoria("ALIMENTAÇÃO");
-    adicionarCategoria("BEBIDAS");
-    adicionarCategoria("HIGIENE");
 
     // Carrega dados ao iniciar o programa
     carregarCategorias();
     carregarProdutos();
     carregarClientes(&clientes, &quantidadeClientes);
 
-    // Verifica se as categorias padrão foram carregadas corretamente
-    if (categoriasGlobais.quantidade == 0) {
-        printf("Erro ao carregar categorias!\n");
-        system("pause");
-    }
+    // Verificação de estoque mínimo (adicionado aqui)
+    verificarEstoqueMinimo();
 
     // Menu principal
     menu_principal();
@@ -1667,14 +1790,10 @@ int main() {
         free(sistemaProdutos.produtos[i].categoriaProduto);
     }
     free(sistemaProdutos.produtos);
-
-    // Libera memória dos clientes
     free(clientes);
-
-    // Libera categorias
     liberarCategorias();
 
-    // Salva dados antes de sair (opcional)
+    // Salva dados antes de sair
     salvarCategorias();
     salvarProdutos();
     salvarClientes(clientes, quantidadeClientes);
