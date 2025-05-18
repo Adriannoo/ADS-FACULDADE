@@ -67,6 +67,7 @@ int vFechamento = 0;
 float totalDinheiroF = 0, totalCartaoF = 0, totalDinheiroCartaoF = 0;
 
 // ===== PROTÓTIPOS DE FUNÇÕES ===== //
+float retiradaCaixa(float *totalCaixa);
 void menu_principal(void);
 void exibirMenu(void);
 void salvarClientes(Cliente *clientes, int quantidade);
@@ -75,7 +76,6 @@ void menuCadastro(void);
 void cadastrarCliente(Cliente **clientes, int *quantidadeClientes);
 void cadastrarProduto(Produto **produtos, int *quantidadeProdutos);
 void menuVendas(void);
-float retiradaCaixa(float *totalCaixa);
 void menuAberturaCaixa(void);
 void menuFechamentoCaixa(void);
 void menuRelatorios(void);
@@ -90,18 +90,14 @@ void exibirClientesCadastrados(Cliente *clientes, int quantidadeClientes);
 void registrarLog(const char *mensagem);
 void exibirLogs();
 void verificarEstoqueMinimo();
-
-// Protótipos de funções
-bool adicionarCategoria(const char *categoria);
-bool categoriaExiste(const char *categoria);
 void exibirCategorias();
 void liberarCategorias();
 void salvarCategorias();
 void salvarProdutos();
 void carregarProdutos();
 void carregarCategorias();
-
-FILE *arquivo_cliente, *arquivo_produto, *arquivo_vendas;
+bool adicionarCategoria(const char *categoria);
+bool categoriaExiste(const char *categoria);
 
 // ===== FUNÇÕES AUXILIARES ===== //
 
@@ -140,10 +136,8 @@ double truncarValor(double const valor, int const casasDecimais) {
     if (casasDecimais < 0) {
         return valor; // Retorna o valor original se casas decimais for negativo
     }
-
     // Calcula o fator de multiplicação/divisão
-    double fator = pow(10.0, casasDecimais);
-
+    const double fator = pow(10.0, casasDecimais);
     // Trunca o valor
     return trunc(valor * fator) / fator;
 }
@@ -254,6 +248,7 @@ void menu_principal() {
         }
     } while (opcaoMenu != 6);
 }
+
 void salvarClientes(Cliente *clientes, int quantidade) {
     FILE *arquivo = fopen("clientes.dat", "wb");
     if (arquivo == NULL) {
@@ -306,6 +301,7 @@ void menuCadastro() {
     Produto *produtos = sistemaProdutos.produtos;
     int quantidadeProdutos = sistemaProdutos.quantidade;
 
+    opcaoMenu = 0;
     while (opcaoMenu != 3) {
         system("cls");
         printf("|=======================================================|\n");
@@ -633,7 +629,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
         printf("\n1 - Selecionar categoria existente\n");
         printf("2 - Criar nova categoria\n");
         printf("0 - Cancelar cadastro\n");
-        printf("Opção: ");
+        printf("Opcao: ");
         scanf("%d", &opcaoCategoria);
         getchar();
 
@@ -894,7 +890,7 @@ void menu_novaVenda() {
         printf("\nInforme o codigo do produto a ser comprado (0 para finalizar): ");
         if (scanf("%d", &codigoProduto) != 1) {
             printf("Codigo invalido!\n");
-            while (getchar() != '\n')
+            while (getchar() != '\n');
             system("pause");
             continue;
         }
@@ -1420,7 +1416,7 @@ void menuFechamentoCaixa() {
                 }
 
                 printf("REALIZANDO FECHAMENTO DE CAIXA...\n");
-                Sleep(2000);
+                Sleep(1000);
                 system("cls");
 
                 // Relatório detalhado
@@ -1442,7 +1438,7 @@ void menuFechamentoCaixa() {
                 printf("| DIFERENCA: R$ %-31.2f |\n", vFechamento);
                 printf("|===============================================|\n");
 
-                if (fabs(vFechamento) > 0.01) { // Considera pequenas diferenças
+                if (fabsf(vFechamento) > 0.01) { // Considera pequenas diferenças
                     printf("\nATENCAO: DIVERGENCIA ENCONTRADA!\n");
                     printf("Verifique os valores informados.\n");
 
@@ -1561,7 +1557,7 @@ void menuRelatorios() {
 void registrarLog(const char *mensagem) {
     time_t now;
     time(&now);
-    struct tm *local = localtime(&now);
+    const struct tm *local = localtime(&now);
 
     FILE *logFile = fopen(ARQUIVO_LOG, "a");
     if (logFile == NULL) {
@@ -1577,7 +1573,7 @@ void registrarLog(const char *mensagem) {
     fclose(logFile);
 }
 
-// Função para exibir logs
+// Função para exibir ‘logs’
 void exibirLogs() {
     system("cls");
     printf("|====================================================================|\n");
@@ -1629,8 +1625,7 @@ void exibirLogs() {
 // Implementação da função para exibir relatório de vendas
 void exibirRelatorioVendas() {
     char logMensagem[200];
-    snprintf(logMensagem, sizeof(logMensagem),
-             "Relatorio de vendas detalhado - Total: R$ %.2f, Vendas: %d",
+    snprintf(logMensagem, sizeof(logMensagem), "Relatorio de vendas detalhado - Total: R$ %.2f, Vendas: %d",
              totalVendas, numeroVenda);
     registrarLog(logMensagem);
     system("cls");
@@ -1660,6 +1655,7 @@ void exibirProdutosCadastrados() {
     printf("|COD | NOME PRODUTO\t\t| CATEGORIA\t| ESTOQUE | PRECO VENDA |\n");
     printf("|====|=======================|===============|=========|=============|\n");
 
+
     for(int i = 0; i < sistemaProdutos.quantidade; i++) {
         printf("|%-3d | %-21s | %-13s | %-7d | R$ %-8.2f |\n",
                sistemaProdutos.produtos[i].codigo,
@@ -1676,7 +1672,7 @@ void exibirProdutosCadastrados() {
 }
 
 // Implementação da função para exibir clientes cadastrados
-void exibirClientesCadastrados(Cliente *clientes, int quantidadeClientes) {
+void exibirClientesCadastrados(Cliente *clientes, const int quantidadeClientes) {
     system("cls");
     printf("|====================================================================|\n");
     printf("|\t\t    CLIENTES CADASTRADOS\t\t\t     |\n");
