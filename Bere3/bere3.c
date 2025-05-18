@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-
+#define ARQUIVO_LOG "relatorios.log"
 
 // Estrutura para armazenar a venda atual
 typedef struct {
@@ -63,22 +63,32 @@ int opcaoMenu;
 int caixaAberto = 0;
 int proximoNumeroVenda = 1;
 float vAbre = 0;
-float totalDinheiroF = 0, totalCartaoF = 0; totalDinheiroCartaoF = 0;
+int vFechamento = 0;
+float totalDinheiroF = 0, totalCartaoF = 0, totalDinheiroCartaoF = 0;
 
 // ===== PROTÓTIPOS DE FUNÇÕES ===== //
 void menu_principal(void);
 void exibirMenu(void);
+void salvarClientes(Cliente *clientes, int quantidade);
+void carregarClientes(Cliente **clientes, int *quantidade);
 void menuCadastro(void);
 void cadastrarCliente(Cliente **clientes, int *quantidadeClientes);
 void cadastrarProduto(Produto **produtos, int *quantidadeProdutos);
-void menuVendas(Produto *produtos, int quantidadeProdutos);
+void menuVendas(void);
 float retiradaCaixa(float *totalCaixa);
 void menuAberturaCaixa(void);
 void menuFechamentoCaixa(void);
 void menuRelatorios(void);
+void processarPagamentoCartao(float *totalCartao, float totalOriginal);
+void processarPagamentoDinheiro(float *totalDinheiro, float *totalVenda, float totalOriginal);
+void finalizarVenda(float totalOriginal, float dinheiro, float cartao);
 void menu_pagamento(void);
 void menu_novaVenda(void);
-
+void exibirRelatorioVendas(void);
+void exibirProdutosCadastrados(void);
+void exibirClientesCadastrados(Cliente *clientes, int quantidadeClientes);
+void registrarLog(const char *mensagem);
+void exibirLogs();
 
 // Protótipos de funções
 bool adicionarCategoria(const char *categoria);
@@ -160,8 +170,16 @@ void exibirMenu() {
 }
 
 void menu_principal() {
-    Produto *produtos;
-    int quantidadeProdutos = 0;
+    int opcaoMenu;
+
+    // Carrega dados ao iniciar
+    carregarCategorias();
+    carregarProdutos();
+
+    // Variáveis locais para clientes
+    Cliente *clientes = NULL;
+    int quantidadeClientes = 0;
+    carregarClientes(&clientes, &quantidadeClientes);
 
     do {
         exibirMenu();
@@ -169,52 +187,125 @@ void menu_principal() {
         getchar();
 
         switch (opcaoMenu) {
-            case 1:
+            case 1:  // CADASTROS
                 system("cls");
                 menuCadastro();
                 break;
-            case 2:
-                menuVendas(produtos, quantidadeProdutos);
+
+            case 2:  // VENDAS
+                if (caixaAberto) {
+                    menuVendas();
+                } else {
+                    printf("Caixa fechado. Efetue a abertura do caixa primeiro.\n");
+                    system("pause");
+                }
                 break;
-            case 3:
-                menuAberturaCaixa();
+
+            case 3:  // ABERTURA DE CAIXA
+                if (!caixaAberto) {
+                    menuAberturaCaixa();
+                } else {
+                    printf("Caixa ja esta aberto.\n");
+                    system("pause");
+                }
                 break;
-            case 4:
-                menuFechamentoCaixa();
+
+            case 4:  // FECHAMENTO DE CAIXA
+                if (caixaAberto) {
+                    menuFechamentoCaixa();
+                } else {
+                    printf("Caixa ja esta fechado.\n");
+                    system("pause");
+                }
                 break;
-            /*case 5:
+
+            case 5:  // RELATÓRIOS
                 menuRelatorios();
-                break;*/
-            case 6:
-                /*if (caixaAberto) {
+                break;
+
+            case 6:  // SAIR
+                if (caixaAberto) {
                     printf("Caixa ainda aberto. Realize o fechamento primeiro.\n");
                     system("pause");
                 } else {
-                    // Liberar memória antes de sair
-                    for (int i = 0; i < quantidadeProdutos; i++) {
-                        free(produtos[i].categoriaProduto);
+                    // Salva dados antes de sair
+                    salvarProdutos();
+                    salvarClientes(clientes, quantidadeClientes);
+                    salvarCategorias();
+
+                    // Libera memória
+                    for (int i = 0; i < sistemaProdutos.quantidade; i++) {
+                        free(sistemaProdutos.produtos[i].categoriaProduto);
                     }
-                    free(produtos);
+                    free(sistemaProdutos.produtos);
+                    free(clientes);
                     liberarCategorias();
+
                     printf("Saindo do sistema...\n");
                     system("pause");
                     exit(0);
-                }*/
+                }
                 break;
+
             default:
                 printf("Opcao invalida! Tente novamente.\n");
                 system("pause");
         }
     } while (opcaoMenu != 6);
 }
+void salvarClientes(Cliente *clientes, int quantidade) {
+    FILE *arquivo = fopen("clientes.dat", "wb");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir arquivo de clientes para escrita!\n");
+        return;
+    }
+
+    // Escreve a quantidade de clientes
+    fwrite(&quantidade, sizeof(int), 1, arquivo);
+
+    // Escreve cada cliente
+    for (int i = 0; i < quantidade; i++) {
+        fwrite(&clientes[i], sizeof(Cliente), 1, arquivo);
+    }
+
+    fclose(arquivo);
+}
+
+void carregarClientes(Cliente **clientes, int *quantidade) {
+    FILE *arquivo = fopen("clientes.dat", "rb");
+    if (arquivo == NULL) {
+        *clientes = NULL;
+        *quantidade = 0;
+        return;
+    }
+
+    // Lê a quantidade de clientes
+    fread(quantidade, sizeof(int), 1, arquivo);
+
+    // Aloca memória para os clientes
+    *clientes = (Cliente*)malloc(*quantidade * sizeof(Cliente));
+    if (*clientes == NULL) {
+        printf("Erro ao alocar memória para clientes!\n");
+        fclose(arquivo);
+        *quantidade = 0;
+        return;
+    }
+
+    // Lê cada cliente
+    for (int i = 0; i < *quantidade; i++) {
+        fread(&(*clientes)[i], sizeof(Cliente), 1, arquivo);
+    }
+
+    fclose(arquivo);
+}
 
 void menuCadastro() {
     static Cliente *clientes = NULL;
     static int quantidadeClientes = 0;
-    static Produto *produtos = NULL;
-    static int quantidadeProdutos = 0;
+    Produto *produtos = sistemaProdutos.produtos;
+    int quantidadeProdutos = sistemaProdutos.quantidade;
 
-    while (1) {
+    while (opcaoMenu != 3) {
         system("cls");
         printf("|=======================================================|\n");
         printf("|\t\t    MENU CADASTROS\t\t\t|\n");
@@ -245,52 +336,69 @@ void menuCadastro() {
 }
 
 void cadastrarCliente(Cliente **clientes, int *quantidadeClientes) {
+    // Realoca memória para o novo cliente
     Cliente *temp = realloc(*clientes, (*quantidadeClientes + 1) * sizeof(Cliente));
     if (temp == NULL) {
-        printf("Erro!\n");
+        printf("Erro ao alocar memória para novo cliente!\n");
         return;
     }
     *clientes = temp;
 
+    // Obtém referência para o novo cliente
     Cliente *novoCliente = &((*clientes)[*quantidadeClientes]);
+    memset(novoCliente, 0, sizeof(Cliente)); // Inicializa a estrutura
+
+    // Atribui código ao novo cliente
     novoCliente->codigo = *quantidadeClientes + 1;
 
     printf("\n=== CADASTRO DE CLIENTE ===\n");
+
+    // Nome Completo
     printf("Nome Completo: ");
     fgets(novoCliente->nomeCompleto, sizeof(novoCliente->nomeCompleto), stdin);
     novoCliente->nomeCompleto[strcspn(novoCliente->nomeCompleto, "\n")] = '\0';
-    arquivo_cliente = fopen("clientes.dat", "wb");
-    fwrite();
 
+    // Nome Social (opcional)
     printf("Nome Social (opcional): ");
     fgets(novoCliente->nomeSocial, sizeof(novoCliente->nomeSocial), stdin);
     novoCliente->nomeSocial[strcspn(novoCliente->nomeSocial, "\n")] = '\0';
 
-    printf("CPF: ");
-    fgets(novoCliente->cpf, sizeof(novoCliente->cpf), stdin);
-    novoCliente->cpf[strcspn(novoCliente->cpf, "\n")] = '\0';
-    while (!validarCPF(novoCliente->cpf)) {
-        printf("\nCPF INVALIDO, DIGITE NOVAMENTE: ");
+    // CPF com validação
+    bool cpfValido = false;
+    while (!cpfValido) {
+        printf("CPF: ");
         fgets(novoCliente->cpf, sizeof(novoCliente->cpf), stdin);
         novoCliente->cpf[strcspn(novoCliente->cpf, "\n")] = '\0';
+
+        cpfValido = validarCPF(novoCliente->cpf);
+        if (!cpfValido) {
+            printf("\nCPF INVALIDO, DIGITE NOVAMENTE!\n");
+        }
     }
 
+    // Endereço
     printf("Endereco: ");
     fgets(novoCliente->endereco, sizeof(novoCliente->endereco), stdin);
     novoCliente->endereco[strcspn(novoCliente->endereco, "\n")] = '\0';
 
+    // Bairro
     printf("Bairro: ");
     fgets(novoCliente->bairro, sizeof(novoCliente->bairro), stdin);
     novoCliente->bairro[strcspn(novoCliente->bairro, "\n")] = '\0';
 
+    // Celular
     printf("Celular: ");
     fgets(novoCliente->celular, sizeof(novoCliente->celular), stdin);
     novoCliente->celular[strcspn(novoCliente->celular, "\n")] = '\0';
 
+    // Atualiza a quantidade de clientes
     (*quantidadeClientes)++;
+
+    // Persistência de dados
+    salvarClientes(*clientes, *quantidadeClientes);
+
     printf("\nCliente cadastrado com sucesso! Codigo: %d\n", novoCliente->codigo);
     system("pause");
-    free(temp);
 }
 
 bool adicionarCategoria(const char *categoria) {
@@ -666,15 +774,15 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
     system("pause");
 }
 
-float retiradaCaixa(float *totalCaixa);
-void menuVendas(Produto *produtos, int quantidadeProdutos) {
+
+void menuVendas() {
     while (1) {
         system("cls");
         printf("|====================================================================|\n");
         printf("|\t\t    MENU VENDAS\t\t\t\t\t     |\n");
         printf("|====================================================================|\n");
 
-        // Exibe produtos cadastrados
+        // Exibe produtos disponíveis usando sistemaProdutos global
         if (sistemaProdutos.quantidade > 0) {
             printf("|====================================================================|\n");
             printf("|PRODUTOS DISPONIVEIS:\t\t\t\t\t\t     |\n");
@@ -683,11 +791,11 @@ void menuVendas(Produto *produtos, int quantidadeProdutos) {
             printf("|======|==========================|==============|=========|=========|\n");
             for (int i = 0; i < sistemaProdutos.quantidade; i++) {
                 printf("|%-5d | %-24s | %-12s | %-7.2f | %-8d|\n",
-                        sistemaProdutos.produtos[i].codigo,
-                        sistemaProdutos.produtos[i].nomeProduto,
-                        sistemaProdutos.produtos[i].categoriaProduto,
-                        sistemaProdutos.produtos[i].precoVenda,
-                        sistemaProdutos.produtos[i].estoque);
+                      sistemaProdutos.produtos[i].codigo,
+                      sistemaProdutos.produtos[i].nomeProduto,
+                      sistemaProdutos.produtos[i].categoriaProduto,
+                      sistemaProdutos.produtos[i].precoVenda,
+                      sistemaProdutos.produtos[i].estoque);
                 printf("|------|--------------------------|--------------|---------|---------|\n");
             }
         } else {
@@ -697,8 +805,7 @@ void menuVendas(Produto *produtos, int quantidadeProdutos) {
         printf("|====================================================================|\n");
         printf("\n|-> 1 - NOVA VENDA\n");
         printf("|-> 2 - RETIRADA DE CAIXA (SANGRIA)\n");
-        printf("|-> 3 - PAGAMENTO\n");
-        printf("|-> 4 - VOLTAR AO MENU PRINCIPAL\n");
+        printf("|-> 3 - VOLTAR AO MENU PRINCIPAL\n");
         printf("|--------------------------------------------------------------------|\n");
         printf("|OPCAO: ");
 
@@ -706,17 +813,31 @@ void menuVendas(Produto *produtos, int quantidadeProdutos) {
         scanf("%d", &opcao);
         getchar();
 
-        if (opcao == 4) {
-            return;
-        }
-
         switch (opcao) {
-            case 1:
-                system("cls");
-                menu_novaVenda();
+            case 1:  // NOVA VENDA
+                if (sistemaProdutos.quantidade > 0) {
+                    menu_novaVenda();
+                } else {
+                    printf("\nNao ha produtos cadastrados para vender!\n");
+                    system("pause");
+                }
                 break;
-            case 2:
+
+            case 2:  // RETIRADA DE CAIXA
+                if (caixaAberto) {
+                    retiradaCaixa(&totalCaixa);
+                } else {
+                    printf("\nCaixa fechado. Efetue a abertura primeiro.\n");
+                    system("pause");
+                }
                 break;
+
+            case 3:  // VOLTAR
+                return;
+
+            default:
+                printf("\nOpcao invalida!\n");
+                system("pause");
         }
     }
 }
@@ -863,387 +984,700 @@ void menu_novaVenda(){
     }
 }
 
-void menu_pagamento(){
-            ItemVenda *carrinho = NULL;
-                carrinho = realloc(carrinho, 100 * sizeof(ItemVenda));
-            int opcaoPagamento, opcaoCartao, opcaoDinheiro;
-            static float totalDinheiro = 0, totalCartao = 0, totalDinheiroCartao = 0;
-            const float totalVendaOriginal = totalVenda;
-            printf("|====================================================================|\n");
-            printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
-            printf("|====================================================================|\n");
-            printf("|MENU FORMA DE PAGAMENTO:                                            |\n");
-            printf("|1. PAGAMENTO EM CARTAO                                              |\n");
-            printf("|2. PAGAMENTO EM DINHEIRO                                            |\n");
-            printf("|3. RETORNAR AO MENU PRINCIPAL                                       |\n");
-            printf("|--------------------------------------------------------------------|\n");
-            printf("OPCAO: ");
-            scanf("%d", &opcaoPagamento);
-            getchar();
+void menu_pagamento() {
+    static ItemVenda carrinho[100];  // Array estático para o carrinho
+    static float totalDinheiro = 0, totalCartao = 0;
+    const float totalVendaOriginal = totalVenda;
+    int opcaoPagamento;
 
-            do {
-                if (opcaoPagamento == 1) {
-                    printf("|====================================================================|\n");
-                    printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
-                    printf("|====================================================================|\n");
-                    printf("|MENU PAGAMENTO CARTAO:                                              |\n");
-                    printf("|1. PAGAMENTO NA MAQUININHA OK!                                      |\n");
-                    printf("|2. PAGAMENTO NO CARTAO NAO OK.                                      |\n");
-                    printf("|3. RETORNAR AO MENU ANTERIOR                                        |\n");
-                    printf("|--------------------------------------------------------------------|\n");
-                    printf("OPCAO: ");
-                    scanf("%d", &opcaoCartao);
-                    getchar();
-                    switch(opcaoCartao){
-                        case 1:
-                            system("cls");
-                            printf("PAGAMENTO REALIZADO COM SUCESSO!\n");
-                            totalCartao += totalVenda;
-                            system("pause");
-                            printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
-                            printf("  |Numero da venda: %d\n", numeroVenda);
-                            printf("  |Total: R$ %.2f\n", totalVendaOriginal);
-                            printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
-                            printf("  |CARTAO: R$ %.2f\n", totalCartao);
-                            system("pause");
+    do {
+        system("cls");
+        printf("|====================================================================|\n");
+        printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
+        printf("|====================================================================|\n");
+        printf("|MENU FORMA DE PAGAMENTO:                                            |\n");
+        printf("|1. PAGAMENTO EM CARTAO                                              |\n");
+        printf("|2. PAGAMENTO EM DINHEIRO                                            |\n");
+        printf("|3. RETORNAR AO MENU ANTERIOR                                        |\n");
+        printf("|--------------------------------------------------------------------|\n");
+        printf("OPCAO: ");
+        scanf("%d", &opcaoPagamento);
+        getchar();
 
-                            // Atualiza o contador de vendas
-                            numeroVenda++;
-                            totalVendas += totalVendaOriginal;
-                            totalCartaoF += totalCartao;
-                            totalDinheiroF += totalDinheiro;
-                            totalCartao = 0;
-                            totalDinheiro = 0;
-                            free(carrinho);
-                            menu_principal();
-                            break;
-                        case 2:
-                            system("cls");
-                            printf("ERRO AO EFETUAR PAGAMENTO EM CARTAO, INFORME NOVA FORMA DE PAGAMENTO: ");
-                            system("pause");
-                            menu_pagamento();
-                            break;
-                        case 3:
-                            system("cls");
-                            menu_pagamento();
-                            break;
-                        default:
-                            system("cls");
-                            printf("OPCAO INVALIDA, TENTE NOVAMENTE: ");
-                            system("pause");
-                            return;
-                    }
-                }
-                    else if (opcaoPagamento == 2){
-                        static float pagamento = 0;
-                        int opcaoFalta;
-                        system("cls");
-                        printf("|====================================================================|\n");
-                        printf("| TOTAL DA VENDA: R$ %-40.2f                                         |\n", totalVenda);
-                        printf("|====================================================================|\n");
-                        printf("|MENU PAGAMENTO DINHEIRO:                                            |\n");
-                        printf("|--------------------------------------------------------------------|\n");
-                        printf("\n| CARRINHO DE COMPRAS - VENDA #%d                                  |\n", numeroVenda);
-                        printf("|====================================================================|\n");
-                        printf("|COD   | DESCRICAO              | QTD | PRECO UN. | SUBTOTAL         |\n");
-                        printf("|======|========================|=====|===========|==================|\n");
-                        for (int i = 0; i < numItens; i++) {
-                            printf("|%-5.2d | %-22s | %-3d | R$ %-7.2f | R$ %-12.2f |\n",
-                               carrinho[i].codigoProduto,
-                               carrinho[i].descricao,
-                               carrinho[i].quantidade,
-                               carrinho[i].precoUnitario,
-                               carrinho[i].subtotal);
-                            printf("|------|------------------------|-----|-----------|-----------------|\n");
-                        }
-                        printf("EFETUAR PAGAMENTO: \nDIGITE O VALOR: ");
-                        scanf("%f", &pagamento);
-                        getchar();
-                        if (totalVenda > pagamento){
-                            totalVenda -= pagamento;
-                            totalDinheiro += pagamento;
-                            totalCaixa += pagamento;
-                            printf("\n\n\nFALTA PAGAR: %.2f", totalVenda);
-                            printf("\nDESEJA EFETUAR O RESTANTE DO PAGAMENTO EM CARTAO? DIGITE 0 PARA CONFIRMAR");
-                            scanf("%d", &opcaoFalta);
-                            if (opcaoFalta == 0){
-                                totalDinheiroCartao += pagamento;
-                                printf("|====================================================================|\n");
-                                printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
-                                printf("|====================================================================|\n");
-                                printf("|MENU PAGAMENTO CARTAO:                                              |\n");
-                                printf("|1. PAGAMENTO NA MAQUININHA OK!                                      |\n");
-                                printf("|2. PAGAMENTO NO CARTAO NAO OK.                                      |\n");
-                                printf("|3. RETORNAR AO MENU ANTERIOR                                        |\n");
-                                printf("|--------------------------------------------------------------------|\n");
-                                printf("OPCAO: ");
-                                scanf("%d", &opcaoCartao);
-                                getchar();
-                                switch(opcaoCartao){
-                                    case 1:
-                                        system("cls");
-                                        printf("PAGAMENTO REALIZADO COM SUCESSO!\n");
-                                        totalCartao += totalVenda;
-                                        system("pause");
-                                        printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
-                                        printf("  |Numero da venda: %d\n", numeroVenda);
-                                        printf("  |Total: R$ %.2f\n", totalVendaOriginal + pagamento);
-                                        printf("  |CARTAO: R$ %.2f\n", totalCartao);
-                                        printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
-                                        system("pause");
+        switch(opcaoPagamento) {
+            case 1: // PAGAMENTO EM CARTÃO
+                processarPagamentoCartao(&totalCartao, totalVendaOriginal);
+                break;
 
-                                        // Atualiza o contador de vendas
-                                        numeroVenda++;
+            case 2: // PAGAMENTO EM DINHEIRO
+                processarPagamentoDinheiro(&totalDinheiro, &totalVenda, totalVendaOriginal);
+                break;
 
-                                        totalDinheiroCartaoF = totalDinheiro + totalCartao;
-                                        totalVendas += totalVendaOriginal;
-                                        totalCartao = 0;
-                                        totalDinheiro = 0;
-                                        free(carrinho);
-                                        menu_principal();
-                                        break;
-                                    case 2:
-                                        system("cls");
-                                        printf("ERRO AO EFETUAR PAGAMENTO EM CARTAO, INFORME NOVA FORMA DE PAGAMENTO: ");
-                                        system("pause");
-                                        menu_pagamento();
-                                        break;
-                                    case 3:
-                                        system("cls");
-                                        menu_pagamento();
-                                        break;
-                                    default:
-                                        system("cls");
-                                        printf("OPCAO INVALIDA, TENTE NOVAMENTE: ");
-                                        system("pause");
-                                        return;
-                                }
-                            }
-                        }
+            case 3: // VOLTAR
+                return;
 
-                        else if (pagamento > totalVenda){
-                            if (pagamento - totalVenda > totalCaixa){
-                                system("cls");
-                                printf("NAO HA VALOR NO CAIXA SUFICIENTE PARA O TROCO, INFORME NOVO VALOR DE PAGAMENTO: ");
-                                system("pause");
-                                menu_pagamento();
-                            }
-                            float troco = pagamento - totalVenda;
-                            totalDinheiro = totalVenda;
-                            totalCaixa -= troco;
-                            printf("TROCO: %.2f", troco);
-                            system("pause");
-                            system("cls");
-                            printf("PAGAMENTO REALIZADO COM SUCESSO!\n");
-                            system("pause");
-                            printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
-                            printf("  |Numero da venda: %d\n", numeroVenda);
-                            printf("  |Total: R$ %.2f\n", totalVendaOriginal);
-                            printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
-                            system("pause");
+            default:
+                printf("Opcao invalida!\n");
+                system("pause");
+        }
+    } while (opcaoPagamento != 3 && totalVenda > 0);
+}
 
-                            // Atualiza o contador de vendas
-                            numeroVenda++;
-                            totalDinheiroF += totalDinheiro;
-                            totalVendas += totalVendaOriginal;
-                            totalDinheiro = 0;
-                            free(carrinho);
-                            menu_principal();
-                        }
-                        else if (pagamento == totalVenda){
-                            totalDinheiro += totalVenda;
-                            system("pause");
-                            system("cls");
-                            printf("PAGAMENTO REALIZADO COM SUCESSO!\n");
-                            system("pause");
-                            printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
-                            printf("  |Numero da venda: %d\n", numeroVenda);
-                            printf("  |Total: R$ %.2f\n", totalVendaOriginal);
-                            printf("  |DINHEIRO: R$ %.2f\n", totalDinheiro);
-                            system("pause");
+// Função auxiliar para processar pagamento com cartão
+void processarPagamentoCartao(float *totalCartao, float totalOriginal) {
+    int opcaoCartao;
 
-                            // Atualiza o contador de vendas
-                            numeroVenda++;
-                            totalDinheiroF += totalDinheiro;
-                            totalVendas += totalVendaOriginal;
-                            totalDinheiro = 0;
-                            free(carrinho);
-                            menu_principal();
-                        }
-                        else{
-                            system("cls");
-                            printf("OPCAO INVALIDA, DIGITE NOVAMENTE!! ");
-                            system("pause");
-                            return;
-                        }
-
-                    }
-                }while (opcaoPagamento != 3 && totalVenda > 0);
-            }
-
-float retiradaCaixa(float *totalCaixa){
     system("cls");
+    printf("|====================================================================|\n");
+    printf("| TOTAL DA VENDA: R$ %-40.2f |\n", totalVenda);
+    printf("|====================================================================|\n");
+    printf("|MENU PAGAMENTO CARTAO:                                              |\n");
+    printf("|1. PAGAMENTO NA MAQUININHA OK!                                      |\n");
+    printf("|2. PAGAMENTO NO CARTAO NAO OK.                                      |\n");
+    printf("|3. RETORNAR AO MENU ANTERIOR                                        |\n");
+    printf("|--------------------------------------------------------------------|\n");
+    printf("OPCAO: ");
+    scanf("%d", &opcaoCartao);
+    getchar();
+
+    switch(opcaoCartao) {
+        case 1: // PAGAMENTO APROVADO
+            *totalCartao += totalVenda;
+            finalizarVenda(totalOriginal, 0, *totalCartao);
+            break;
+
+        case 2: // PAGAMENTO NEGADO
+            printf("ERRO AO EFETUAR PAGAMENTO EM CARTAO!\n");
+            system("pause");
+            break;
+
+        case 3: // VOLTAR
+            break;
+
+        default:
+            printf("Opcao invalida!\n");
+            system("pause");
+    }
+}
+
+// Função auxiliar para processar pagamento em dinheiro
+void processarPagamentoDinheiro(float *totalDinheiro, float *totalVenda, float totalOriginal) {
+    float pagamento;
+    system("cls");
+    printf("|====================================================================|\n");
+    printf("| TOTAL DA VENDA: R$ %-40.2f |\n", *totalVenda);
+    printf("|====================================================================|\n");
+    printf("DIGITE O VALOR RECEBIDO: R$ ");
+    scanf("%f", &pagamento);
+    getchar();
+
+    if (pagamento > *totalVenda) {
+        // Pagamento maior que o valor devido (dar troco)
+        float troco = pagamento - *totalVenda;
+        if (troco > totalCaixa) {
+            printf("CAIXA NAO TEM TROCO SUFICIENTE!\n");
+            system("pause");
+            return;
+        }
+        *totalDinheiro += *totalVenda;
+        totalCaixa -= troco;
+        printf("TROCO: R$ %.2f\n", troco);
+        system("pause");
+        finalizarVenda(totalOriginal, *totalDinheiro, 0);
+    }
+    else if (pagamento == *totalVenda) {
+        // Pagamento exato
+        *totalDinheiro += pagamento;
+        finalizarVenda(totalOriginal, *totalDinheiro, 0);
+    }
+    else {
+        // Pagamento parcial
+        *totalVenda -= pagamento;
+        *totalDinheiro += pagamento;
+        printf("FALTA PAGAR: R$ %.2f\n", *totalVenda);
+        system("pause");
+    }
+}
+
+// Função auxiliar para finalizar a venda
+void finalizarVenda(float totalOriginal, float dinheiro, float cartao) {
+    system("cls");
+    printf("PAGAMENTO REALIZADO COM SUCESSO!\n");
+    system("pause");
+
+    printf("\n|VENDA FINALIZADA COM SUCESSO!\n");
+    printf("  |Numero da venda: %d\n", numeroVenda);
+    printf("  |Total: R$ %.2f\n", totalOriginal);
+    printf("  |DINHEIRO: R$ %.2f\n", dinheiro);
+    printf("  |CARTAO: R$ %.2f\n", cartao);
+    system("pause");
+
+    // Atualiza totais
+    numeroVenda++;
+    totalVendas += totalOriginal;
+    totalDinheiroF += dinheiro;
+    totalCartaoF += cartao;
+    totalCaixa += dinheiro;
+
+    // Limpa carrinho e volta ao menu principal
+    menu_principal();
+}
+
+float retiradaCaixa(float *totalCaixa) {
+    const float SALDO_MINIMO = 50.0f;
+    const int MAX_TENTATIVAS = 3;
+    int tentativas = 0;
+    float valorRetirada;
+
+    do {
+        system("cls");
         printf("|===========================================================|\n");
         printf("|\t\t   RETIRADA DE CAIXA (SANGRIA)\t\t\t   |\n");
         printf("|===========================================================|\n");
         printf("| SALDO ATUAL EM CAIXA: R$ %.2f\n", *totalCaixa);
-        printf("| DIGITE O VALOR A SER RETIRADO: R$ ");
-            
-        float valorRetirada;
-        scanf("%f", &valorRetirada);
-        getchar();
-            if (valorRetirada <= 0){
-                printf("| VALOR INVALIDO\n");
+        printf("| SALDO MINIMO OBRIGATORIO: R$ %.2f\n", SALDO_MINIMO);
+        printf("| DIGITE O VALOR A SER RETIRADO (0 para cancelar): R$ ");
+
+        // Validação da entrada
+        if (scanf("%f", &valorRetirada) != 1) {
+            printf("\n| VALOR INVALIDO! Digite apenas numeros.\n");
+            while (getchar() != '\n'); // Limpa buffer
+            system("pause");
+            tentativas++;
+            if (tentativas >= MAX_TENTATIVAS) {
+                printf("\n| MUITAS TENTATIVAS INVALIDAS. OPERACAO CANCELADA.\n");
                 system("pause");
                 return *totalCaixa;
             }
-            else if (valorRetirada > *totalCaixa){
-                printf("| SALDO INSUFICIENTE. SALDO ATUAL: R$ %.2f\n", *totalCaixa);
-                system("pause");
-                return *totalCaixa;
-            }
-            else if (*totalCaixa - valorRetirada > 50){
-                printf("NECESSARIO DEIXAR VALOR MINIMO DE 50 REAIS EM CAIXA, SALDO ATUAL: R$ %.2f\n", *totalCaixa);
-                system("pause");
-                return *totalCaixa;
-            }
-            *totalCaixa -= valorRetirada;
-            printf("| RETIRADA REALIZADA COM SUCESSO!\n");
-            printf("| NOVO SALDO EM CAIXA: R$ %.2f\n", *totalCaixa);
+            continue;
+        }
+        getchar(); // Limpa o \n
+
+        // Verifica se o usuário quer cancelar
+        if (valorRetirada == 0) {
+            printf("\n| OPERACAO CANCELADA PELO USUARIO.\n");
             system("pause");
             return *totalCaixa;
+        }
+
+        // Validações do valor
+        if (valorRetirada <= 0) {
+            printf("\n| VALOR DEVE SER POSITIVO!\n");
+            system("pause");
+            tentativas++;
+            continue;
+        }
+
+        if (valorRetirada > *totalCaixa) {
+            printf("\n| SALDO INSUFICIENTE!\n");
+            printf("| SALDO ATUAL: R$ %.2f\n", *totalCaixa);
+            system("pause");
+            tentativas++;
+            continue;
+        }
+
+        if (*totalCaixa - valorRetirada < SALDO_MINIMO) {
+            printf("\n| NAO E POSSIVEL RETIRAR ESTE VALOR!\n");
+            printf("| SALDO MINIMO DE R$ %.2f DEVE SER MANTIDO.\n", SALDO_MINIMO);
+            printf("| VALOR MAXIMO QUE PODE SER RETIRADO: R$ %.2f\n",
+                  *totalCaixa - SALDO_MINIMO);
+            system("pause");
+            tentativas++;
+            continue;
+        }
+
+        // Confirmação da operação
+        printf("\n| CONFIRMAR RETIRADA DE R$ %.2f? (s/n): ", valorRetirada);
+        char confirmacao = getchar();
+        getchar(); // Limpa buffer
+
+        if (tolower(confirmacao) != 's') {
+            printf("\n| OPERACAO CANCELADA.\n");
+            system("pause");
+            return *totalCaixa;
+        }
+
+        // Efetua a retirada
+        *totalCaixa -= valorRetirada;
+
+        // Registra a operação (poderia ser gravado em log)
+        time_t now;
+        time(&now);
+        struct tm *local = localtime(&now);
+
+        printf("\n| RETIRADA REALIZADA COM SUCESSO!\n");
+        printf("| DATA/HORA: %02d/%02d/%04d %02d:%02d\n",
+               local->tm_mday, local->tm_mon+1, local->tm_year+1900,
+               local->tm_hour, local->tm_min);
+        printf("| VALOR RETIRADO: R$ %.2f\n", valorRetirada);
+        printf("| NOVO SALDO: R$ %.2f\n", *totalCaixa);
+        printf("|===========================================================|\n");
+        system("pause");
+
+        return *totalCaixa;
+
+    } while (tentativas < MAX_TENTATIVAS);
+
+    printf("\n| MUITAS TENTATIVAS INVALIDAS. OPERACAO CANCELADA.\n");
+    system("pause");
+    return *totalCaixa;
 }
 
-void menuAberturaCaixa(void){
+void menuAberturaCaixa() {
     int opcaoAbre;
-    printf("|====================================================================|\n");
-    printf("|\t\t    MENU ABERTURA\t\t\t\t     |\n");
-    printf("|====================================================================|\n");
-    printf("|-> 1. ABRIR CAIXA\n");
-    printf("|-> 2. RETORNAR AO MENU PRINCIPAL\n");
-    printf("|--------------------------------------------------------------------|\n");
-    printf("| OPCAO: ");
-    scanf("|%d", &opcaoAbre);
-    getchar();
-    switch(opcaoAbre){
-        case 1:
-            system("cls");
-            if (caixaAberto == 1){
-                printf("JA HA UM CAIXA EM ABERTO, REALIZE O FECHAMENTO");
+    int tentativas = 0;
+    const int MAX_TENTATIVAS = 3;
+
+    do {
+        system("cls");
+        printf("|====================================================================|\n");
+        printf("|\t\t    MENU ABERTURA\t\t\t\t     |\n");
+        printf("|====================================================================|\n");
+        printf("|-> 1. ABRIR CAIXA\n");
+        printf("|-> 2. RETORNAR AO MENU PRINCIPAL\n");
+        printf("|--------------------------------------------------------------------|\n");
+        printf("| OPCAO: ");
+
+        // Corrigido: removido o "|" do scanf que causava problemas
+        if (scanf("%d", &opcaoAbre) != 1) {
+            // Limpa buffer de entrada em caso de erro
+            while (getchar() != '\n');
+            printf("Entrada invalida! Digite um numero.\n");
+            system("pause");
+            tentativas++;
+            continue;
+        }
+        getchar(); // Limpa o newline
+
+        switch(opcaoAbre) {
+            case 1: {
+                if (caixaAberto == 1) {
+                    printf("JA HA UM CAIXA EM ABERTO, REALIZE O FECHAMENTO\n");
+                    system("pause");
+                    return; // Retorna ao invés de chamar menu_principal recursivamente
+                }
+
+                printf("REALIZANDO ABERTURA DE CAIXA...\n");
+                Sleep(2000);
+
+                int entradaValida = 0;
+                do {
+                    system("cls");
+                    printf("DIGITE O VALOR DE ABERTURA: \n");
+                    printf("VALOR R$ ");
+
+                    if (scanf("%f", &vAbre) != 1) {
+                        while (getchar() != '\n');
+                        printf("Valor invalido! Digite um numero.\n");
+                        system("pause");
+                        tentativas++;
+                        if (tentativas >= MAX_TENTATIVAS) {
+                            printf("Muitas tentativas invalidas. Retornando...\n");
+                            system("pause");
+                            return;
+                        }
+                        continue;
+                    }
+                    getchar(); // Limpa o newline
+
+                    if (vAbre < 0) {
+                        printf("VALOR DE ABERTURA INCORRETO, DIGITE UM VALOR POSITIVO\n");
+                        system("pause");
+                        tentativas++;
+                        if (tentativas >= MAX_TENTATIVAS) {
+                            printf("Muitas tentativas invalidas. Retornando...\n");
+                            system("pause");
+                            return;
+                        }
+                    } else {
+                        entradaValida = 1;
+                    }
+                } while (!entradaValida);
+
+                system("cls");
+                printf("ABERTURA REALIZADA COM SUCESSO!\n");
+                printf("VALOR DE ABERTURA: R$ %.2f\n", vAbre);
+                totalCaixa = vAbre;
+                caixaAberto = 1;
                 system("pause");
-                menu_principal();
-                break;
+                return;
             }
-            printf("REALIZANDO ABERTURA DE CAIXA...");
-            Sleep(2000);
-            system("cls");
-            printf("DIGITE O VALOR DE ABERTURA: \n");
-            printf("VALOR R$ ");
-            scanf("%f", &vAbre);
+            case 2:
+                return; // Simplesmente retorna ao menu principal
+            default:
+                printf("OPCAO INVALIDA, TENTE NOVAMENTE\n");
+                system("pause");
+                tentativas++;
+        }
+    } while (tentativas < MAX_TENTATIVAS);
+
+    printf("Muitas tentativas invalidas. Retornando ao menu principal...\n");
+    system("pause");
+}
+
+void menuFechamentoCaixa() {
+    int opcaoFechamento;
+    float vFechamento = 0;
+    const int MAX_TENTATIVAS = 3;
+    int tentativas = 0;
+
+    do {
+        system("cls");
+        printf("|====================================================================|\n");
+        printf("|\t\t    MENU FECHAMENTO\t\t\t\t     |\n");
+        printf("|====================================================================|\n");
+        printf("|-> 1. FECHAR CAIXA\n");
+        printf("|-> 2. RETORNAR AO MENU PRINCIPAL\n");
+        printf("|--------------------------------------------------------------------|\n");
+        printf("| OPCAO: ");
+
+        // Validação da entrada
+        if (scanf("%d", &opcaoFechamento) != 1) {
+            printf("Entrada invalida! Digite 1 ou 2.\n");
+            while (getchar() != '\n'); // Limpa buffer
+            system("pause");
+            tentativas++;
+            if (tentativas >= MAX_TENTATIVAS) {
+                printf("Muitas tentativas invalidas. Retornando...\n");
+                system("pause");
+                return;
+            }
+            continue;
+        }
+        getchar(); // Limpa o \n
+
+        switch(opcaoFechamento) {
+            case 1: {
+                system("cls");
+                if (caixaAberto == 0) {
+                    printf("NAO HA CAIXA ABERTO, RETORNANDO...\n");
+                    system("pause");
+                    return; // Retorna ao invés de chamar menu_principal()
+                }
+
+                printf("REALIZANDO FECHAMENTO DE CAIXA...\n");
+                Sleep(2000);
+                system("cls");
+
+                // Relatório detalhado
+                printf("|================ RESUMO DO DIA ================|\n");
+                printf("| VENDAS REALIZADAS: %-26d |\n", numeroVenda);
+                printf("| FATURAMENTO TOTAL: R$ %-23.2f |\n", totalVendas);
+                printf("|-----------------------------------------------|\n");
+                printf("| VALOR ABERTURA: R$ %-26.2f |\n", vAbre);
+                printf("| TOTAL DINHEIRO: R$ %-26.2f |\n", totalDinheiroF);
+                printf("| TOTAL CARTAO: R$ %-27.2f |\n", totalCartaoF);
+                printf("| DINHEIRO/CARTAO: R$ %-24.2f |\n", totalDinheiroCartaoF);
+                printf("|===============================================|\n");
+
+                // Cálculo do fechamento
+                vFechamento = totalCaixa - (vAbre + totalDinheiroF);
+
+                printf("| SALDO EM CAIXA: R$ %-27.2f |\n", totalCaixa);
+                printf("| VALOR ESPERADO: R$ %-26.2f |\n", vAbre + totalDinheiroF);
+                printf("| DIFERENCA: R$ %-31.2f |\n", vFechamento);
+                printf("|===============================================|\n");
+
+                if (fabs(vFechamento) > 0.01) { // Considera pequenas diferenças
+                    printf("\nATENCAO: DIVERGENCIA ENCONTRADA!\n");
+                    printf("Verifique os valores informados.\n");
+
+                    // Sugere possíveis problemas
+                    if (vFechamento > 0) {
+                        printf("Possivel valor nao registrado ou troco incorreto.\n");
+                    } else {
+                        printf("Possivel sangria nao registrada ou erro nas vendas.\n");
+                    }
+
+                    printf("Deseja forçar o fechamento? (s/n): ");
+                    char resposta = getchar();
+                    if (tolower(resposta) != 's') {
+                        system("pause");
+                        return;
+                    }
+                }
+
+                // Confirmação de fechamento
+                printf("\nCONFIRMAR FECHAMENTO DE CAIXA? (s/n): ");
+                char confirmacao = getchar();
+                getchar(); // Limpa buffer
+
+                if (tolower(confirmacao) == 's') {
+                    caixaAberto = 0;
+                    printf("\nCAIXA FECHADO COM SUCESSO!\n");
+
+                    // Zera os valores do dia
+                    totalVendas = 0;
+                    numeroVenda = 0;
+                    totalDinheiroF = 0;
+                    totalCartaoF = 0;
+                    totalDinheiroCartaoF = 0;
+                    vAbre = 0;
+                } else {
+                    printf("Fechamento cancelado.\n");
+                }
+                system("pause");
+                return;
+            }
+            case 2:
+                return; // Retorna ao menu principal
+            default:
+                printf("OPCAO INVALIDA! Digite 1 ou 2.\n");
+                system("pause");
+                tentativas++;
+        }
+    } while (tentativas < MAX_TENTATIVAS);
+
+    printf("Muitas tentativas invalidas. Retornando ao menu principal...\n");
+    system("pause");
+}
+
+// Implementação da função principal de relatórios
+void menuRelatorios() {
+    Cliente *clientes = NULL;
+    int quantidadeClientes = 0;
+    carregarClientes(&clientes, &quantidadeClientes);
+
+    int opcao;
+    do {
+        system("cls");
+        printf("|=======================================================|\n");
+        printf("|\t\t    MENU RELATORIOS\t\t\t|\n");
+        printf("|=======================================================|\n");
+        printf("| -> 1 - RELATORIO DE VENDAS POR DIA \t\t\t|\n");
+        printf("| -> 2 - RELATORIO DE PRODUTOS CADASTRADOS \t\t|\n");
+        printf("| -> 3 - RELATORIO DE CLIENTES CADASTRADOS \t\t|\n");
+        printf("| -> 4 - VISUALIZAR LOGS DO SISTEMA \t\t\t|\n");
+        printf("| -> 5 - VOLTAR AO MENU PRINCIPAL \t\t\t|\n");
+        printf("|=======================================================|\n");
+        printf("Opcao: ");
+
+        if (scanf("%d", &opcao) != 1) {
+            registrarLog("Erro: Tentativa de entrada invalida no menu de relatorios");
+            while (getchar() != '\n');
+            printf("Entrada invalida!\n");
+            system("pause");
+            continue;
+        }
+        getchar();
+
+        char logMensagem[100];
+
+        switch(opcao) {
+            case 1:
+                snprintf(logMensagem, sizeof(logMensagem), "Relatorio de vendas gerado - %d vendas", numeroVenda);
+                registrarLog(logMensagem);
+                exibirRelatorioVendas();
+                break;
+            case 2:
+                snprintf(logMensagem, sizeof(logMensagem), "Relatorio de produtos acessado - %d produtos", sistemaProdutos.quantidade);
+                registrarLog(logMensagem);
+                exibirProdutosCadastrados();
+                break;
+            case 3:
+                snprintf(logMensagem, sizeof(logMensagem), "Relatorio de clientes acessado - %d clientes", quantidadeClientes);
+                registrarLog(logMensagem);
+                exibirClientesCadastrados(clientes, quantidadeClientes);
+                break;
+            case 4:
+                registrarLog("Visualizacao de logs do sistema");
+                exibirLogs();
+                break;
+            case 5:
+                free(clientes);
+                registrarLog("Saida do menu de relatorios");
+                return;
+            default:
+                printf("Opcao invalida!\n");
+                system("pause");
+        }
+    } while(opcao != 5);
+}
+
+void registrarLog(const char *mensagem) {
+    time_t now;
+    time(&now);
+    struct tm *local = localtime(&now);
+
+    FILE *logFile = fopen(ARQUIVO_LOG, "a");
+    if (logFile == NULL) {
+        printf("Erro ao abrir arquivo de log!\n");
+        return;
+    }
+
+    fprintf(logFile, "[%02d/%02d/%04d %02d:%02d:%02d] %s\n",
+            local->tm_mday, local->tm_mon+1, local->tm_year+1900,
+            local->tm_hour, local->tm_min, local->tm_sec,
+            mensagem);
+
+    fclose(logFile);
+}
+
+// Função para exibir logs
+void exibirLogs() {
+    system("cls");
+    printf("|====================================================================|\n");
+    printf("|\t\t    LOGS DO SISTEMA\t\t\t\t     |\n");
+    printf("|====================================================================|\n");
+
+    FILE *logFile = fopen(ARQUIVO_LOG, "r");
+    if (logFile == NULL) {
+        printf("| Nenhum registro de log encontrado.\n");
+        printf("|====================================================================|\n");
+        system("pause");
+        return;
+    }
+
+    char linha[200];
+    int contador = 0;
+
+    while (fgets(linha, sizeof(linha), logFile) != NULL) {
+        // Remove a quebra de linha
+        linha[strcspn(linha, "\n")] = '\0';
+        printf("| %-66s |\n", linha);
+        contador++;
+
+        // Pausa a cada 20 registros
+        if (contador % 20 == 0) {
+            printf("|====================================================================|\n");
+            printf("| Pressione qualquer tecla para continuar... (%d registros)           |\n", contador);
+            printf("|====================================================================|\n");
             getchar();
             system("cls");
-            if (vAbre < 0){
-                system("cls");
-                printf("VALOR DE ABERTURA INCORRETO, RETORNANDO...");
-                system("pause");
-                system("cls");
-                aberturaCaixa();
-                break;
-            }
-            printf("ABERTURA REALIZADA COM SUCESSO!\n");
-            printf("VALOR DE ABERTURA: R$ %.2f", vAbre);
-            totalCaixa = vAbre;
-            system("pause");
-            system("cls");
-            caixaAberto = 1;
-            menu_principal();
-            break;
-        case 2:
-            system("cls");
-            menu_principal();
-            break;
-        default:
-            system("cls");
-            printf("OPCAO INVALIDA, RETORNANDO...");
-            system("pause");
-            return;
+            printf("|====================================================================|\n");
+            printf("|\t\t    LOGS DO SISTEMA (CONT.)\t\t\t     |\n");
+            printf("|====================================================================|\n");
+        }
     }
+
+    if (contador == 0) {
+        printf("| Nenhum registro de log encontrado.\n");
+    } else {
+        printf("|--------------------------------------------------------------------|\n");
+        printf("| TOTAL DE REGISTROS: %-46d |\n", contador);
+    }
+
+    printf("|====================================================================|\n");
+    fclose(logFile);
+    system("pause");
 }
 
-void menuFechamentoCaixa(void){
-    int opcaoFechamento;
-    vFechamento = 0;
+// Implementação da função para exibir relatório de vendas
+void exibirRelatorioVendas() {
+    char logMensagem[200];
+    snprintf(logMensagem, sizeof(logMensagem),
+             "Relatorio de vendas detalhado - Total: R$ %.2f, Vendas: %d",
+             totalVendas, numeroVenda);
+    registrarLog(logMensagem);
+    system("cls");
     printf("|====================================================================|\n");
-    printf("|\t\t    MENU FECHAMENTO\t\t\t\t     |\n");
+    printf("|\t\t    RELATORIO DE VENDAS\t\t\t\t     |\n");
     printf("|====================================================================|\n");
-    printf("|-> 1. FECHAR CAIXA\n");
-    printf("|-> 2. RETORNAR AO MENU PRINCIPAL\n");
+    printf("| DATA: %s\n", __DATE__); // Usa a data atual do sistema
     printf("|--------------------------------------------------------------------|\n");
-    printf("| OPCAO: ");
-    scanf("%d", &opcaoFechamento);
-    getchar();
-    switch(opcaoFechamento){
-        case 1:
-            system("cls");
-            if (caixaAberto == 0){
-                printf("NAO HA CAIXA ABERTO, RETORNANDO...");
-                system("pause");
-                menu_principal();
-                break;
-            }
-            printf("REALIZANDO FECHAMENTO DE CAIXA...");
-            Sleep(2000);
-            system("cls");
-            printf("QUANTIDADE DE VENDAS REALIZADAS: %d\n", &numeroVenda);
-            printf("TOTAL DO FATURAMENTO NO DIA (FATURAMENTO): R$ %.2f\n", &totalVendas);
-            printf("VALOR DE ABERTURA DE CAIXA: R$ %.2f\n", &vAbre);
-            printf("VALOR PAGO EM DINHEIRO: R$ %.2f\n", &totalDinheiroF);
-            printf("VALOR PAGO EM CARTAO: R$ %.2f\n", &totalCartaoF);
-            printf("VALOR PAGO EM DINHEIRO/CARTAO: R$ %.2f\n", &totalDinheiroCartaoF);
-            vFechamento = &totalVendas - &vAbre - &totalDinheiroF - &totalCartaoF - &totalDinheiroCartaoF;
-            printf("VALOR DE FECHAMENTO: R$ %.2f\n", vFechamento);
-            if (vFechamento > 0){
-                printf("ATENCAO, O CAIXA NAO PODERA SER FECHADO PORQUE HA DIVERGENCIA DE VALORES!\n");
-                printf("RETORNANDO AO MENU PRINCIPAL...");
-                system("pause");
-                caixaAberto = 1;
-                system("cls");
-                menu_principal();
-                break;
-            }
-            system("pause");
-            caixaAberto = 0;
-            menu_principal();
-            break;
-        case 2:
-            system("cls");
-            menu_principal();
-            break;
-        default:
-            system("cls");
-            printf("OPCAO INVALIDA, RETORNANDO...");
-            system("pause");
-            return;
+    printf("| TOTAL DE VENDAS HOJE: %d\n", numeroVenda);
+    printf("| FATURAMENTO TOTAL: R$ %.2f\n", totalVendas);
+    printf("|--------------------------------------------------------------------|\n");
+    printf("| FORMA DE PAGAMENTO\t|\tQUANTIDADE\t|\tVALOR TOTAL\t|\n");
+    printf("|--------------------------------------------------------------------|\n");
+    printf("| DINHEIRO\t\t|\t\t\t|\tR$ %.2f\t|\n", totalDinheiroF);
+    printf("| CARTAO\t\t|\t\t\t|\tR$ %.2f\t|\n", totalCartaoF);
+    printf("| MISTO (DIN+CARTAO)\t|\t\t\t|\tR$ %.2f\t|\n", totalDinheiroCartaoF);
+    printf("|====================================================================|\n");
+    system("pause");
+}
+
+// Implementação da função para exibir produtos cadastrados
+void exibirProdutosCadastrados() {
+    system("cls");
+    printf("|====================================================================|\n");
+    printf("|\t\t    PRODUTOS CADASTRADOS\t\t\t     |\n");
+    printf("|====================================================================|\n");
+    printf("|COD | NOME PRODUTO\t\t| CATEGORIA\t| ESTOQUE | PRECO VENDA |\n");
+    printf("|====|=======================|===============|=========|=============|\n");
+
+    for(int i = 0; i < sistemaProdutos.quantidade; i++) {
+        printf("|%-3d | %-21s | %-13s | %-7d | R$ %-8.2f |\n",
+               sistemaProdutos.produtos[i].codigo,
+               sistemaProdutos.produtos[i].nomeProduto,
+               sistemaProdutos.produtos[i].categoriaProduto,
+               sistemaProdutos.produtos[i].estoque,
+               sistemaProdutos.produtos[i].precoVenda);
+        printf("|----|-----------------------|--------------|---------|-------------|\n");
     }
+
+    printf("| TOTAL DE PRODUTOS: %-43d |\n", sistemaProdutos.quantidade);
+    printf("|====================================================================|\n");
+    system("pause");
+}
+
+// Implementação da função para exibir clientes cadastrados
+void exibirClientesCadastrados(Cliente *clientes, int quantidadeClientes) {
+    system("cls");
+    printf("|====================================================================|\n");
+    printf("|\t\t    CLIENTES CADASTRADOS\t\t\t     |\n");
+    printf("|====================================================================|\n");
+    printf("|COD | NOME COMPLETO\t\t| CPF\t\t| CELULAR\t     |\n");
+    printf("|====|=======================|===============|=====================|\n");
+
+    for(int i = 0; i < quantidadeClientes; i++) {
+        printf("|%-3d | %-21s | %-13s | %-19s |\n",
+               clientes[i].codigo,
+               clientes[i].nomeCompleto,
+               clientes[i].cpf,
+               clientes[i].celular);
+        printf("|----|-----------------------|--------------|---------------------|\n");
+    }
+
+    printf("| TOTAL DE CLIENTES: %-43d |\n", quantidadeClientes);
+    printf("|====================================================================|\n");
+    system("pause");
 }
 
 //==== FUNÇÃO PRINCIPAL ====//
 int main() {
-    system("color 0a"); // Cor vermelha no terminal;
+    system("color 0a"); // Cor verde no terminal
+
+    // Inicialização de variáveis
+    Cliente *clientes = NULL;
+    int quantidadeClientes = 0;
+
+    // Inicializar categorias padrão
     adicionarCategoria("LIMPEZA");
+    adicionarCategoria("ALIMENTAÇÃO");
+    adicionarCategoria("BEBIDAS");
+    adicionarCategoria("HIGIENE");
+
     // Carrega dados ao iniciar o programa
     carregarCategorias();
     carregarProdutos();
+    carregarClientes(&clientes, &quantidadeClientes);
 
-    // Inicializar com categorias padrão
+    // Verifica se as categorias padrão foram carregadas corretamente
+    if (categoriasGlobais.quantidade == 0) {
+        printf("Erro ao carregar categorias!\n");
+        system("pause");
+    }
 
+    // Menu principal
     menu_principal();
+
     // Libera memória ao sair
     for (int i = 0; i < sistemaProdutos.quantidade; i++) {
         free(sistemaProdutos.produtos[i].categoriaProduto);
     }
     free(sistemaProdutos.produtos);
 
+    // Libera memória dos clientes
+    free(clientes);
+
+    // Libera categorias
     liberarCategorias();
+
+    // Salva dados antes de sair (opcional)
+    salvarCategorias();
+    salvarProdutos();
+    salvarClientes(clientes, quantidadeClientes);
+
     return 0;
 }

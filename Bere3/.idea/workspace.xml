@@ -17,7 +17,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fa7aafe-3d6f-4a02-9362-fc8a1ee6832a" name="Changes" comment="" />
+    <list default="true" id="2fa7aafe-3d6f-4a02-9362-fc8a1ee6832a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bere3.c" beforeDir="false" afterPath="$PROJECT_DIR$/bere3.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bere3.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bere3.exe" afterDir="false" />
+    </list>
+    <list id="33f9697a-ed72-4cda-abf4-9918269a6b72" name="Changes by Adriano Ramos" comment="" />
     <list id="ae1b9032-6f64-4612-b6d6-cbee67e05103" name="Changes by PC" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +34,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -83,13 +91,28 @@
       <workItem from="1745880006913" duration="1926000" />
       <workItem from="1747400659615" duration="2122000" />
       <workItem from="1747412298127" duration="45000" />
-      <workItem from="1747444427127" duration="2646000" />
-      <workItem from="1747457717719" duration="8000" />
-      <workItem from="1747457912860" duration="16000" />
+      <workItem from="1747444427127" duration="13826000" />
+      <workItem from="1747526950967" duration="2369000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/bere3.c</url>
+          <line>773</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
