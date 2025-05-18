@@ -21,3 +21,6 @@
 # Ignorar arquivos de dependências
 node_modules/
 .idea
+
+*.exe
+*.dat
