@@ -281,7 +281,7 @@ void carregarClientes(Cliente **clientes, int *quantidade) {
     // Aloca memória para os clientes
     *clientes = (Cliente*)malloc(*quantidade * sizeof(Cliente));
     if (*clientes == NULL) {
-        printf("Erro ao alocar memória para clientes!\n");
+        printf("Erro ao alocar memoria para clientes!\n");
         fclose(arquivo);
         *quantidade = 0;
         return;
@@ -336,7 +336,7 @@ void cadastrarCliente(Cliente **clientes, int *quantidadeClientes) {
     // Realoca memória para o novo cliente
     Cliente *temp = realloc(*clientes, (*quantidadeClientes + 1) * sizeof(Cliente));
     if (temp == NULL) {
-        printf("Erro ao alocar memória para novo cliente!\n");
+        printf("Erro ao alocar memoria para novo cliente!\n");
         return;
     }
     *clientes = temp;
@@ -407,7 +407,7 @@ bool adicionarCategoria(const char *categoria) {
     // Realoca memória para a nova categoria
     char **temp = realloc(categoriasGlobais.categorias, (categoriasGlobais.quantidade + 1) * sizeof(char *));
     if (temp == NULL) {
-        printf("Erro ao alocar memória para categorias.\n");
+        printf("Erro ao alocar memoria para categorias.\n");
         return false;
     }
     categoriasGlobais.categorias = temp;
@@ -415,7 +415,7 @@ bool adicionarCategoria(const char *categoria) {
     // Aloca e copia a nova categoria
     categoriasGlobais.categorias[categoriasGlobais.quantidade] = strdup(categoria);
     if (categoriasGlobais.categorias[categoriasGlobais.quantidade] == NULL) {
-        printf("Erro ao alocar memória para nova categoria.\n");
+        printf("Erro ao alocar memoria para nova categoria.\n");
         return false;
     }
 
@@ -438,7 +438,7 @@ void exibirCategorias() {
         return;
     }
 
-    printf("\n=== CATEGORIAS DISPONÍVEIS ===\n");
+    printf("\n=== CATEGORIAS DISPONIVEIS ===\n");
     for (int i = 0; i < categoriasGlobais.quantidade; i++) {
         printf("%d - %s\n", i + 1, categoriasGlobais.categorias[i]);
     }
@@ -524,7 +524,7 @@ void carregarCategorias() {
 
         char *categoria = (char *)malloc(tamanho * sizeof(char));
         if (categoria == NULL) {
-            printf("Erro ao alocar memória para categoria!\n");
+            printf("Erro ao alocar memoria para categoria!\n");
             break;
         }
 
@@ -561,7 +561,7 @@ void carregarProdutos() {
         Produto *temp = realloc(sistemaProdutos.produtos,
                               (sistemaProdutos.quantidade + 1) * sizeof(Produto));
         if (temp == NULL) {
-            printf("Erro ao alocar memória para produtos!\n");
+            printf("Erro ao alocar memoria para produtos!\n");
             break;
         }
         sistemaProdutos.produtos = temp;
@@ -578,7 +578,7 @@ void carregarProdutos() {
         if (tamanho > 0) {
             novo->categoriaProduto = (char *)malloc(tamanho * sizeof(char));
             if (novo->categoriaProduto == NULL) {
-                printf("Erro ao alocar memória para categoria do produto!\n");
+                printf("Erro ao alocar memoria para categoria do produto!\n");
                 continue;
             }
             fread(novo->categoriaProduto, sizeof(char), tamanho, arquivo);
@@ -636,7 +636,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
         switch (opcaoCategoria) {
             case 1: {
                 if (categoriasGlobais.quantidade == 0) {
-                    printf("Nenhuma categoria disponível. Você precisa criar uma nova.\n");
+                    printf("Nenhuma categoria disponivel. Você precisa criar uma nova.\n");
                     system("pause");
                     break;
                 }
@@ -654,7 +654,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                     }
                     categoriaDefinida = true;
                 } else {
-                    printf("Opção invalida!\n");
+                    printf("Opcao invalida!\n");
                     system("pause");
                 }
                 break;
@@ -674,7 +674,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
                 }
 
                 if (!nomeValido) {
-                    printf("Nome de categoria invalido! Use apenas letras, numeros e espaços.\n");
+                    printf("Nome de categoria invalido! Use apenas letras, numeros e espacos.\n");
                     system("pause");
                     break;
                 }
@@ -710,7 +710,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
 
     // Preço de compra
     do {
-        printf("\nPreço de Compra: R$ ");
+        printf("\nPreco de Compra: R$ ");
         if (scanf("%f", &novo->precoCompra) != 1 || novo->precoCompra <= 0) {
             printf("Valor incorreto! Digite um valor positivo.\n");
             while (getchar() != '\n') // Limpa o buffer
@@ -724,7 +724,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
     do {
         printf("\nMargem de Lucro (%%): ");
         if (scanf("%f", &novo->percentual) != 1 || novo->percentual < 0) {
-            printf("Valor incorreto! Digite um percentual não negativo.\n");
+            printf("Valor incorreto! Digite um percentual nao negativo.\n");
             while (getchar() != '\n');
             continue;
         }
@@ -734,13 +734,13 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
 
     // Calcula preço de venda
     novo->precoVenda = novo->precoCompra * (1 + novo->percentual / 100);
-    printf("\nPreço de Venda Calculado: R$ %.2f\n", novo->precoVenda);
+    printf("\nPreco de Venda Calculado: R$ %.2f\n", novo->precoVenda);
 
     // Quantidade em estoque
     do {
         printf("\nQuantidade em Estoque: ");
         if (scanf("%d", &novo->estoque) != 1 || novo->estoque < 0) {
-            printf("Valor incorreto! Digite um número inteiro não negativo.\n");
+            printf("Valor incorreto! Digite um número inteiro nao negativo.\n");
             while (getchar() != '\n');
             continue;
         }
@@ -750,9 +750,9 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
 
     // Estoque mínimo
     do {
-        printf("\nEstoque Mínimo: ");
+        printf("\nEstoque Minimo: ");
         if (scanf("%d", &novo->estoqueMinimo) != 1 || novo->estoqueMinimo < 0) {
-            printf("Valor incorreto! Digite um número inteiro não negativo.\n");
+            printf("Valor incorreto! Digite um número inteiro nao negativo.\n");
             while (getchar() != '\n');
             continue;
         }
@@ -767,7 +767,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
     // Persistência de dados
     salvarProdutos();
 
-    printf("\nProduto cadastrado com sucesso! Código: %d\n", novo->codigo);
+    printf("\nProduto cadastrado com sucesso! Codigo: %d\n", novo->codigo);
     system("pause");
 }
 
@@ -1448,7 +1448,7 @@ void menuFechamentoCaixa() {
                         printf("Possivel sangria nao registrada ou erro nas vendas.\n");
                     }
 
-                    printf("Deseja forçar o fechamento? (s/n): ");
+                    printf("Deseja forcar o fechamento? (s/n): ");
                     char resposta = getchar();
                     if (tolower(resposta) != 's') {
                         system("pause");
@@ -1640,7 +1640,6 @@ void exibirRelatorioVendas() {
     printf("|--------------------------------------------------------------------|\n");
     printf("| DINHEIRO\t\t|\t\t\t|\tR$ %.2f\t|\n", totalDinheiroF);
     printf("| CARTAO\t\t|\t\t\t|\tR$ %.2f\t|\n", totalCartaoF);
-    printf("| MISTO (DIN+CARTAO)\t|\t\t\t|\tR$ %.2f\t|\n", totalDinheiroCartaoF);
     printf("|====================================================================|\n");
     system("pause");
 }
@@ -1761,7 +1760,7 @@ void verificarEstoqueMinimo() {
     }
 }
 
-// Modificação na função main() para chamar corretamente:
+// função main() para chamar corretamente:
 int main() {
     system("color 0A"); // Cor verde no terminal (sem caracteres especiais)
 

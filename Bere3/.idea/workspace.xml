@@ -20,10 +20,6 @@
     <list default="true" id="2fa7aafe-3d6f-4a02-9362-fc8a1ee6832a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bere3.c" beforeDir="false" afterPath="$PROJECT_DIR$/bere3.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bere3.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bere3.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/categorias.dat" beforeDir="false" afterPath="$PROJECT_DIR$/categorias.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clientes.dat" beforeDir="false" afterPath="$PROJECT_DIR$/clientes.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/produtos.dat" beforeDir="false" afterPath="$PROJECT_DIR$/produtos.dat" afterDir="false" />
     </list>
     <list id="33f9697a-ed72-4cda-abf4-9918269a6b72" name="Changes by Adriano Ramos" comment="" />
     <list id="ae1b9032-6f64-4612-b6d6-cbee67e05103" name="Changes by PC" comment="" />
@@ -96,6 +92,7 @@
       <workItem from="1747412298127" duration="45000" />
       <workItem from="1747444427127" duration="13826000" />
       <workItem from="1747526950967" duration="3854000" />
+      <workItem from="1747665623463" duration="1825000" />
     </task>
     <servers />
   </component>
