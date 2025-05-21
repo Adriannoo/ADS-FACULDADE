@@ -1196,7 +1196,7 @@ float retiradaCaixa(float *totalCaixaPtr) {
     do {
         system("cls");
         printf("|===========================================================|\n");
-        printf("|\t\t   RETIRADA DE CAIXA (SANGRIA)\t\t\t   |\n");
+        printf("|\t\t   RETIRADA DE CAIXA (SANGRIA)\t\t\t|\n");
         printf("|===========================================================|\n");
         printf("| SALDO ATUAL EM CAIXA: R$ %.2f\n", *totalCaixaPtr);
         printf("| SALDO MINIMO OBRIGATORIO: R$ %.2f\n", SALDO_MINIMO);
@@ -1664,12 +1664,12 @@ void exibirRelatorioVendas() {
     printf("| DATA: %s\t\t\t\t\t\t     |\n", dataFormatada);
     printf("|--------------------------------------------------------------------|\n");
     // proximoNumeroVenda -1 porque proximoNumeroVenda já foi incrementado após a última venda
-    printf("| TOTAL DE VENDAS HOJE: %-38d |\n", (proximoNumeroVenda > 0 ? proximoNumeroVenda -1 : 0) );
-    printf("| FATURAMENTO TOTAL HOJE: R$ %-33.2f |\n", totalVendas);
+    printf("| TOTAL DE VENDAS HOJE: %-38d   |\n", (proximoNumeroVenda > 0 ? proximoNumeroVenda -1 : 0) );
+    printf("| FATURAMENTO TOTAL HOJE: R$ %-33.2f    |\n", totalVendas);
     printf("|--------------------------------------------------------------------|\n");
     printf("| DETALHAMENTO POR FORMA DE PAGAMENTO (VENDAS DO DIA):\t\t     |\n");
-    printf("| - DINHEIRO: R$ %-48.2f |\n", totalDinheiroF);
-    printf("| - CARTAO: R$ %-50.2f |\n", totalCartaoF);
+    printf("| - DINHEIRO: R$ %-48.2f    |\n", totalDinheiroF);
+    printf("| - CARTAO: R$ %-50.2f      |\n", totalCartaoF);
     printf("|====================================================================|\n");
     system("pause");
 }
