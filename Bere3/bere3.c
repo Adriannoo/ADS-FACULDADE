@@ -70,7 +70,7 @@ float totalDinheiroF = 0, totalCartaoF = 0, totalDinheiroCartaoF = 0;
 float retiradaCaixa(float *totalCaixa);
 void menu_principal(void);
 void exibirMenu(void);
-void salvarClientes(Cliente *clientes, int quantidade);
+void salvarClientes(const Cliente *clientes, int quantidade);
 void carregarClientes(Cliente **clientes, int *quantidade);
 void menuCadastro(void);
 void cadastrarCliente(Cliente **clientes, int *quantidadeClientes);
@@ -249,7 +249,7 @@ void menu_principal() {
     } while (opcaoMenu != 6);
 }
 
-void salvarClientes(Cliente *clientes, int quantidade) {
+void salvarClientes(const Cliente *clientes, int quantidade) {
     FILE *arquivo = fopen("clientes.dat", "wb");
     if (arquivo == NULL) {
         printf("Erro ao abrir arquivo de clientes para escrita!\n");
@@ -636,7 +636,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
         switch (opcaoCategoria) {
             case 1: {
                 if (categoriasGlobais.quantidade == 0) {
-                    printf("Nenhuma categoria disponivel. Você precisa criar uma nova.\n");
+                    printf("Nenhuma categoria disponivel. Voce precisa criar uma nova.\n");
                     system("pause");
                     break;
                 }
@@ -714,7 +714,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
         if (scanf("%f", &novo->precoCompra) != 1 || novo->precoCompra <= 0) {
             printf("Valor incorreto! Digite um valor positivo.\n");
             while (getchar() != '\n') // Limpa o buffer
-            continue;
+            break;
         }
         break;
     } while (1);
@@ -752,7 +752,7 @@ void cadastrarProduto(Produto **produtos, int *quantidadeProdutos) {
     do {
         printf("\nEstoque Minimo: ");
         if (scanf("%d", &novo->estoqueMinimo) != 1 || novo->estoqueMinimo < 0) {
-            printf("Valor incorreto! Digite um número inteiro nao negativo.\n");
+            printf("Valor incorreto! Digite um numero inteiro nao negativo.\n");
             while (getchar() != '\n');
             continue;
         }
@@ -1650,7 +1650,7 @@ void exibirProdutosCadastrados() {
     printf("|====================================================================|\n");
     printf("|\t\t    PRODUTOS CADASTRADOS\t\t\t     |\n");
     printf("|====================================================================|\n");
-    printf("|COD | NOME PRODUTO\t\t| CATEGORIA\t| ESTOQUE | PRECO VENDA |\n");
+    printf("|COD | NOME PRODUTO\t     | CATEGORIA   | ESTOQUE   | PRECO VENDA   |\n");
     printf("|====|=======================|===============|=========|=============|\n");
 
 
@@ -1661,10 +1661,10 @@ void exibirProdutosCadastrados() {
                sistemaProdutos.produtos[i].categoriaProduto,
                sistemaProdutos.produtos[i].estoque,
                sistemaProdutos.produtos[i].precoVenda);
-        printf("|----|-----------------------|--------------|---------|-------------|\n");
+        printf("|----|-----------------------|---------------|---------|-------------|\n");
     }
 
-    printf("| TOTAL DE PRODUTOS: %-43d |\n", sistemaProdutos.quantidade);
+    printf("| TOTAL DE PRODUTOS: %-47d |\n", sistemaProdutos.quantidade);
     printf("|====================================================================|\n");
     system("pause");
 }
