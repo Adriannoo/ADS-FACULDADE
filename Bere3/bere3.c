@@ -786,13 +786,13 @@ void menuVendas() {
             printf("|COD   | NOME                     | CATEGORIA    | PRECO   | ESTOQUE |\n");
             printf("|======|==========================|==============|=========|=========|\n");
             for (int i = 0; i < sistemaProdutos.quantidade; i++) {
-                printf("|%-5d | %-24s | %-12s | %-7.2f | %-8d|\n",
+                printf("|%-5d | %-24s | %-12s | %-7.2f| %-8d |\n",
                       sistemaProdutos.produtos[i].codigo,
                       sistemaProdutos.produtos[i].nomeProduto,
                       sistemaProdutos.produtos[i].categoriaProduto,
                       sistemaProdutos.produtos[i].precoVenda,
                       sistemaProdutos.produtos[i].estoque);
-                printf("|------|--------------------------|--------------|---------|---------|\n");
+                printf("|------|--------------------------|--------------|---------|----------|\n");
             }
         } else {
             printf("\n|AVISO: Nenhum produto cadastrado!\n");
@@ -1636,10 +1636,10 @@ void exibirRelatorioVendas() {
     printf("| TOTAL DE VENDAS HOJE: %d\n", numeroVenda);
     printf("| FATURAMENTO TOTAL: R$ %.2f\n", totalVendas);
     printf("|--------------------------------------------------------------------|\n");
-    printf("| FORMA DE PAGAMENTO\t|\tQUANTIDADE\t|\tVALOR TOTAL\t|\n");
+    printf("| FORMA DE PAGAMENTO\t| QUANTIDADE\t\t| VALOR TOTAL        |\n");
     printf("|--------------------------------------------------------------------|\n");
-    printf("| DINHEIRO\t\t|\t\t\t|\tR$ %.2f\t|\n", totalDinheiroF);
-    printf("| CARTAO\t\t|\t\t\t|\tR$ %.2f\t|\n", totalCartaoF);
+    printf("| DINHEIRO\t\t|\t\t\t|\tR$ %.2f\t     |\n", totalDinheiroF);
+    printf("| CARTAO\t\t|\t\t\t|\tR$ %.2f      |\n", totalCartaoF);
     printf("|====================================================================|\n");
     system("pause");
 }
@@ -1650,7 +1650,7 @@ void exibirProdutosCadastrados() {
     printf("|====================================================================|\n");
     printf("|\t\t    PRODUTOS CADASTRADOS\t\t\t     |\n");
     printf("|====================================================================|\n");
-    printf("|COD | NOME PRODUTO\t     | CATEGORIA   | ESTOQUE   | PRECO VENDA   |\n");
+    printf("|COD | NOME PRODUTO          | CATEGORIA     | ESTOQUE | PRECO VENDA |\n");
     printf("|====|=======================|===============|=========|=============|\n");
 
 
@@ -1675,19 +1675,19 @@ void exibirClientesCadastrados(Cliente *clientes, const int quantidadeClientes) 
     printf("|====================================================================|\n");
     printf("|\t\t    CLIENTES CADASTRADOS\t\t\t     |\n");
     printf("|====================================================================|\n");
-    printf("|COD | NOME COMPLETO\t\t| CPF\t\t| CELULAR\t     |\n");
-    printf("|====|=======================|===============|=====================|\n");
+    printf("|COD | NOME COMPLETO         | CPF           | CELULAR               |\n");
+    printf("|====|=======================|===============|=======================|\n");
 
     for(int i = 0; i < quantidadeClientes; i++) {
-        printf("|%-3d | %-21s | %-13s | %-19s |\n",
+        printf("|%-3d | %-21s | %-13s | %-19s   |\n",
                clientes[i].codigo,
                clientes[i].nomeCompleto,
                clientes[i].cpf,
                clientes[i].celular);
-        printf("|----|-----------------------|--------------|---------------------|\n");
+        printf("|----|-----------------------|---------------|-----------------------|\n");
     }
 
-    printf("| TOTAL DE CLIENTES: %-43d |\n", quantidadeClientes);
+    printf("| TOTAL DE CLIENTES: %-47d |\n", quantidadeClientes);
     printf("|====================================================================|\n");
     system("pause");
 }
