@@ -3,7 +3,7 @@
 #include <time.h>
 #include <math.h>
 // #include <windows.h>
-#include <unistd.h> // Para sistemas POSIX (Linux, macOS)
+#include <unistd.h> // Para rodar no linux
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
@@ -279,7 +279,7 @@ void menu_principal() {
 }
 
 void exibirMenuPrincipal() {
-    system("cls");
+    system("clear");
     printf("|=======================================================|\n");
     printf("|\t\t    Mercado Dona Bere\t\t\t|\n");
     printf("|=======================================================|\n");
@@ -307,7 +307,7 @@ void menuGerenciamento() {
 
     int opcao = 0;
     while (opcao != 9) {
-        system("cls");
+        system("clear");
         printf("|===============================================================|\n");
         printf("|\t\t MENU DE GERENCIAMENTO \t\t\t        |\n");
         printf("|===============================================================|\n");
@@ -341,7 +341,7 @@ void menuGerenciamento() {
 void menuVendas() {
     int opcao;
     while (true) {
-        system("cls");
+        system("clear");
         printf("|====================================================================|\n");
         printf("|\t\t\t    MENU VENDAS\t\t\t\t     |\n");
         printf("|====================================================================|\n");
@@ -380,7 +380,7 @@ void menu_novaVenda() {
     int codProd, qtd;
 
     while(true) {
-        system("cls");
+        system("clear");
         printf("--- NOVA VENDA (Venda #%d) ---\n", proximoNumeroVenda);
         exibirProdutos();
 
@@ -452,7 +452,7 @@ void menu_novaVenda() {
 }
 
 void menuAberturaCaixa() {
-    system("cls");
+    system("clear");
     printf("|=======================================================|\n");
     printf("|\t\t   ABERTURA DE CAIXA\t\t\t|\n");
     printf("|=======================================================|\n");
@@ -484,7 +484,7 @@ void menuFechamentoCaixa() {
         return;
     }
 
-    system("cls");
+    system("clear");
     printf("|=======================================================|\n");
     printf("|\t\t   FECHAMENTO DE CAIXA\t\t\t|\n");
     printf("|=======================================================|\n");
@@ -547,7 +547,7 @@ void menuFechamentoCaixa() {
 void menuRelatorios() {
     int opcao = 0;
     while(opcao != 5){
-        system("cls");
+        // system("clear");
         printf("|=======================================================|\n");
         printf("|\t\t    MENU RELATORIOS\t\t\t|\n");
         printf("|=======================================================|\n");
@@ -564,8 +564,8 @@ void menuRelatorios() {
 
         switch(opcao){
             case 1: exibirRelatorioVendas(); break; // Relatorios de venda
-            case 2: system("cls"); exibirProdutos(); break; // Lista de produtos
-            case 3: system("cls"); exibirClientes(); break; // Lista de clientes
+            case 2: system("clear"); exibirProdutos(); break; // Lista de produtos
+            case 3: system("clear"); exibirClientes(); break; // Lista de clientes
             case 4: exibirLogs(); break; // Logs
             case 5: break;
             default: printf("Opcao invalida!\n");
@@ -582,7 +582,7 @@ void cadastrarCliente() {
         printf("\n>> ACESSO NEGADO: Apenas administradores podem cadastrar clientes.\n");
         return;
     }
-    system("cls");
+    system("clear");
     NodeCliente *novo = malloc(sizeof(NodeCliente)); // Aloca memoria para um novo cliente
     if (!novo) { printf("Erro de alocacao de memoria!\n"); return; } // Verifica se a alocacao foi bem-sucedida
 
@@ -630,7 +630,7 @@ void cadastrarProduto() {
         printf("\n>> ACESSO NEGADO: Apenas administradores podem cadastrar produtos.\n");
         return;
     }
-    system("cls");
+    system("clear");
     if (listaCategorias == NULL) { // Se nao houver categorias cadastradas
         printf(">> ERRO: Nenhuma categoria cadastrada. Cadastre uma categoria primeiro.\n");
         return; // Sai da funcao
@@ -654,7 +654,7 @@ void cadastrarProduto() {
 
         if (obterNomeCategoria(novo->dados.codigoCategoria) != NULL) break; // Verifica se o codigo da categoria existe
         printf(">> Codigo de categoria invalido! Tente novamente.\n");
-        system("cls");
+        system("clear");
     }
 
     printf("Preco de Compra: R$ ");
@@ -683,7 +683,7 @@ void cadastrarCategoria() {
         printf("\n>> ACESSO NEGADO: Apenas administradores podem cadastrar categorias.\n");
         return;
     }
-    system("cls");
+    system("clear");
     NodeCategoria *novo = malloc(sizeof(NodeCategoria));
     if (!novo) { printf("Erro de alocacao!\n"); return; } // Verifica se a alocacao foi bem-sucedida
 
@@ -706,7 +706,7 @@ void cadastrarUsuario() {
         printf("\n>> ACESSO NEGADO: Apenas administradores podem cadastrar usuarios.\n");
         return;
     }
-    system("cls");
+    system("clear");
     NodeUsuario *novo = malloc(sizeof(NodeUsuario));
     if (!novo) { printf("Erro de alocacao!\n"); return; } // Verifica se a alocacao foi bem-sucedida
 
@@ -756,7 +756,7 @@ void excluirCliente() {
         printf("\n>> ACESSO NEGADO: Apenas administradores podem excluir clientes.\n");
         return;
     }
-    system("cls");
+    system("clear");
     exibirClientes(); // Exibe a lista de clientes cadastrados
 
     if (!listaClientes) { // Verifica se a lista de clientes esta vazia
@@ -806,7 +806,7 @@ void excluirProduto() {
         printf("\n>> ACESSO NEGADO: Apenas administradores podem excluir produtos.\n");
         return;
     }
-    system("cls");
+    system("clear");
     exibirProdutos();
 
     if (!listaProdutos) { // Verifica se a lista de produtos esta vazia
@@ -856,7 +856,7 @@ void excluirCategoria() {
         printf("\n>> ACESSO NEGADO: Apenas administradores podem excluir categorias.\n");
         return;
     }
-    system("cls");
+    system("clear");
     exibirCategorias(false); // Exibe a lista de categorias cadastradas
 
     if (!listaCategorias) { // Verifica se a lista de categorias esta vazia
@@ -915,7 +915,7 @@ void excluirUsuario() {
         printf("\n>> ACESSO NEGADO: Apenas administradores podem excluir usuarios.\n");
         return;
     }
-    system("cls");
+    system("clear");
     exibirUsuarios();
 
     if (!listaUsuarios) { // Verifica se a lista de usuarios esta vazia
@@ -975,7 +975,7 @@ void menu_pagamento(float valorAPagar, ItemVenda carrinho[], int numItens) {
     bool vendaConcluida = false;
 
     do {
-        system("cls");
+        system("clear");
         printf("|====================================================================|\n");
         printf("| PAGAMENTO DA VENDA - PAGAMENTO MISTO PERMITIDO                     |\n");
         printf("|--------------------------------------------------------------------|\n");
@@ -1063,7 +1063,7 @@ void menu_pagamento(float valorAPagar, ItemVenda carrinho[], int numItens) {
     } while (!vendaConcluida);
 
     // Finalizacao da venda e recibo
-    system("cls");
+    system("clear");
     printf("|====================================================================|\n");
     printf("| VENDA #%d FINALIZADA COM SUCESSO!\n", proximoNumeroVenda);
     printf("|====================================================================|\n");
@@ -1140,7 +1140,7 @@ void exibirProdutos() {
 
 void exibirCategorias(bool comPause) {
     if (!comPause) { // Se nao for para pausar, limpa a tela
-        system("cls");
+        system("clear");
     }
     printf("|========================================|\n");
     printf("|   CATEGORIAS DISPONIVEIS               |\n");
@@ -1160,7 +1160,7 @@ void exibirCategorias(bool comPause) {
 }
 
 void exibirClientes() {
-    system("cls");
+    system("clear");
     printf("|=======================================================================================|\n");
     printf("|                                   CLIENTES CADASTRADOS                                |\n");
     printf("|=======================================================================================|\n");
@@ -1184,7 +1184,7 @@ void exibirClientes() {
 }
 
 void exibirUsuarios() {
-    system("cls");
+    system("clear");
     printf("|================================================================================|\n");
     printf("|                               USUARIOS CADASTRADOS                             |\n");
     printf("|================================================================================|\n");
@@ -1532,7 +1532,7 @@ void retiradaCaixa() { // Funcao Sangria
         printf("\n>> ACESSO NEGADO: Apenas administradores podem realizar retiradas de caixa.\n");
         return;
     }
-    system("cls");
+    system("clear");
     printf("|=======================================================|\n");
     printf("|               RETIRADA DE CAIXA (SANGRIA)             |\n");
     printf("|=======================================================|\n");
@@ -1593,7 +1593,7 @@ void verificarEstoqueMinimo() {
 }
 
 void exibirRelatorioVendas() {
-    system("cls");
+    system("clear");
     time_t t = time(NULL); // Cria um objeto time_t com o tempo atual
     struct tm tm = *localtime(&t); // Converte o tempo atual para uma estrutura tm, que contem campos como ano, mes, dia, hora, minuto e segundo
     printf("|=======================================================|\n");
@@ -1615,7 +1615,7 @@ void exibirRelatorioVendas() {
 }
 
 void exibirLogs() {
-    system("cls");
+    system("clear");
     FILE *f = fopen(ARQUIVO_LOG, "r"); // Abre o arquivo de log para leitura
     printf("|=======================================================|\n");
     printf("|                     LOGS DO SISTEMA                   |\n");
@@ -1643,7 +1643,7 @@ bool fazerLogin() {
     char senha[50];
     bool logado = false;
 
-    system("cls");
+    system("clear");
     printf("|=======================================================|\n");
     printf("|                     TELA DE LOGIN                     |\n");
     printf("|=======================================================|\n");
