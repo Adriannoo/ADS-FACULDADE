@@ -1,0 +1,170 @@
+/* ===========================
+   Reset e fontes
+   =========================== */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: "Montserrat", Arial, sans-serif;
+  background: #222;
+  color:#111;
+}
+
+/* ===========================
+   Topbar
+   =========================== */
+.topbar{
+  background:#e8e8e8;
+  border-bottom:4px solid #000;
+  box-shadow:0 6px 0 rgba(0,0,0,0.6);
+}
+.topbar-inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:18px 16px;
+}
+.topbar .logo img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+  filter: drop-shadow(0 2px 0 #000);
+}
+.menu{
+  display:flex;
+  gap:22px;
+  margin-left:8px;
+}
+.menu a{
+  text-decoration:none;
+  color:#111;
+  font-weight:700;
+  font-size:22px;
+  /* contorno estilo quadrinhos - várias camadas de text-shadow */
+  text-shadow:
+    -2px -2px 0 #fff,
+    2px 2px 0 #000,
+    -2px 2px 0 #000,
+    2px -2px 0 #000;
+  letter-spacing:1px;
+}
+
+/* ===========================
+   Hero com faixas diagonais e grid
+   =========================== */
+.hero{
+  position:relative;
+  overflow:hidden;
+  height:720px;             /* ajuste conforme necessário */
+  max-width:1100px;
+  margin:18px auto;
+  border:8px solid #333;    /* moldura escura como no protótipo */
+  background:
+    /* thin inner separators (white then black) using repeating-linear-gradient overlay */
+    linear-gradient(135deg,
+      /* faixa amarela */
+      #ffd400 0% 34%,
+      /* separador branco */
+      #ffffff 34% 35%,
+      /* separador preto */
+      #000 35% 36%,
+      /* faixa azul */
+      #2f4df0 36% 70%,
+      /* separador branco */
+      #ffffff 70% 71%,
+      /* separador preto */
+      #000 71% 72%,
+      /* faixa vermelha */
+      #d81e1e 72% 100%
+    );
+  background-repeat:no-repeat;
+  background-size:140% 140%;
+  background-position:center;
+  transform: translateZ(0); /* melhora renderização */
+}
+
+/* grid sutil por cima (como papel quadriculado do seu Figma) */
+.grid-overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size:20px 20px;
+  mix-blend-mode: multiply;
+}
+
+/* ===========================
+   Caixa "Sobre nós" (à esquerda)
+   =========================== */
+.about{
+  position:absolute;
+  left:28px;
+  top:48px;
+  width:380px;
+  background:#e6e6e6;
+  border-radius:28px;
+  padding:28px;
+  border:6px solid #000;          /* contorno preto grosso */
+  box-shadow: 10px 10px 0 rgba(0,0,0,0.9), 0 4px 0 rgba(0,0,0,0.6);
+  z-index:4;
+  font-size:18px;
+  line-height:1.4;
+  color:#111;
+  /* o efeito de contorno interno (como no protótipo) */
+  text-shadow: 2px 2px 0 #fff;
+}
+.about p{margin:0}
+
+/* ===========================
+   Oval branco sob sprite
+   =========================== */
+.oval{
+  position:absolute;
+  right:150px;
+  bottom:120px;
+  width:360px;
+  height:120px;
+  background:#fff;
+  border-radius:50%;
+  z-index:2;
+  box-shadow: 6px 8px 0 rgba(0,0,0,0.9);
+  transform: rotate(-4deg);
+}
+
+/* ===========================
+   Sprite Blastoise (pixelado)
+   =========================== */
+.sprite{
+  position:absolute;
+  right:28px;
+  top:48px;
+  width:380px;            /* ajuste do tamanho do sprite */
+  image-rendering: pixelated; /* mantém aparência em pixel art */
+  z-index:5;
+  transform: translateY(0);
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+/* ===========================
+   Ajustes responsivos (tela pequena)
+   =========================== */
+@media (max-width:800px){
+  .topbar-inner{padding:12px}
+  .menu a{font-size:18px}
+  .hero{height:720px; margin:12px}
+  .about{left:18px; top:20px; width:320px; padding:20px; border-radius:22px}
+  .sprite{width:260px; right:10px; top:80px}
+  .oval{width:260px; height:90px; right:10px; bottom:80px}
+}
+
+@media (max-width:460px){
+  .menu{gap:10px}
+  .menu a{font-size:16px}
+  .about{width:270px; padding:16px}
+  .sprite{width:200px; top:70px}
+  .oval{width:200px; height:70px; bottom:70px}
+}
