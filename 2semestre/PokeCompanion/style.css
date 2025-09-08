@@ -4,10 +4,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: "Righteous", sans-serif;
+  font-weight:400;
+  font-style: normal;
   background: #222;
   color:#111;
 }
+
 
 /* ===========================
    Topbar
@@ -38,16 +41,16 @@ body{
 }
 .menu a{
   text-decoration:none;
-  color:#111;
+  color:#ffffff;
   font-weight:700;
-  font-size:22px;
+  font-size:26px;
   /* contorno estilo quadrinhos - várias camadas de text-shadow */
   text-shadow:
-    -2px -2px 0 #fff,
-    2px 2px 0 #000,
-    -2px 2px 0 #000,
-    2px -2px 0 #000;
-  letter-spacing:1px;
+    -0px -0px 1px #000000,
+    1px 1px 0 #000,
+    -1px 1px 0 #000,
+    1px -1px 0 #000;
+  letter-spacing:2px;
 }
 
 /* ===========================
@@ -104,13 +107,14 @@ body{
   left:28px;
   top:48px;
   width:380px;
+  height: 380px;
   background:#e6e6e6;
   border-radius:28px;
   padding:28px;
   border:6px solid #000;          /* contorno preto grosso */
   box-shadow: 10px 10px 0 rgba(0,0,0,0.9), 0 4px 0 rgba(0,0,0,0.6);
   z-index:4;
-  font-size:18px;
+  font-size:24px;
   line-height:1.4;
   color:#111;
   /* o efeito de contorno interno (como no protótipo) */
@@ -123,15 +127,13 @@ body{
    =========================== */
 .oval{
   position:absolute;
-  right:150px;
-  bottom:120px;
-  width:360px;
+  right:100px;
+  bottom:150px;
+  width:420px;
   height:120px;
-  background:#fff;
+  background:#ffffff;
   border-radius:50%;
-  z-index:2;
-  box-shadow: 6px 8px 0 rgba(0,0,0,0.9);
-  transform: rotate(-4deg);
+  box-shadow: 0px 8px 0 rgba(0,0,0,0.9);
 }
 
 /* ===========================
@@ -139,14 +141,14 @@ body{
    =========================== */
 .sprite{
   position:absolute;
-  right:28px;
-  top:48px;
-  width:380px;            /* ajuste do tamanho do sprite */
+  right:0px;
+  width:600px;            /* ajuste do tamanho do sprite */
   image-rendering: pixelated; /* mantém aparência em pixel art */
   z-index:5;
   transform: translateY(0);
   user-select:none;
   -webkit-user-drag:none;
+  box-shadow: 0px 0px #000000; /* evita que o texto da caixa "sobre nós" envolva o sprite */
 }
 
 /* ===========================
