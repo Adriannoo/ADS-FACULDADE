@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registrar Usuário</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main class="form-wrapper">
+    <header>
+      <h2>Registrar Novo Usuário</h2>
+    </header>
+    <section>
+      <form id="cadastroUsuario">
+        <div class="campo-form">
+          <label for="userEmail">E-mail</label>
+          <input type="email" id="userEmail" name="userEmail" placeholder="Seu melhor e-mail" required>
+        </div>
+        <div class="campo-form">
+          <label for="userName">Nome completo</label>
+          <input type="text" id="userName" name="userName" placeholder="Nome e sobrenome" required>
+        </div>
+        <div class="campo-form">
+          <label for="userAge">Idade</label>
+          <input type="number" id="userAge" name="userAge" min="0" placeholder="Informe sua idade">
+        </div>
+        <button type="submit">Registrar</button>
+      </form>
+      <aside id="retorno"></aside>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+
+</html>
+

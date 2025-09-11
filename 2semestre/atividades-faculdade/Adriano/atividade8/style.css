@@ -1,0 +1,62 @@
+body {
+    font-family: Georgia, serif;
+}
+
+h1, h2 {
+    color: #0f172a;
+    letter-spacing: 2px;
+}
+
+p {
+    line-height: 1.6;
+}
+
+button {
+    text-transform: uppercase;
+    color: white;
+    border: none;
+}
+
+.cartao {
+    border: 1px solid #cbd5e1;
+    margin: 20px 10px;
+    background-color: white;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+rodape-principal {
+    border-top: 4px solid #3b82f6;
+}
+
+#cabecalho-principal {
+    background-color: #f8fafc;
+    color: #334155;
+}
+
+.botao-destaque {
+    background-color: #ef4444;
+}
+
+.cartao.info {
+    background-color: #eff6ff;
+}
+
+a:hover {
+    color: #dc2626;
+}
+
+.cartao:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+li {
+    list-style-type: none;
+}
+
+button:not(.botao-destaque) {
+    background-color: #475569;
+}   
