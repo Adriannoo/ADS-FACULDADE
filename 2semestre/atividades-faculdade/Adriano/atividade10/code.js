@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const messageDiv = document.getElementById('message');
     
     /**
-     * Valida se um campo está preenchido
+     * Valida se um campo está preenchido corretamente
      * @param {string} value - Valor do campo a ser validado
      * @returns {boolean} - Retorna true se o campo estiver preenchido
      */
