@@ -43,7 +43,6 @@ body{
   color:#ffffff;
   font-weight:700;
   font-size:38px;
-  /* contorno estilo quadrinhos - várias camadas de text-shadow */
   -webkit-text-stroke: 1px #000;
   letter-spacing:2px;
 }
@@ -125,9 +124,9 @@ body{
    =========================== */
 .sprite {
   position: absolute;
-  right: 30px;
-  top: 20px;
-  width: 580px;
+  right: 70px;
+  top: 60px;
+  width: 500px;
   image-rendering: pixelated;
   z-index: 5;
   user-select: none;
@@ -139,23 +138,3 @@ body{
 .sprite:hover {
     transform: scale(1.1);
   }
-
-/* ===========================
-   Ajustes responsivos (tela pequena)
-   =========================== */
-@media (max-width:800px){
-  .topbar-inner{padding:12px}
-  .menu a{font-size:18px}
-  .hero{height:720px; margin:12px}
-  .about{left:18px; top:20px; width:320px; padding:20px; border-radius:22px}
-  .sprite{width:260px; right:10px; top:80px}
-  .oval{width:260px; height:90px; right:10px; bottom:80px}
-}
-
-@media (max-width:460px){
-  .menu{gap:10px}
-  .menu a{font-size:16px}
-  .about{width:270px; padding:16px}
-  .sprite{width:200px; top:70px}
-  .oval{width:200px; height:70px; bottom:70px}
-}
