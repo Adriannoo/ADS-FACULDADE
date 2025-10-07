@@ -1,47 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PokéCompanion</title>
-
-  <!-- fonte -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="logo">
-        <img src="./assets/pokeball_icon.png" alt="pokébola">
-      </div>
-      <nav class="menu">
-        <a href="#">Página Inicial</a>
-        <a href="#">Comparador</a>
-        <a href="#">Pokédex</a>
-      </nav>
+    <header class="header">
+        <nav class="nav">
+            <a class="nav-item">
+                <div class="nav-icon"></div>
+                <span>Página Inicial</span>
+            </a>
+            <a class="nav-item">
+                <div class="nav-icon"></div>
+                <span>Pokédex</span>
+            </a>
+            <a class="nav-item">
+                <div class="nav-icon"></div>
+                <span>Comparar</span>
+            </a>
+            <a class="login-btn">Fazer login</a>
+        </nav>
+    </header>
+
+    <div class="blastoise-container">
+        <div class="blastoise-base"></div>
+        <img id="sprite-blastoise" alt="Blastoise" />
     </div>
-  </header>
 
-  <main class="hero">
-    <!-- fundo diagonal -->
-    <div class="grid-overlay"></div>
 
-    <!-- caixa Sobre -->
-    <aside class="about">
-      <p><strong>O PokéCompanion</strong> é uma plataforma feita por fãs, para fãs, que reúne tudo sobre o mundo Pokémon em um só lugar.</p>
-    </aside>
+    <div class="background-container">
+        <div class="stripe yellow-stripe"></div>
+        <div class="stripe blue-stripe"></div>
+        <div class="stripe red-stripe"></div>
+    </div>
 
-    <!-- oval branco sob o sprite -->
-    <div class="oval"></div>
-
-    <!-- sprite pixel -->
-    <img class="sprite" id="sprite-blastoise" alt="Blastoise">
-  </main>
-
-  <script src="index.js"></script>
-</body>
+    <script src="index.js"></script>
+    </body>
 </html>

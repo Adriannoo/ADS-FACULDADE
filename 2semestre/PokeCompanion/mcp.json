@@ -1,0 +1,11 @@
+{
+    "servers": {
+        "Figma MCP": {
+            "url": "https://mcp.figma.com/mcp",
+            "type": "http"
+        }
+    },
+    "fileId": "BMIxPtOfdWrDZMKBC8H2Xr",
+    "nodeId": "174-136",
+    "inputs": []
+}

@@ -1,140 +1,154 @@
-/* ===========================
-   Reset e fontes
-   =========================== */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{
+/* ===== HEADER CONTAINER ===== */
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+:root {
+  --azul-cerulean: #3B4CCA;
+  --vermelho-boston: #C00;
+}
+
+body {
+  background-color: black;
+}
+
+.header {
+  margin: auto;
+  padding: 30px 48px;
+  background-color: var(--Branco-Padrao, #d9d9d9);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== NAVEGAÇÃO ===== */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  margin: auto;
+
+}
+
+/* ===== ITENS DO MENU ===== */
+.nav-item {
+  display: flex;
+  align-items: center;
+  /* gap: 12px; */
+  height: 80px;
+  cursor: pointer;
+}
+
+/* Ícone (você substitui o <path-to-image> quando baixar o asset) */
+.nav-icon {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 50px;
+  background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+}
+
+/* Texto dos links */
+.nav-item span {
   font-family: "Righteous", sans-serif;
-  font-weight:400;
-  font-style: normal;
-  background: #222;
-  color:#111;
-}
-
-/* ===========================
-   Topbar
-   =========================== */
-.topbar{
-  background:#e8e8e8;
-  border-bottom:4px solid #000;
-  box-shadow:0 6px 0 rgba(0,0,0,0.6);
-}
-.topbar-inner{
-  max-width:1100px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  gap:18px;
-  padding:18px 16px;
-}
-.topbar .logo img{
-  width:40px;
-  height:40px;
-  object-fit:contain;
-  filter: drop-shadow(0 2px 0 #000);
-}
-.menu{
-  display:flex;
-  gap:22px;
-  margin-left:8px;
-}
-.menu a{
-  text-decoration:none;
-  color:#ffffff;
-  font-weight:700;
-  font-size:38px;
-  -webkit-text-stroke: 1px #000;
-  letter-spacing:2px;
-}
-
-/* ===========================
-   Hero com faixas diagonais e grid
-   =========================== */
-.hero{
-  position:relative;
-  overflow:hidden;
-  height:720px;             /* ajuste conforme necessário */
-  max-width:1100px;
-  margin:18px auto;
-  border:8px solid #333;    /* moldura escura como no protótipo */
-  background:
-    /* faixas diagonais */
-    linear-gradient(155deg,
-      /* faixa amarela */
-      #ffd400 0% 34%,
-      /* separador branco */
-      #ffffff 34% 35%,
-      /* separador preto */
-      #000 35% 36%,
-      /* faixa azul */
-      #2f4df0 36% 70%,
-      /* separador branco */
-      #ffffff 70% 71%,
-      /* separador preto */
-      #000 71% 72%,
-      /* faixa vermelha */
-      #d81e1e 72% 100%
-    );
-  background-repeat:no-repeat;
-  background-size:140% 140%;
-  background-position:center;
-  transform: translateZ(0); /* melhora renderização */
-}
-
-/* ===========================
-   Caixa "Sobre nós" (à esquerda)
-   =========================== */
-.about{
-  position:absolute;
-  left:28px;
-  top:108px;
-  width:420px;
-  height: 420px;
-  background:#e6e6e6;
-  border-radius:28px;
-  padding:28px;
-  border:6px solid #000;          /* contorno preto grosso */
-  box-shadow: 10px 10px 0 rgba(0,0,0,0.9), 0 4px 0 rgba(0,0,0,0.6);
-  z-index:4;
-  font-size:38px;
+  color: var(--Branco-Full, #fff); 
   text-align: center;
-  line-height:1.4;
-  color:#ffffff;
-  -webkit-text-stroke: 1px #000;
-  /* o efeito de contorno interno (como no protótipo) */
-}
-.about p{margin:0}
-
-/* ===========================
-   Oval branco sob sprite
-   =========================== */
-.oval{
-  position:absolute;
-  right:100px;
-  bottom:150px;
-  width:420px;
-  height:120px;
-  background:#ffffff;
-  border-radius:50%;
-  box-shadow: 0px 8px 0 rgba(0,0,0,0.9);
+  paint-order: stroke fill;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke: 0.2em black;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: normal;
+  color: white;
 }
 
-/* ===========================
-   Sprite Blastoise (pixelado)
-   =========================== */
-.sprite {
+/* ===== BOTÃO LOGIN ===== */
+.login-btn {
+  padding: 10px 28px;
+  font-family: "Righteous", sans-serif;
+  font-size: 32px;
+  color: #000;
+  background-color: #00ff99;
+  border: 3px solid #000;
+  border-radius: 12px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+/* Hoover Botao Login */
+.login-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Fundo geral preto */
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* você pode ajustar pra altura desejada */
+  background-color: #000;
+  overflow: hidden; /* corta o excesso das faixas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Faixa base */
+.stripe {
   position: absolute;
-  right: 70px;
-  top: 60px;
-  width: 500px;
-  image-rendering: pixelated;
-  z-index: 5;
-  user-select: none;
-  -webkit-user-drag: none;
-  filter: drop-shadow(8px 8px 0px #000000be);
-  transition: transform 0.3s ease;
+  width: 2200px;
+  height: 400px;
+  transform: rotate(-20deg);
+  border: 10px solid #fff;
+  flex-shrink: 0;
+  z-index: 0;
 }
 
-.sprite:hover {
-    transform: scale(1.1);
-  }
+.yellow-stripe {
+  background-color: #FFDE00;
+  top: -130px;
+  height: 300px;
+}
+
+/* Faixa azul (padrão) */
+.blue-stripe {
+  background-color: var(--azul-cerulean);
+}
+
+.red-stripe {
+  background-color: var(--vermelho-boston);
+  bottom: -130px;
+  height: 300px;
+}
+
+/* ===== CONTAINER GERAL ===== */
+.blastoise-container {
+  position: relative;
+  width: 600px;
+  height: 605px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* coloca a base embaixo */
+  margin: 0 auto; /* centraliza horizontalmente */
+  transform: translateX(80px); /* ajusta leve deslocamento pra direita */
+}
+
+/* ===== BASE / SOMBRA ===== */
+.blastoise-base {
+  position: absolute;
+  bottom: 10px;
+  width: 500px;
+  height: 200px;
+  background: #fff;
+  border-radius: 50% / 50%; /* <-- deixa bem oval */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.75);
+  z-index: 1;
+}
+
+/* ===== SPRITE DO BLASTOISE ===== */
+#sprite-blastoise {
+  position: absolute;
+  bottom: 80px; /* sobe o sprite pra cima da base */
+  right: 40px; /* ajusta leve deslocamento à direita */
+  width: 600px;
+  height: 567px;
+  image-rendering: pixelated;
+  z-index: 2;
+}
