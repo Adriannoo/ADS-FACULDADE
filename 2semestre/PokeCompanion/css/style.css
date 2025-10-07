@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+body {
+    background-color: #000;
+}
+
 .header {
     margin: auto;
     padding: 30px 48px;
@@ -69,4 +75,12 @@
     height: 400px;
     transform: rotate(-20deg);
     border: 10px solid #fff;
+    background-color: blue;
+}
+
+.yellow-stripe {
+    position: absolute;
+    background-color: yellow;
+    top: -100px;
+    height: 300px;
 }
