@@ -1,0 +1,72 @@
+.header {
+    margin: auto;
+    padding: 30px 48px;
+    background-color: #d9d9d9;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
+    margin: auto;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    cursor: pointer;
+}
+
+.nav-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+}
+
+.nav-item span {
+    font-family: "Righteous", sans-serif;
+    color: white;
+    text-shadow: 4px 4px 4px rgba(0,0,0,0.25);
+    font-size: 48px;
+    font-weight: 400;
+}
+
+.login-btn {
+    padding: 10px 28px;
+    font-family: "Righteous", sans-serif;
+    font-size: 32px;
+    color: #000;
+    background-color: #00ff99;
+    border: 3px solid #000;
+    border-radius: 12px;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.login-btn:hover {
+    transform: scale(1.05);
+}
+
+.background-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stripe {
+    position: absolute;
+    width: 2200px;
+    height: 400px;
+    transform: rotate(-20deg);
+    border: 10px solid #fff;
+}
