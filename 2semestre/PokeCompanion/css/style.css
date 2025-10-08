@@ -75,12 +75,19 @@ body {
     height: 400px;
     transform: rotate(-20deg);
     border: 10px solid #fff;
-    background-color: blue;
+    background-color: var(--azul-cerulean);
 }
 
 .yellow-stripe {
     position: absolute;
-    background-color: yellow;
-    top: -100px;
+    background-color: var(--amarelo-dourado);
+    top: -105px;
+    height: 300px;
+}
+
+.red-stripe {
+    position: absolute;
+    background-color: var(--vermelho-boston);
+    bottom: -105px;
     height: 300px;
 }

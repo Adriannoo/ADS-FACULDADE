@@ -1,0 +1,156 @@
+/* ===== HEADER CONTAINER ===== */
+body {
+  background-color: #000;
+}
+
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 30px 48px;
+  height: 140px;
+  background-color: var(--Branco-Padrao, #d9d9d9);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  /* gap: 46px; */
+}
+
+/* ===== NAVEGAÇÃO ===== */
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 46px;
+}
+
+/* ===== ITENS DO MENU ===== */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 80px;
+  cursor: pointer;
+}
+
+/* Ícone (você substitui o <path-to-image> quando baixar o asset) */
+.nav-icon {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 50px;
+  background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+}
+
+/* Texto dos links */
+.nav-item span {
+  color: var(--Branco-Full, #fff);
+  text-align: center;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: white;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 0.2em black;
+  font-family: "Righteous", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+/* ===== BOTÃO LOGIN ===== */
+.login-btn {
+  padding: 10px 28px;
+  font-family: "Righteous", sans-serif;
+  font-size: 32px;
+  color: #000;
+  background-color: #00ff99;
+  border: 3px solid #000;
+  border-radius: 12px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Fundo geral preto */
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* você pode ajustar pra altura desejada */
+  background-color: #000;
+  overflow: hidden; /* corta o excesso das faixas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Faixa base */
+.stripe {
+  position: absolute;
+  width: 2100px;
+  height: 400px;
+  transform: rotate(-20deg);
+  border: 10px solid #fff;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* Faixa azul (padrão) */
+.blue-stripe {
+  background-color: #3B4CCA; /* Azul Cerulean */
+}
+
+.yellow-stripe {
+  background-color:#FFDE00;
+  height: 300px;
+  top: -110px;
+}
+
+.red-stripe {
+  background-color: #C00;
+  height: 300px;
+  bottom: -110px;
+}
+
+/* HERO precisa ser referência para posicionamento absoluto */
+
+/* wrapper do Blastoise - absoluto dentro do .hero */
+.blastoise-wrap{
+  position: absolute;
+  right: 60px;       /* distancia da borda direita do hero - ajuste */
+  bottom: 110px;     /* distancia da base do hero - ajuste */
+  width: 480px;      /* tamanho visível do bloco do sprite (ajuste fino) */
+  height: auto;
+  display: block;
+  z-index: 10;       /* acima do fundo, abaixo do nav se preciso */
+  pointer-events: none; /* evita atrapalhar clicks no fundo */
+}
+
+/* a base oval branca (a "plataforma") */
+.blastoise-base {
+  position: absolute;
+  display: flex;
+  right: 5px;
+  bottom: 10px;
+  width: 500px;
+  height: 200px;
+  background: #fff;
+  border-radius: 50% / 50%; /* <-- deixa bem oval */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.75);
+  z-index: 1;
+}
+
+/* sprite do Blastoise */
+.sprite-blastoise{
+  position: relative;
+  display: flex;
+  right: 100px;
+  width: 620px;          /* controla o tamanho final do sprite - ajuste */
+  height: auto;
+  image-rendering: pixelated;  /* mantém aparência retro */
+  object-fit: contain;
+  z-index: 20;
+  transform: translateY(-30px); /* sobe um pouco para encaixar na base */
+}
+
