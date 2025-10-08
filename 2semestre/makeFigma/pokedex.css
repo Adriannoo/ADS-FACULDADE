@@ -1,0 +1,578 @@
+/* Reset e Configurações Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Righteous', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Fundo com Listras */
+.background-stripes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0.95;
+}
+
+.stripe {
+    position: absolute;
+    width: 1566.45px;
+    height: 500px;
+    transform: rotate(330deg) skewX(346.715deg);
+    border: 10px solid white;
+}
+
+.stripe-blue {
+    background: #3b4cca;
+    top: 20%;
+    left: 5%;
+}
+
+.stripe-yellow {
+    background: #FFDE00;
+    height: 400px;
+    top: 0;
+    right: 11%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.stripe-red {
+    background: #cc0000;
+    height: 400px;
+    bottom: 0;
+    right: 0;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background-color: #d9d9d9;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+}
+
+.header-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.header-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    opacity: 0.9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.header-text {
+    font-size: 48px;
+    color: white;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.login-button {
+    background-color: #81c784;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 40px 60px;
+    font-family: 'Righteous', sans-serif;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.login-button:hover {
+    transform: scale(1.05);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 140px;
+    width: 280px;
+    height: calc(100vh - 440px);
+    background-color: #141414;
+    border-right: 2px solid black;
+    box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.sidebar-header {
+    padding: 30px 20px 20px;
+}
+
+.sidebar-title {
+    font-size: 36px;
+    color: white;
+    text-align: center;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.sidebar-divider {
+    width: 260px;
+    height: 2px;
+    background-color: #d9d9d9;
+    margin: 0 auto;
+}
+
+.types-container {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px 30px;
+}
+
+.type-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.type-item:hover {
+    transform: scale(1.1);
+}
+
+.type-name {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+}
+
+.type-badge {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tipos de Pokémon - Cores */
+.type-water { background: linear-gradient(180deg, #4a90dd 0%, #6cbde4 100%); box-shadow: 0px 0px 62.576px rgba(85, 158, 223, 0.7); }
+.type-ice { background: linear-gradient(180deg, #70ccbd 0%, #8cddd4 100%); box-shadow: 0px 0px 62.576px rgba(126, 212, 201, 0.7); }
+.type-rock { background: linear-gradient(180deg, #c5b489 0%, #d7cd90 100%); box-shadow: 0px 0px 52.121px rgba(203, 193, 148, 0.7); }
+.type-steel { background: linear-gradient(180deg, #52869d 0%, #58a6aa 100%); box-shadow: 0px 0px 52.121px rgba(80, 148, 161, 0.7); }
+.type-normal { background: linear-gradient(180deg, #9298a4 0%, #a3a49e 98.711%); box-shadow: 0px 0px 52.121px rgba(93, 89, 106, 0.7); }
+.type-poison { background: linear-gradient(180deg, #a864c7 0%, #c261d4 100%); box-shadow: 0px 0px 52.121px rgba(163, 107, 203, 0.7); }
+.type-psychic { background: linear-gradient(180deg, #f66f71 0%, #fe9f92 100%); box-shadow: 0px 0px 52.121px rgba(248, 124, 122, 0.7); }
+.type-fighting { background: linear-gradient(180deg, #ce4265 0%, #e74347 98.711%); box-shadow: 0px 0px 62.576px rgba(212, 68, 93, 0.7); }
+.type-ghost { background: linear-gradient(180deg, #516aac 0%, #7773d4 98.711%); box-shadow: 0px 0px 52.121px rgba(101, 108, 198, 0.7); }
+.type-grass { background: linear-gradient(180deg, #5fbc51 0%, #5ac178 100%); box-shadow: 0px 0px 52.121px rgba(100, 185, 84, 0.7); }
+.type-fire { background: linear-gradient(180deg, #fb9b51 0%, #fbae46 100%); box-shadow: 0px 0px 52.121px rgba(254, 158, 84, 0.7); }
+.type-flying { background: linear-gradient(180deg, #90a7da 0%, #a6c2f2 100%); box-shadow: 0px 0px 52.121px rgba(157, 181, 228, 0.7); }
+.type-electric { background: linear-gradient(180deg, #edd53e 0%, #fbe273 98.711%); box-shadow: 0px 0px 52.121px rgba(244, 213, 86, 0.7); }
+.type-fairy { background: linear-gradient(180deg, #ec8ce5 0%, #f3a7e7 98.359%); box-shadow: 0px 0px 52.121px rgba(242, 148, 233, 0.7); }
+.type-dark { background: linear-gradient(180deg, #595761 0%, #6e7587 98.711%); box-shadow: 0px 0px 52.121px rgba(93, 89, 106, 0.7); }
+.type-dragon { background: linear-gradient(180deg, #0c69c8 0%, #0180c7 98.711%); box-shadow: 0px 0px 52.121px rgba(7, 109, 192, 0.7); }
+.type-bug { background: linear-gradient(180deg, #92bc2c 0%, #afc836 100%); box-shadow: 0px 0px 52.121px rgba(152, 195, 47, 0.7); }
+.type-ground { background: linear-gradient(180deg, #dc7545 0%, #d29463 98.711%); box-shadow: 0px 0px 52.121px rgba(216, 130, 85, 0.7); }
+
+/* Conteúdo Principal */
+.main-content {
+    position: absolute;
+    top: 160px;
+    left: 320px;
+    right: 40px;
+    padding-bottom: 320px;
+}
+
+/* Barra de Pesquisa */
+.search-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.search-bar {
+    flex: 1;
+    background-color: #141414;
+    border: 3px solid black;
+    border-radius: 15px;
+    padding: 13px 40px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    opacity: 0.95;
+    box-shadow: 0px 4px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.search-icon {
+    width: 35px;
+    height: 35px;
+    fill: #FEF7FF;
+}
+
+.search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 36px;
+    font-weight: 500;
+    color: #d9d9d9;
+}
+
+.search-button {
+    background-color: #81c784;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 15px 50px;
+    font-family: 'Righteous', sans-serif;
+    font-size: 36px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.search-button:hover {
+    transform: scale(1.05);
+}
+
+/* Quadro Principal */
+.main-board {
+    background-color: #d9d9d9;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 30px;
+    opacity: 0.95;
+    box-shadow: 0px 4px 5px 5px rgba(0, 0, 0, 0.25);
+    min-height: 600px;
+}
+
+.board-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.board-title {
+    font-size: 36px;
+    color: white;
+}
+
+.board-title-right {
+    font-size: 36px;
+    color: white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sort-selector {
+    background-color: #141414;
+    border-radius: 10px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.sort-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.sort-text {
+    font-size: 36px;
+    color: white;
+}
+
+.sort-arrow {
+    font-size: 24px;
+    color: white;
+    margin-left: 10px;
+}
+
+.divider-line {
+    width: 100%;
+    height: 4px;
+    background-color: black;
+    margin-bottom: 40px;
+}
+
+/* Card Pokémon */
+.pokemon-card {
+    width: 270px;
+    background-color: white;
+    border: 3px solid white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 5px 5px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-10px);
+}
+
+.pokemon-image {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    border-bottom: 3px solid white;
+    box-shadow: 0px 4px 10px #000000;
+}
+
+.pokemon-info {
+    background-color: #3f3f3f;
+    padding: 20px;
+    text-align: center;
+}
+
+.pokemon-name {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.pokemon-number {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.pokemon-types {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.type-badge-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    display: flex;
+    padding: 40px 60px;
+    z-index: 50;
+}
+
+.footer-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    opacity: 0.7;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.footer-title {
+    font-size: 54px;
+    color: white;
+    opacity: 0.7;
+}
+
+.footer-links-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    opacity: 0.7;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.footer-list {
+    list-style: disc;
+    padding-left: 36px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 24px;
+    color: white;
+}
+
+.footer-list li {
+    margin-bottom: 5px;
+}
+
+.footer-divider {
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 0 60px;
+}
+
+.footer-right {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-about-title {
+    font-size: 54px;
+    color: white;
+    opacity: 0.7;
+}
+
+.footer-about-text {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    opacity: 0.7;
+    line-height: 1.5;
+    max-width: 620px;
+}
+
+.footer-copyright {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+}
+
+/* Scrollbar Customizada */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #3f3f3f;
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsividade para 1366x768 */
+@media screen and (max-width: 1366px) {
+    .header {
+        height: 120px;
+        padding: 0 30px;
+    }
+    
+    .header-text {
+        font-size: 36px;
+    }
+    
+    .header-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .login-button {
+        font-size: 32px;
+        padding: 30px 50px;
+    }
+    
+    .sidebar {
+        top: 120px;
+        width: 250px;
+    }
+    
+    .sidebar-title {
+        font-size: 30px;
+    }
+    
+    .type-name {
+        font-size: 20px;
+    }
+    
+    .type-badge {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .main-content {
+        top: 140px;
+        left: 280px;
+    }
+    
+    .search-input {
+        font-size: 30px;
+    }
+    
+    .search-button {
+        font-size: 30px;
+        padding: 12px 40px;
+    }
+    
+    .board-title,
+    .board-title-right,
+    .sort-text {
+        font-size: 30px;
+    }
+    
+    .footer {
+        height: 250px;
+        padding: 30px 50px;
+    }
+    
+    .footer-title,
+    .footer-about-title {
+        font-size: 42px;
+    }
+}
+
+/* Responsividade para telas maiores (1920x1080) */
+@media screen and (min-width: 1920px) {
+    .main-content {
+        right: 100px;
+    }
+    
+    .stripe {
+        width: 2000px;
+        height: 600px;
+    }
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéCompanion - Comparar Pokémons</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Fredoka:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Background Stripes -->
+        <div class="background-stripes">
+            <div class="stripe stripe-yellow"></div>
+            <div class="stripe stripe-blue"></div>
+            <div class="stripe stripe-red"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-item">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokébola" class="header-icon">
+                <span class="header-text">Página Inicial</span>
+            </div>
+            <div class="header-item">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokédex" class="header-icon">
+                <span class="header-text">Pokédex</span>
+            </div>
+            <div class="header-item">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Comparar" class="header-icon">
+                <span class="header-text">Comparar</span>
+            </div>
+            <button class="login-button">Fazer login</button>
+        </header>
+
+        <!-- Title -->
+        <h1 class="page-title">Compare Pokémons</h1>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <svg class="search-icon" viewBox="0 0 27 27" fill="none">
+                    <path d="M24.2083 26.25L15.0208 17.0625C14.2917 17.6458 13.4531 18.1076 12.5052 18.4479C11.5573 18.7882 10.5486 18.9583 9.47917 18.9583C6.82986 18.9583 4.58767 18.0408 2.7526 16.2057C0.917535 14.3707 0 12.1285 0 9.47917C0 6.82986 0.917535 4.58767 2.7526 2.7526C4.58767 0.917535 6.82986 0 9.47917 0C12.1285 0 14.3707 0.917535 16.2057 2.7526C18.0408 4.58767 18.9583 6.82986 18.9583 9.47917C18.9583 10.5486 18.7882 11.5573 18.4479 12.5052C18.1076 13.4531 17.6458 14.2917 17.0625 15.0208L26.25 24.2083L24.2083 26.25ZM9.47917 16.0417C11.3021 16.0417 12.8516 15.4036 14.1276 14.1276C15.4036 12.8516 16.0417 11.3021 16.0417 9.47917C16.0417 7.65625 15.4036 6.10677 14.1276 4.83073C12.8516 3.55469 11.3021 2.91667 9.47917 2.91667C7.65625 2.91667 6.10677 3.55469 4.83073 4.83073C3.55469 6.10677 2.91667 7.65625 2.91667 9.47917C2.91667 11.3021 3.55469 12.8516 4.83073 14.1276C6.10677 15.4036 7.65625 16.0417 9.47917 16.0417Z" fill="white"/>
+                </svg>
+                <span class="search-text">Selecione um Pokémon</span>
+                <svg class="search-arrow" viewBox="0 0 13 21" fill="none">
+                    <path clip-rule="evenodd" d="M0.412327 20.3234C0.867944 20.7255 1.60481 20.7255 2.0593 20.3234L11.6925 11.8016C11.9081 11.6137 12.0798 11.3876 12.1972 11.137C12.3145 10.8865 12.375 10.6166 12.375 10.344C12.375 10.0713 12.3145 9.80144 12.1972 9.55086C12.0798 9.30029 11.9081 9.0742 11.6925 8.88636L1.98955 0.301635C1.76934 0.109778 1.47772 0.00194121 1.17391 2.59541e-05C0.870108 -0.0018893 0.576897 0.10226 0.353828 0.291323C0.243323 0.384687 0.154905 0.497853 0.0940484 0.623811C0.0331919 0.749769 0.00119278 0.885838 3.27147e-05 1.02359C-0.00112735 1.16135 0.0285763 1.29785 0.0873043 1.42465C0.146032 1.55146 0.232534 1.66586 0.341453 1.76078L9.22204 9.61542C9.32995 9.70935 9.41588 9.82242 9.47459 9.94775C9.53331 10.0731 9.56359 10.2081 9.56359 10.3445C9.56359 10.4809 9.53331 10.6159 9.47459 10.7412C9.41588 10.8665 9.32995 10.9796 9.22204 11.0735L0.412327 18.8663C0.304453 18.9601 0.218547 19.0731 0.159843 19.1984C0.101139 19.3236 0.070865 19.4585 0.070865 19.5948C0.070865 19.7312 0.101139 19.866 0.159843 19.9913C0.218547 20.1166 0.304453 20.2295 0.412327 20.3234Z" fill="white" fill-rule="evenodd"/>
+                </svg>
+            </div>
+
+            <div class="divider-horizontal"></div>
+            <div class="divider-vertical"></div>
+
+            <!-- Pokemon Frames Container -->
+            <div class="pokemon-frames">
+                <!-- Magikarp Frame -->
+                <div class="pokemon-frame">
+                    <button class="close-button">×</button>
+                    
+                    <div class="pokemon-image-container">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png" alt="Magikarp" class="pokemon-image">
+                    </div>
+                    
+                    <div class="pokemon-number">#0129</div>
+                    <div class="pokemon-name">Magikarp</div>
+                    
+                    <div class="pokemon-type type-water">Água</div>
+                    
+                    <div class="pokemon-info">
+                        <span>Altura: 0,9m</span>
+                        <span>Peso: 10,0kg</span>
+                    </div>
+                    
+                    <div class="divider-dashed"></div>
+                    
+                    <!-- Stats -->
+                    <div class="stats-section">
+                        <h3 class="section-title">Estatísticas</h3>
+                        <div class="stats-bars">
+                            <div class="stat-bar">
+                                <div class="stat-value">20</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 10%;"></div>
+                                </div>
+                                <div class="stat-label">HP</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">10</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 5%;"></div>
+                                </div>
+                                <div class="stat-label">ATK</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">55</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 27.5%;"></div>
+                                </div>
+                                <div class="stat-label">DEF</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">15</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 7.5%;"></div>
+                                </div>
+                                <div class="stat-label">S.ATK</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">20</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 10%;"></div>
+                                </div>
+                                <div class="stat-label">S.DEF</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">80</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 40%;"></div>
+                                </div>
+                                <div class="stat-label">VEL</div>
+                            </div>
+                        </div>
+                        <div class="stats-total">Total: 200</div>
+                    </div>
+                    
+                    <!-- Abilities -->
+                    <div class="abilities-section">
+                        <h3 class="section-title">Habilidades</h3>
+                        <div class="ability-item">• Swift Swim</div>
+                    </div>
+                    
+                    <!-- Weaknesses -->
+                    <div class="weaknesses-section">
+                        <h3 class="section-title">Fraquezas</h3>
+                        <div class="weakness-container">
+                            <div class="weakness-badge weakness-electric">Elétrico</div>
+                            <div class="weakness-badge weakness-grass">Planta</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arceus Frame -->
+                <div class="pokemon-frame">
+                    <button class="close-button">×</button>
+                    
+                    <div class="pokemon-image-container">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/493.png" alt="Arceus" class="pokemon-image">
+                    </div>
+                    
+                    <div class="pokemon-number">#0493</div>
+                    <div class="pokemon-name">Arceus</div>
+                    
+                    <div class="pokemon-type type-normal">Normal</div>
+                    
+                    <div class="pokemon-info">
+                        <span>Altura: 3,2m</span>
+                        <span>Peso: 320,0kg</span>
+                    </div>
+                    
+                    <div class="divider-dashed"></div>
+                    
+                    <!-- Stats -->
+                    <div class="stats-section">
+                        <h3 class="section-title">Estatísticas</h3>
+                        <div class="stats-bars">
+                            <div class="stat-bar">
+                                <div class="stat-value">120</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 60%;"></div>
+                                </div>
+                                <div class="stat-label">HP</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">120</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 60%;"></div>
+                                </div>
+                                <div class="stat-label">ATK</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">120</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 60%;"></div>
+                                </div>
+                                <div class="stat-label">DEF</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">120</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 60%;"></div>
+                                </div>
+                                <div class="stat-label">S.ATK</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">120</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 60%;"></div>
+                                </div>
+                                <div class="stat-label">S.DEF</div>
+                            </div>
+                            <div class="stat-bar">
+                                <div class="stat-value">120</div>
+                                <div class="bar-container">
+                                    <div class="bar-fill" style="height: 60%;"></div>
+                                </div>
+                                <div class="stat-label">VEL</div>
+                            </div>
+                        </div>
+                        <div class="stats-total">Total: 720</div>
+                    </div>
+                    
+                    <!-- Abilities -->
+                    <div class="abilities-section">
+                        <h3 class="section-title">Habilidades</h3>
+                        <div class="ability-item">• Multitype</div>
+                    </div>
+                    
+                    <!-- Weaknesses -->
+                    <div class="weaknesses-section">
+                        <h3 class="section-title">Fraquezas</h3>
+                        <div class="weakness-container">
+                            <div class="weakness-badge weakness-fighting">Lutador</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-left">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokébola" class="footer-logo">
+                <div class="footer-brand">PokéCompanion</div>
+                
+                <div class="footer-links">
+                    <h4>Links</h4>
+                    <ul>
+                        <li>Pagina Inicial</li>
+                        <li>Pokédex</li>
+                        <li>Comparar</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="footer-right">
+                <h3>Sobre</h3>
+                <p class="footer-description">
+                    Este site foi desenvolvido como parte de um projeto acadêmico de Engenharia de Software, 
+                    com objetivo de praticar prototipagem e desenvolvimento web.
+                </p>
+                <p class="footer-copyright">
+                    PokéCompanion © 2025<br>
+                    Projeto acadêmico — Engenharia de Software
+                </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
