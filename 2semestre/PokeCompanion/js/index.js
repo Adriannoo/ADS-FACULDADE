@@ -1,6 +1,6 @@
 
 // Seleciona o ID do elemento <img>
-const sprite_blastoise = document.getElementById("sprite-blastoise");
+const sprite_blastoise = document.getElementById("blastoise-gif");
 
 
 // Função Async/Await
