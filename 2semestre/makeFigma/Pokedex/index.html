@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex - PokéCompanion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Container Principal -->
+    <div class="container">
+        
+        <!-- Fundo com Listras -->
+        <div class="background-stripes">
+            <div class="stripe stripe-blue"></div>
+            <div class="stripe stripe-yellow"></div>
+            <div class="stripe stripe-red"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <nav class="nav">
+                <div class="nav-item">
+                    <img src="https://via.placeholder.com/64" alt="Home" class="nav-icon">
+                    <span>Página Inicial</span>
+                </div>
+                <div class="nav-item active">
+                    <img src="https://via.placeholder.com/64" alt="Pokédex" class="nav-icon">
+                    <span>Pokédex</span>
+                </div>
+                <div class="nav-item">
+                    <img src="https://via.placeholder.com/64" alt="Comparar" class="nav-icon">
+                    <span>Comparar</span>
+                </div>
+                <button class="login-btn">Fazer login</button>
+            </nav>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>TIPOS</h2>
+                <hr>
+            </div>
+            <div class="types-grid">
+                <div class="type-item">
+                    <div class="type-icon water"></div>
+                    <span>Água</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon ice"></div>
+                    <span>Gelo</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon rock"></div>
+                    <span>Pedra</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon steel"></div>
+                    <span>Metal</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon normal"></div>
+                    <span>Normal</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon poison"></div>
+                    <span>Veneno</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon psychic"></div>
+                    <span>Psíquico</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon fighting"></div>
+                    <span>Lutador</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon fire"></div>
+                    <span>Fogo</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon flying"></div>
+                    <span>Voador</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon ghost"></div>
+                    <span>Fantasma</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon grass"></div>
+                    <span>Planta</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon electric"></div>
+                    <span>Elétrico</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon fairy"></div>
+                    <span>Fada</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon dark"></div>
+                    <span>Sombrio</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon dragon"></div>
+                    <span>Dragão</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon bug"></div>
+                    <span>Inseto</span>
+                </div>
+                <div class="type-item">
+                    <div class="type-icon ground"></div>
+                    <span>Terrestre</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Área Principal -->
+        <main class="main-content">
+            
+            <!-- Barra de Pesquisa -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="0384" value="0384">
+                </div>
+                <button class="search-btn">Pesquisar</button>
+            </div>
+
+            <!-- Quadro de Pokémons -->
+            <div class="pokemon-board">
+                <div class="board-header">
+                    <h3>Filtrar</h3>
+                    <h3>Organizar por</h3>
+                    <div class="sort-select">
+                        <img src="https://via.placeholder.com/50" alt="Pokeball" class="pokeball-icon">
+                        <span>A - Z</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                </div>
+                
+                <!-- Grid de Cards -->
+                <div class="pokemon-grid">
+                    <!-- Card Rayquaza -->
+                    <div class="pokemon-card">
+                        <div class="card-image">
+                            <img src="https://via.placeholder.com/270x270" alt="Rayquaza">
+                        </div>
+                        <div class="card-info">
+                            <h4>Rayquaza</h4>
+                            <p class="pokemon-number">#0384</p>
+                            <div class="pokemon-types">
+                                <span class="type-badge dragon">Dragão</span>
+                                <span class="type-badge flying">Voador</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Adicione mais cards aqui -->
+                    <div class="pokemon-card">
+                        <div class="card-image">
+                            <img src="https://via.placeholder.com/270x270" alt="Pokemon">
+                        </div>
+                        <div class="card-info">
+                            <h4>Pokémon</h4>
+                            <p class="pokemon-number">#0001</p>
+                            <div class="pokemon-types">
+                                <span class="type-badge grass">Planta</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pokemon-card">
+                        <div class="card-image">
+                            <img src="https://via.placeholder.com/270x270" alt="Pokemon">
+                        </div>
+                        <div class="card-info">
+                            <h4>Pokémon</h4>
+                            <p class="pokemon-number">#0002</p>
+                            <div class="pokemon-types">
+                                <span class="type-badge water">Água</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="https://via.placeholder.com/80" alt="Pokeball" class="footer-logo">
+                    <h3>PokéCompanion</h3>
+                    <div class="footer-links">
+                        <h4>Links</h4>
+                        <ul>
+                            <li>Página Inicial</li>
+                            <li>Pokédex</li>
+                            <li>Comparar</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-section about">
+                    <h3>Sobre</h3>
+                    <p>Este site foi desenvolvido como parte de um projeto acadêmico de Engenharia de Software, com objetivo de praticar prototipagem e desenvolvimento web.</p>
+                    <p class="copyright">PokéCompanion © 2025<br>Projeto acadêmico — Engenharia de Software</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</body>
+</html>

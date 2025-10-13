@@ -29,3 +29,28 @@ fetch("https://pokeapi.co/api/v2/pokemon/blastoise")
     sprite_blastoise.src = sprite_animado;
   })
   .catch(error => console.error("Erro ao buscar Pokemon:", error));
+
+
+function ajustarEscala() {
+  const baseWidth = 1920;
+  const baseHeight = 1080;
+  const container = document.querySelector('.main-container');
+
+  const scaleX = window.innerWidth / baseWidth;
+  const scaleY = window.innerHeight / baseHeight;
+  const scale = Math.min(scaleX, scaleY);
+
+  container.style.transform = `scale(${scale})`;
+  container.style.transformOrigin = 'top center';
+
+  // Centraliza na tela
+  const offsetX = (window.innerWidth - baseWidth * scale) / 2;
+  const offsetY = (window.innerHeight - baseHeight * scale) / 2;
+  container.style.position = 'absolute';
+  container.style.left = `${offsetX}px`;
+  container.style.top = `${offsetY}px`;
+}
+
+window.addEventListener('resize', ajustarEscala);
+window.addEventListener('load', ajustarEscala);
+
