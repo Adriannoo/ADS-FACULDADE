@@ -1,23 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Righteous&display=swap');
 
+/* ===== BASE ===== */
 body {
     background-color: #000;
-    height: calc(1324 / 1080 * 100vh);
+    min-height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 /* ===== HEADER ===== */
 .header {
     margin: auto;
     padding: calc(40 / 1080 * 100vh) calc(48 / 1920 * 100vw);
-    background-color: #d9d9d9;
-    box-shadow: 0 calc(4 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25);
+    background-color: var(--cinza-padrao);
+    box-shadow: 0 calc(4 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0, 0, 0, 0.25);
 }
 
 .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: calc(1440 / 1920 * 100vw);
+    max-width: min(1440px, 90%);
     margin: auto;
 }
 
@@ -26,13 +30,14 @@ body {
     align-items: center;
     height: calc(80 / 1080 * 100vh);
     cursor: pointer;
+    gap: 8px;
 }
 
-/* ÍCONES */
+/* ===== ÍCONES ===== */
 .icon-1, .icon-2, .icon-3 {
-    width: calc(80 / 1920 * 100vw);
-    height: calc(80 / 1080 * 100vh);
-    border-radius: calc(50 / 1920 * 100vw);
+    width: clamp(40px, calc(80 / 1920 * 100vw), 80px);
+    height: clamp(40px, calc(80 / 1080 * 100vh), 80px);
+    border-radius: 50%;
     background-size: cover;
     background-position: center;
 }
@@ -41,34 +46,33 @@ body {
 .icon-2 { background: url(../assets/icone2.png) var(--cinza-padrao) 50% / cover no-repeat; }
 .icon-3 { background: url(../assets/icone3.png) var(--cinza-padrao) 50% / cover no-repeat; }
 
+/* Fonte Header */
 .nav-item span {
     font-family: "Righteous", sans-serif;
     color: white;
-    /* text-shadow: calc(4 / 1920 * 100vw) calc(4 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25); */
-    font-size: clamp(20px, calc(48 / 1920 * 100vw), 48px);
+    text-shadow: 4px 4px 4px rgba(0,0,0,0.25);
+    font-size: clamp(20px, 2.5vw, 48px);
     font-weight: 400;
     -webkit-text-stroke: 0.2em black;
     paint-order: stroke fill;
 }
 
-/* BOTÃO LOGIN */
+/* ===== BOTÃO LOGIN ===== */
 .login-btn {
-    padding: calc(25 / 1080 * 100vh) calc(48 / 1920 * 100vw);
+    padding: clamp(8px, calc(10 / 1080 * 100vh), 14px) clamp(16px, calc(28 / 1920 * 100vw), 32px);
     font-family: "Righteous", sans-serif;
-    font-size: clamp(16px, calc(32 / 1920 * 100vw), 32px);
-    color: var(--branco-full);
-    -webkit-text-stroke: 0.2em black;
-    paint-order: stroke fill;
+    font-size: clamp(16px, 1.5vw, 32px);
+    color: #000;
     background-color: #00ff99;
     border: calc(3 / 1920 * 100vw) solid black;
     border-radius: calc(24 / 1920 * 100vw);
     box-shadow: 0 calc(4 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25);
     cursor: pointer;
     transition: 0.3s ease;
-}.login-btn:hover {
+}
+.login-btn:hover {
     transform: scale(1.05);
 }
-
 
 /* ===== BACKGROUND ===== */
 .background-container {
@@ -85,23 +89,21 @@ body {
 .stripe {
     position: absolute;
     width: calc(2200 / 1920 * 100vw);
-    height: calc(400 / 1080 * 100vh);
+    height: calc(500 / 1080 * 100vh);
     transform: rotate(-20deg);
     border: calc(10 / 1920 * 100vw) solid #fff;
     background-color: var(--azul-cerulean);
 }
 
 .yellow-stripe {
-    position: absolute;
     background-color: var(--amarelo-dourado);
-    top: calc(-90 / 1080 * 50vh);
+    top: calc(-90 / 1080 * 110vh);
     height: calc(300 / 1080 * 100vh);
 }
 
 .red-stripe {
-    position: absolute;
     background-color: var(--vermelho-boston);
-    bottom: calc(-90 / 1080 * 50vh);
+    bottom: calc(-90 / 1080 * 110vh);
     height: calc(300 / 1080 * 100vh);
 }
 
@@ -110,34 +112,28 @@ body {
     position: absolute;
     right: calc(100 / 1920 * 100vw);
     bottom: calc(50 / 1080 * 100vh);
-    width: calc(760 / 1920 * 100vw);
-    height: auto;
-    display: block;
+    width: clamp(300px, calc(760 / 1920 * 100vw), 760px);
     z-index: 30;
     pointer-events: none;
 }
 
 .blastoise-gif {
-    position: relative;
-    display: block;
-    width: calc(760 / 1920 * 100vw);
-    height: auto;
+    width: 100%;
     image-rendering: pixelated;
     object-fit: contain;
-    z-index: 20;
     transform: translateY(calc(-30 / 1080 * 100vh));
-    filter: drop-shadow(0 0 calc(5 / 1080 * 100vh) black);
+    filter: drop-shadow(0 0 5px black);
 }
 
 .blastoise-base {
     position: absolute;
     bottom: calc(5 / 1080 * 100vh);
-    width: calc(640 / 1920 * 100vw);
     right: calc(50 / 1920 * 100vw);
+    width: 80%;
     height: calc(200 / 1080 * 100vh);
     background: rgba(255, 255, 255, 0.95);
     border-radius: 50% / 50%;
-    box-shadow: 0 calc(20 / 1080 * 100vh) calc(10 / 1080 * 100vh) rgba(0, 0, 0, 0.75);
+    box-shadow: 0 20px 10px rgba(0,0,0,0.75);
     z-index: 0;
 }
 
@@ -149,14 +145,14 @@ body {
     position: absolute;
     padding: calc(30 / 1080 * 100vh);
     left: 0;
-    top: calc(260 / 1080 * 100vh);
-    width: calc(820 / 1920 * 100vw);
-    height: calc(620 / 1080 * 100vh);
+    top: calc(220 / 1080 * 100vh);
+    width: clamp(300px, calc(820 / 1920 * 100vw), 820px);
+    height: clamp(300px, calc(620 / 1080 * 100vh), 620px);
     background: rgba(217, 217, 217, 0.95);
     border-radius: 0 calc(60 / 1920 * 100vw) calc(60 / 1920 * 100vw) 0;
     border: calc(5 / 1920 * 100vw) solid black;
     border-left: 0;
-    box-shadow: calc(5 / 1920 * 100vw) calc(10 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25);
+    box-shadow: 5px 10px 4px rgba(0,0,0,0.25);
     overflow: hidden;
 }
 
@@ -164,13 +160,12 @@ body {
     display: flex;
     justify-content: center;
     font-family: Fredoka;
-    color: var(--Branco-Full, #FFF);
+    color: var(--branco-full);
     text-align: center;
     text-shadow: 0 0 20px rgba(0, 0, 0, 0.30);
     paint-order: stroke fill;
-    -webkit-text-stroke: 0.1em black;
-    font-size: 68px;
-    font-style: normal;
+    -webkit-text-stroke: 0.3vw black;
+    font-size: clamp(20px, 4vw, 46px);
     font-weight: 500;
     line-height: 1.2;
 }
@@ -180,24 +175,32 @@ body {
     display: flex;
     position: relative;
     z-index: 10;
-    /* width: 100%;  */
-    height: calc(300 / 1080 * 100vh);
+    width: 100%;
+    min-height: calc(300 / 1080 * 100vh);
     background: rgba(0, 0, 0, 0.2);
     display: flex;
+    flex-wrap: wrap;
     padding: calc(40 / 1080 * 100vh) calc(80 / 1920 * 100vw);
     margin-top: auto;
 }
 
-.footer-left {
-    flex: 1;
+.footer-left, .footer-right {
     display: flex;
     flex-direction: column;
-    gap: calc(20 / 1080 * 100vh);
+    gap: clamp(10px, 2vh, 20px);
+}
+
+.footer-logo {
+    width: clamp(40px, calc(80 / 1920 * 100vw), 80px);
+    height: clamp(40px, calc(80 / 1080 * 100vh), 80px);
+    border-radius: 50%;
+    opacity: 0.7;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
 }
 
 .footer-brand {
     font-family: 'Righteous', sans-serif;
-    font-size: clamp(20px, calc(54 / 1920 * 100vw), 54px);
+    font-size: clamp(20px, 2.5vw, 54px);
     color: white;
     opacity: 0.7;
 }
@@ -205,7 +208,7 @@ body {
 .footer-links h4 {
     font-family: 'Fredoka', sans-serif;
     font-weight: 600;
-    font-size: clamp(14px, calc(24 / 1920 * 100vw), 24px);
+    font-size: clamp(14px, 1.5vw, 24px);
     color: white;
     opacity: 0.7;
     text-decoration: underline;
@@ -214,31 +217,24 @@ body {
 
 .footer-links ul {
     list-style: disc;
-    padding-left: calc(36 / 1920 * 100vw);
+    padding-left: 1.5rem;
     font-family: 'Fredoka', sans-serif;
     font-weight: 400;
-    font-size: clamp(14px, calc(24 / 1920 * 100vw), 24px);
+    font-size: clamp(14px, 1.5vw, 24px);
     color: white;
     opacity: 0.7;
 }
 
 .footer-divider {
-    width: calc(1 / 1920 * 100vw);
-    height: calc(310 / 1080 * 100vh);
+    width: 1px;
+    height: calc(240 / 1080 * 100vh);
     background: rgba(255, 255, 255, 0.7);
-    margin: 0 calc(30 / 1920 * 100vw)
-}
-
-.footer-right {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: calc(15 / 1080 * 100vh);
+    margin: 0 calc(60 / 1920 * 100vw);
 }
 
 .footer-right h3 {
     font-family: 'Righteous', sans-serif;
-    font-size: clamp(24px, calc(54 / 1920 * 100vw), 54px);
+    font-size: clamp(24px, 2.5vw, 54px);
     color: white;
     opacity: 0.7;
     margin: 0px;
@@ -249,10 +245,42 @@ body {
     display: flex;
     font-family: 'Fredoka', sans-serif;
     font-weight: 400;
-    font-size: clamp(14px, calc(20 / 1920 * 100vw), 20px);
+    font-size: clamp(14px, 1vw, 20px);
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.4;
-    max-width: calc(500 / 1920 * 100vw);
-    margin: 0 calc(5 / 1920 * 100vw);
-    padding: 1vh;
+    max-width: 500px;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 1440px) {
+    .frame-sobre { top: 18vh; }
+    .blastoise-wrap { right: 5vw; width: 40vw; }
+}
+
+@media (max-width: 1024px) {
+    .nav { flex-wrap: wrap; gap: 1rem; }
+    .frame-sobre {
+        position: relative;
+        margin: 4rem auto;
+        left: auto;
+        top: auto;
+        width: 90%;
+        border-radius: 20px;
+    }
+    .blastoise-wrap {
+        position: relative;
+        margin: 0 auto;
+        right: auto;
+        bottom: auto;
+        width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav { flex-direction: column; }
+    .frame-sobre { height: auto; padding: 1.5rem; }
+    .frame-sobre-text { font-size: clamp(18px, 6vw, 32px); }
+    .blastoise-wrap { width: 90%; }
+    .footer { flex-direction: column; align-items: center; }
+    .footer-divider { display: none; }
 }
