@@ -59,16 +59,18 @@ body {
 
 /* ===== BOTÃO LOGIN ===== */
 .login-btn {
-    padding: clamp(8px, calc(10 / 1080 * 100vh), 14px) clamp(16px, calc(28 / 1920 * 100vw), 32px);
+    padding: clamp(16px, calc(20 / 1080 * 100vh), 28px) clamp(16px, calc(28 / 1920 * 100vw), 32px);
     font-family: "Righteous", sans-serif;
     font-size: clamp(16px, 1.5vw, 32px);
-    color: #000;
+    color: var(--branco-full);
     background-color: #00ff99;
     border: calc(3 / 1920 * 100vw) solid black;
     border-radius: calc(24 / 1920 * 100vw);
     box-shadow: 0 calc(4 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25);
     cursor: pointer;
     transition: 0.3s ease;
+    -webkit-text-stroke: 0.2em black;
+    paint-order: stroke fill;
 }
 .login-btn:hover {
     transform: scale(1.05);
@@ -165,7 +167,7 @@ body {
     text-shadow: 0 0 20px rgba(0, 0, 0, 0.30);
     paint-order: stroke fill;
     -webkit-text-stroke: 0.3vw black;
-    font-size: clamp(20px, 4vw, 46px);
+    font-size: clamp(26px, 4vw, 52px);
     font-weight: 500;
     line-height: 1.2;
 }
@@ -227,7 +229,7 @@ body {
 
 .footer-divider {
     width: 1px;
-    height: calc(240 / 1080 * 100vh);
+    height: calc(320 / 1080 * 100vh);
     background: rgba(255, 255, 255, 0.7);
     margin: 0 calc(60 / 1920 * 100vw);
 }
