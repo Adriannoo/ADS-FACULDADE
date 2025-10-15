@@ -2,77 +2,75 @@
 
 body {
     background-color: #000;
-    height: 1324px;
+    height: calc(1324 / 1080 * 100vh);
 }
 
+/* ===== HEADER ===== */
 .header {
     margin: auto;
-    padding: 40px 48px;
+    padding: calc(40 / 1080 * 100vh) calc(48 / 1920 * 100vw);
     background-color: #d9d9d9;
-    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+    box-shadow: 0 calc(4 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25);
 }
 
 .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1440px;
+    max-width: calc(1440 / 1920 * 100vw);
     margin: auto;
 }
 
 .nav-item {
     display: flex;
     align-items: center;
-    height: 80px;
+    height: calc(80 / 1080 * 100vh);
     cursor: pointer;
 }
 
-.icon-1 {
-    width: 80px;
-    height: 80px;
-    border-radius: 50px;
-    background: url(../assets/icone1.png) var(--cinza-padrao) 50% / cover no-repeat;
+/* ÍCONES */
+.icon-1, .icon-2, .icon-3 {
+    width: calc(80 / 1920 * 100vw);
+    height: calc(80 / 1080 * 100vh);
+    border-radius: calc(50 / 1920 * 100vw);
+    background-size: cover;
+    background-position: center;
 }
-.icon-2 {
-    width: 80px;
-    height: 80px;
-    border-radius: 50px;
-    background: url(../assets/icone2.png) var(--cinza-padrao) 50% / cover no-repeat;
-}
-.icon-3 {
-    width: 80px;
-    height: 80px;
-    border-radius: 50px;
-    background: url(../assets/icone3.png) var(--cinza-padrao) 50% / cover no-repeat;
-}
+
+.icon-1 { background: url(../assets/icone1.png) var(--cinza-padrao) 50% / cover no-repeat; }
+.icon-2 { background: url(../assets/icone2.png) var(--cinza-padrao) 50% / cover no-repeat; }
+.icon-3 { background: url(../assets/icone3.png) var(--cinza-padrao) 50% / cover no-repeat; }
 
 .nav-item span {
     font-family: "Righteous", sans-serif;
     color: white;
-    text-shadow: 4px 4px 4px rgba(0,0,0,0.25);
-    font-size: 48px;
+    /* text-shadow: calc(4 / 1920 * 100vw) calc(4 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25); */
+    font-size: clamp(20px, calc(48 / 1920 * 100vw), 48px);
     font-weight: 400;
-    paint-order: stroke fill;
     -webkit-text-stroke: 0.2em black;
+    paint-order: stroke fill;
 }
 
+/* BOTÃO LOGIN */
 .login-btn {
-    padding: 10px 28px;
+    padding: calc(25 / 1080 * 100vh) calc(48 / 1920 * 100vw);
     font-family: "Righteous", sans-serif;
-    font-size: 32px;
-    color: #000;
+    font-size: clamp(16px, calc(32 / 1920 * 100vw), 32px);
+    color: var(--branco-full);
+    -webkit-text-stroke: 0.2em black;
+    paint-order: stroke fill;
     background-color: #00ff99;
-    border: 3px solid #000;
-    border-radius: 12px;
-    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+    border: calc(3 / 1920 * 100vw) solid black;
+    border-radius: calc(24 / 1920 * 100vw);
+    box-shadow: 0 calc(4 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25);
     cursor: pointer;
     transition: 0.3s ease;
-}
-
-.login-btn:hover {
+}.login-btn:hover {
     transform: scale(1.05);
 }
 
+
+/* ===== BACKGROUND ===== */
 .background-container {
     position: relative;
     width: 100%;
@@ -86,79 +84,79 @@ body {
 
 .stripe {
     position: absolute;
-    width: 2200px;
-    height: 400px;
+    width: calc(2200 / 1920 * 100vw);
+    height: calc(400 / 1080 * 100vh);
     transform: rotate(-20deg);
-    border: 10px solid #fff;
+    border: calc(10 / 1920 * 100vw) solid #fff;
     background-color: var(--azul-cerulean);
 }
 
 .yellow-stripe {
     position: absolute;
     background-color: var(--amarelo-dourado);
-    top: -90px;
-    height: 300px;
+    top: calc(-90 / 1080 * 50vh);
+    height: calc(300 / 1080 * 100vh);
 }
 
 .red-stripe {
     position: absolute;
     background-color: var(--vermelho-boston);
-    bottom: -90px;
-    height: 300px;
+    bottom: calc(-90 / 1080 * 50vh);
+    height: calc(300 / 1080 * 100vh);
 }
 
-.blastoise-wrap{
+/* ===== BLASTOISE ===== */
+.blastoise-wrap {
     position: absolute;
-    right: 100px;       /* distancia da borda direita do hero - ajuste */
-    bottom: 50px;     /* distancia da base do hero - ajuste */
-    width: 760px;      /* tamanho visível do bloco do sprite (ajuste fino) */
+    right: calc(100 / 1920 * 100vw);
+    bottom: calc(50 / 1080 * 100vh);
+    width: calc(760 / 1920 * 100vw);
     height: auto;
     display: block;
-    z-index: 30;       /* acima do fundo, abaixo do nav se preciso */
-    pointer-events: none; /* evita atrapalhar clicks no fundo */
+    z-index: 30;
+    pointer-events: none;
 }
 
-/* sprite do Blastoise */
-.blastoise-gif{
+.blastoise-gif {
     position: relative;
     display: block;
-    width: 760px;          /* controla o tamanho final do sprite - ajuste */
+    width: calc(760 / 1920 * 100vw);
     height: auto;
-    image-rendering: pixelated;  /* mantém aparência retro */
+    image-rendering: pixelated;
     object-fit: contain;
     z-index: 20;
-    transform: translateY(-30px); /* sobe um pouco para encaixar na base */
-    filter: drop-shadow(0 0 5px black);
+    transform: translateY(calc(-30 / 1080 * 100vh));
+    filter: drop-shadow(0 0 calc(5 / 1080 * 100vh) black);
 }
 
-/* a base oval branca (a "plataforma") */
 .blastoise-base {
     position: absolute;
-    bottom: 5px;
-    width: 640px;
-    right: 50px;
-    height: 200px;
-    background: rgb(255, 255, 255, 0.95);
-    border-radius: 50% / 50%; /* <-- deixa bem oval */
-    box-shadow: 0px 20px 10px rgb(0, 0, 0);
+    bottom: calc(5 / 1080 * 100vh);
+    width: calc(640 / 1920 * 100vw);
+    right: calc(50 / 1920 * 100vw);
+    height: calc(200 / 1080 * 100vh);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50% / 50%;
+    box-shadow: 0 calc(20 / 1080 * 100vh) calc(10 / 1080 * 100vh) rgba(0, 0, 0, 0.75);
     z-index: 0;
 }
 
+/* ===== FRAME SOBRE ===== */
 .frame-sobre {
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    padding: 30px;
+    padding: calc(30 / 1080 * 100vh);
     left: 0;
-    top: 220px;
-    width: 820px;
-    height: 620px;
+    top: calc(260 / 1080 * 100vh);
+    width: calc(820 / 1920 * 100vw);
+    height: calc(620 / 1080 * 100vh);
     background: rgba(217, 217, 217, 0.95);
-    border-radius: 0 60px 60px 0;
-    border: 5px solid black;
+    border-radius: 0 calc(60 / 1920 * 100vw) calc(60 / 1920 * 100vw) 0;
+    border: calc(5 / 1920 * 100vw) solid black;
     border-left: 0;
-    box-shadow: 5px 10px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: calc(5 / 1920 * 100vw) calc(10 / 1080 * 100vh) calc(4 / 1080 * 100vh) rgba(0,0,0,0.25);
     overflow: hidden;
 }
 
@@ -177,14 +175,16 @@ body {
     line-height: 1.2;
 }
 
+/* ===== FOOTER ===== */
 .footer {
+    display: flex;
     position: relative;
     z-index: 10;
-    width: 100%;
-    height: 300px;
+    /* width: 100%;  */
+    height: calc(300 / 1080 * 100vh);
     background: rgba(0, 0, 0, 0.2);
     display: flex;
-    padding: 40px 80px;
+    padding: calc(40 / 1080 * 100vh) calc(80 / 1920 * 100vw);
     margin-top: auto;
 }
 
@@ -192,20 +192,12 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-.footer-logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    opacity: 0.7;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    gap: calc(20 / 1080 * 100vh);
 }
 
 .footer-brand {
     font-family: 'Righteous', sans-serif;
-    font-size: 54px;
+    font-size: clamp(20px, calc(54 / 1920 * 100vw), 54px);
     color: white;
     opacity: 0.7;
 }
@@ -213,60 +205,54 @@ body {
 .footer-links h4 {
     font-family: 'Fredoka', sans-serif;
     font-weight: 600;
-    font-size: 24px;
+    font-size: clamp(14px, calc(24 / 1920 * 100vw), 24px);
     color: white;
     opacity: 0.7;
     text-decoration: underline;
-    margin-bottom: 10px;
+    margin: calc(10 / 1920 * 100vw);
 }
 
 .footer-links ul {
     list-style: disc;
-    padding-left: 36px;
+    padding-left: calc(36 / 1920 * 100vw);
     font-family: 'Fredoka', sans-serif;
     font-weight: 400;
-    font-size: 24px;
+    font-size: clamp(14px, calc(24 / 1920 * 100vw), 24px);
     color: white;
-}
-
-.footer-links li {
-    margin: 5px 0;
+    opacity: 0.7;
 }
 
 .footer-divider {
-    width: 1px;
-    height: 240px;
+    width: calc(1 / 1920 * 100vw);
+    height: calc(310 / 1080 * 100vh);
     background: rgba(255, 255, 255, 0.7);
-    margin: 0 60px;
+    margin: 0 calc(30 / 1920 * 100vw)
 }
 
 .footer-right {
     flex: 2;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: calc(15 / 1080 * 100vh);
 }
 
 .footer-right h3 {
     font-family: 'Righteous', sans-serif;
-    font-size: 54px;
+    font-size: clamp(24px, calc(54 / 1920 * 100vw), 54px);
     color: white;
     opacity: 0.7;
+    margin: 0px;
 }
 
-.footer-description {
-  font-family: 'Fredoka', sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.4;
-  max-width: 500px;
-}
-
+.footer-description,
 .footer-copyright {
+    display: flex;
     font-family: 'Fredoka', sans-serif;
     font-weight: 400;
-    font-size: 20px;
+    font-size: clamp(14px, calc(20 / 1920 * 100vw), 20px);
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.4;
+    max-width: calc(500 / 1920 * 100vw);
+    margin: 0 calc(5 / 1920 * 100vw);
+    padding: 1vh;
 }
