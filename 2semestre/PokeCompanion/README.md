@@ -21,7 +21,3 @@ Objetivo: aplicar conceitos de front-end, lógica de programação e persistênc
 - **Luan Augusto** 
 
 ---
-
-## 🧾 Licença
-Este projeto é de uso **acadêmico e educacional**.  
-© 2025 PokéCompanion
