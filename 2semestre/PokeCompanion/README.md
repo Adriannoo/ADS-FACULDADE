@@ -17,11 +17,7 @@ Objetivo: aplicar conceitos de front-end, lógica de programação e persistênc
 ---
 
 ## 🧠 Equipe
-- **Adriano Ramos** (Líder do Grupo)  
-- Colaboradores: *[adicione aqui os nomes do grupo]*  
+- **Adriano Ramos** 
+- **Luan Augusto** 
 
 ---
-
-## 🧾 Licença
-Este projeto é de uso **acadêmico e educacional**.  
-© 2025 PokéCompanion
