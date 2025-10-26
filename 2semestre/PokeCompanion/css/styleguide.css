@@ -10,4 +10,10 @@
     --vermelho-boston: #CC0000;
     --cinza-padrao: #d9d9d9;
     --branco-full: #ffffff;
+    --verde-campo: #81C784;
 }
+
+.icon-1 { background: url(../assets/icone1.png) var(--cinza-padrao) 50% / cover no-repeat; }
+.icon-2 { background: url(../assets/icone2.png) var(--cinza-padrao) 50% / cover no-repeat; }
+.icon-3 { background: url(../assets/icone3.png) var(--cinza-padrao) 50% / cover no-repeat; }
+
