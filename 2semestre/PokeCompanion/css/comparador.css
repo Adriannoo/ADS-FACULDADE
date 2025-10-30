@@ -194,7 +194,7 @@ body {
 .divider-vertical {
     position: absolute;
     width: 1px;
-    height: 1000px;
+    height: 85%;
     background: white;
     left: 50%;
     top: 120px;
