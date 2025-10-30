@@ -114,7 +114,7 @@ body {
 
 /* Main Content */
 .main-content {
-    position: relative;
+    /* position: relative; */
     z-index: 1;
     width: 100%;
     min-height: calc(1800 / 1920 * 100vh);

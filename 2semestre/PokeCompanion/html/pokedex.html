@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poké - Pokédex</title>
+    <link rel="stylesheet" href="../css/pokedex.css  ">
+    <link rel="stylesheet" href="../css/styleguide.css">
+    <link rel="icon" type="imagem/jpg" href="../assets/icone1.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a class="nav-item" href="pagina-inicial.html">
+                <div class="nav-icon icon-1"></div>
+                <span>Página Inicial</span>
+            </a>
+            <a class="nav-item">
+                <div class="nav icon-2"></div>
+                <span>Pokédex</span>
+            </a>
+            <a class="nav-item">
+                <div class="nav icon-3"></div>
+                <span>Comparar</span>
+            </a>
+            <a class="login-btn">Fazer login</a>
+        </nav>
+    </header>
+    
+    <!-- Background Stripes -->
+    <div class="background-container">
+        <div class="stripe stripe-yellow"></div>
+        <div class="stripe stripe-blue"></div>
+        <div class="stripe stripe-red"></div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <h1 class="page-title">Pokédex</h1>
+
+        <section class="search-area">
+            <input id="search-input" type="text" placeholder="Digite nome ou número (ex: pikachu ou 025)" />
+            <button id="search-btn">Pesquisar</button>
+            <div id="search-feedback" class="feedback" aria-live="polite"></div>
+        </section>
+
+        <section class="pokedex-panel">
+            <aside class="types-list">
+                <!-- ícones estáticos (você pode pegar do figma e salvar em ../assets/types/) -->
+                <h4>TIPOS</h4>
+                <div class="types-grid">
+                    <!-- exemplo visual — não funcional (apenas mostrar) -->
+                    <img src="../assets/types/water.svg" alt="Água" title="Água">
+                    <img src="../assets/types/fire.svg" alt="Fogo" title="Fogo">
+                    <img src="../assets/types/grass.svg" alt="Planta" title="Planta">
+                    <!-- adicione os demais ícones conforme sua pasta -->
+                </div>
+            </aside>
+
+            <section class="results-area">
+                <div class="controls-row">
+                    <div class="filters">Filtrar <!-- placeholders --></div>
+                    <div class="sort">Organizar por <select id="sort-select"><option>A - Z</option></select></div>
+                </div>
+
+                <div class="compare-slots" id="compare-slots">
+                    <div class="slot" data-slot="0">
+                        <div class="slot-placeholder">Selecione um Pokémon</div>
+                    </div>
+                    <div class="slot" data-slot="1">
+                        <div class="slot-placeholder">Selecione um Pokémon</div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            <div class="footer-brand">PokéCompanion</div>
+            <div class="footer-links">
+                <h4>Links</h4>
+                <ul>
+                    <li>Pagina Inicial</li>
+                    <li>Pokédex</li>
+                    <li>Comparar</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-divider"></div>
+        
+        <div class="footer-right">
+            <h3>Sobre</h3>
+            <p class="footer-description">
+                Este site foi desenvolvido como parte de um projeto acadêmico de Engenharia de Software, 
+                com objetivo de praticar prototipagem e desenvolvimento web.
+            </p>
+            <p class="footer-copyright">
+                PokéCompanion &copy; 2025<br>
+                Projeto acadêmico — Engenharia de Software
+            </p>
+        </div>
+    </footer>
+
+    <!-- Template do Card -->
+    <template id="pokemon-card-template">
+        <article class="pokemon-card">
+            <button class="card-close" title="Remover">×</button>
+
+            <div class="card-top">
+                <img class="pokemon-sprite" alt="sprite">
+            </div>
+
+            <div class="card-meta">
+                <div class="pokemon-number"></div>
+                <div class="pokemon-name"></div>
+                <div class="pokemon-types"></div>
+                <div class="pokemon-dim">Altura: <span class="h-val"></span>m | Peso: <span class="w-val"></span>kg</div>
+            </div>
+
+            <div class="card-divider"></div>
+
+            <div class="card-stats">
+                <h4>Estatísticas</h4>
+                <div class="stats-vertical"></div>
+                <div class="stats-total"></div>
+            </div>
+
+            <div class="card-abilities">
+                <h4>Habilidades</h4>
+                <div class="abilities-list"></div>
+            </div>
+        </article>
+    </template>
+
+    <script src="../js/pokedex.js"></script>
+</body>
+</html>
+
